@@ -1,2 +1,3 @@
-Spencer Wolf
-David Ash
+Spencer Wolf  
+David Ash  
+Tyler Royer  
