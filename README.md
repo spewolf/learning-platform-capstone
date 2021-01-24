@@ -1,5 +1,11 @@
 # Setup Guide
 
+## Computer Setup
+
+1. Install npm
+
+## Repo Setup
+
 1. install packages with `npm install`
 2. install firebase-tools with `npm i -g firebase-tools`
 3. login to firebase via `firebase login`
