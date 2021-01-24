@@ -7,7 +7,7 @@
 ## Repo Setup
 
 1. install packages with `npm install`
-2. install firebase-tools with `npm i -g firebase-tools`
+2. install firebase-tools with `npm i -g firebase-tools` and `npm i -g firebase`
 3. login to firebase via `firebase login`
 4. to start dev server run `npm run start`  
 5. to start storybook run `npm run storybook`
