@@ -1,13 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import firebase from "firebase";
+import React, {useState} from 'react';
 
 function App() {
+  // Firebase stuff in here is just an example, can be deleted
+  const app = firebase.apps[0];
+  const db = firebase.firestore(app);
+
+  const [quote, setQuote] = useState(0);
+
+  db.collection("quotes").doc("JfAQwxQZdhyCBnG2i6PA").get()
+    .then((query) => setQuote(query.data().body));
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {quote}
         </p>
         <a
           className="App-link"

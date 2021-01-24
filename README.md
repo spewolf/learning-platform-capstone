@@ -1,3 +1,9 @@
+# Setup Guide
+
+1. install packages with `npm install`
+2. install firebase-tools with `npm i -g firebase-tools`
+3. login to firebase via `firebase login`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
