@@ -1,9 +1,7 @@
 import React from 'react';
-import { Router } from 'react-router';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import routes from './routes'
 
 import reportWebVitals from './reportWebVitals';
 import firebase from "firebase/app";
