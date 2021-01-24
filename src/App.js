@@ -1,33 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
-import firebase from "firebase";
-import React, {useState} from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Example from './components/Example';
+import ReactExample from './components/ReactExample';
 
-function App() {
-  // Firebase stuff in here is just an example, can be deleted
-  const app = firebase.apps[0];
-  const db = firebase.firestore(app);
-
-  const [quote, setQuote] = useState(0);
-
-  db.collection("quotes").doc("JfAQwxQZdhyCBnG2i6PA").get()
-    .then((query) => setQuote(query.data().body));
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {quote}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <header>
+          Binary Learning System - I am a header
+          <Link to="/">React Example</Link>
+          <Link to="/example">Example Component</Link>
+        </header>
+        <Switch>
+          <Route path="/example">
+            <Example />
+          </Route>
+          <Route path="/">
+            <ReactExample />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
