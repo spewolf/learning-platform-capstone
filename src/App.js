@@ -28,7 +28,7 @@ function App(props) {
           <Link to="/example">Example Component</Link>
           <Link to="/Login">_Login</Link>
           <Link to="/Register">_Register</Link>
-          <button onClick={() => app.auth().signOut()}>_Sign out</button>
+          <button onClick={() => app?.auth().signOut()}>_Sign out</button>
         </header>
         <Switch>
           <PrivateRoute path="/example" component={Example} />
