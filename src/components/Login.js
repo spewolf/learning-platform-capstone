@@ -12,7 +12,7 @@ const Login = ({ history }) => {
       const { email, password } = event.target.elements;
       try {
         await app
-          .auth()
+          ?.auth()
           .signInWithEmailAndPassword(email.value, password.value);
         history.push("/");
       } catch (error) {
