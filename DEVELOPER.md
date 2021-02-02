@@ -1,3 +1,15 @@
+# Technical Overview   
+
+## Backend   
+* Webhosting: Google Firebase
+* Database: Google Firestore (Full database design here: https://docs.google.com/document/d/1bIoLSbHOrLcIwlteWAQ0QRQKYfwh17qO6-nnfDWkl2Q/edit)
+
+## Frontend
+* Language: Javascript
+* Framework: React
+* CSS/Style: Material Design (https://material.io/design)
+
+
 # Setup Guide
 
 ## Computer Setup
