@@ -8,7 +8,7 @@ numbers.  Instructors will also be able to assign modules to students for more g
 * Frontend: Javascript/React/Material Design.   
 
 ## Contributors   
-Tianyi Song - Client
+Tianyi Song - Client   
 Tyler Royer - Developer   
 David Ash - Developer   
 Spencer Wolf - Developer   
