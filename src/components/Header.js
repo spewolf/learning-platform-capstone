@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     flexDirection: "row",
-    boxShadow: "0px 0px 4px 0px rgba(0,0,0,.5)",
+    boxShadow: "0px 0px 4px 0px rgba(0,0,0,.5)"
   },
   navItem: {
     padding: theme.spacing(1.5),
@@ -17,10 +17,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "auto",
   },
   title: {
-    marginTop: "auto",
-    marginBottom: "auto",
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(2),
+    textDecoration: "none",
+    color: "black",
+    padding: "auto",
+    display: "flex",
+    '& h1': {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(2),
+      marginTop: "auto",
+      marginBottom: "auto",
+    }
   }
 }));
 
@@ -67,14 +73,16 @@ export default function Header(props) {
 
   return (
     <header className={classes.header}>
-      <h1 className={classes.title}>Binary Learning</h1>
+      <a href="/" className={classes.title}>
+        <h1 >Binary Learning</h1>
+      </a>
       <NavItem href="/">React</NavItem>
       <NavItem href="/example">Example</NavItem>
       <NavItem href="/material">Material</NavItem>
 
       <div className={classes.spacer}></div>
 
-      <LoginLinks/>
+      <LoginLinks />
     </header>
   );
 }

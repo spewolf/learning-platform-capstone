@@ -19,11 +19,11 @@ function App(props) {
     <div>
       <AuthProvider>
         <Router>
-          <Header/>
+          <Header />
           <Switch>
             <PrivateRoute path="/example" component={Example} />
             <Route path="/login" component={Login} />
-            <Route path="/material" component={MaterialExamples} /> 
+            <Route path="/material" component={MaterialExamples} />
             <Route path="/register" component={Register} />
             <Route path="/" component={ReactExample} />
           </Switch>
