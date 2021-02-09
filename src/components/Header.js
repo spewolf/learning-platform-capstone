@@ -8,7 +8,11 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     flexDirection: "row",
-    boxShadow: "0px 0px 5px 1px rgba(0,0,0,.2)"
+    boxShadow: "0px 0px 5px 1px rgba(0,0,0,.2)",
+    position: "sticky",
+    zIndex: "5",
+    top: "0",
+    background: "white",
   },
   navItem: {
     padding: theme.spacing(1.5),
