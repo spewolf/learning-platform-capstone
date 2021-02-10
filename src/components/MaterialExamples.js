@@ -7,6 +7,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
+import Checkboxes from './Checkbox';
+import RadioButtonsGroup from './Radio';
+import SelectTextBoxes from './SelectTextBoxes';
+import TextEntryBox from './TextEntryBox';
 
 export default class MaterialExamples extends React.Component {
   RegularButton(text) {
@@ -168,24 +172,28 @@ export default class MaterialExamples extends React.Component {
   }
 
   render() {
+    
+
     return (
       <div>
-        <Box bgcolor="#4F2C1D">
-          <Container style={{ backgroundColor: '#FF7300', height: '200vh' }}>
-            {this.RegularButton("Yeah")}
-            {this.DisabledButton("Nope")}
-            <Paper variant="outlined" elevation={3}>
-              {this.DeleteIconButton()}
-              {this.MixedDeleteIconButton()}
-            </Paper>
-            {this.AddFab()}
-            {this.SimpleAccordion()}
-            {this.StaticAppBar()}
-            {this.UnknownProgress()}
-            {this.KnownProgress()}
-            {this.PersistentSnackbar()}
-          </Container>
-        </Box>
+        <Container style={{ backgroundColor: '#ffffff', height: '125vh' }}>
+          {this.RegularButton("Yeah")}
+          {this.DisabledButton("Nope")}
+          <Paper variant="outlined" elevation={3}>
+            {this.DeleteIconButton()}
+            {this.MixedDeleteIconButton()}
+          </Paper>
+          {this.AddFab()}
+          {this.SimpleAccordion()}
+          {this.StaticAppBar()}
+          {this.UnknownProgress()}
+          {this.KnownProgress()}
+          {/* {this.PersistentSnackbar()} */}
+          <Checkboxes />
+          <RadioButtonsGroup />
+          <SelectTextBoxes />
+          <TextEntryBox />
+        </Container>
       </div>
     );
   }

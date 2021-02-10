@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { AppBar, Button, Toolbar } from '@material-ui/core';
+import LeftDrawer from './LeftDrawer';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     position: "sticky",
     zIndex: "5",
     top: "0",
-    background: "white",
+    color: "palette.primary.text",
   },
   navItem: {
     padding: theme.spacing(1.5),
@@ -20,18 +21,6 @@ const useStyles = makeStyles((theme) => ({
   spacer: {
     marginRight: "auto",
   },
-  title: {
-    textDecoration: "none",
-    color: "black",
-    padding: "auto",
-    display: "flex",
-    '& h1': {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(2),
-      marginTop: "auto",
-      marginBottom: "auto",
-    }
-  }
 }));
 
 function NavItem(props) {
@@ -76,17 +65,17 @@ export default function Header(props) {
   const classes = useStyles();
 
   return (
-    <header className={classes.header}>
-      <a href="/" className={classes.title}>
-        <h1 >Binary Learning</h1>
-      </a>
-      <NavItem href="/">React</NavItem>
-      <NavItem href="/example">Example</NavItem>
-      <NavItem href="/material">Material</NavItem>
+    <AppBar position="sticky">
+      <Toolbar>
+        <LeftDrawer />
+        <NavItem href="/">React</NavItem>
+        <NavItem href="/example">Example</NavItem>
+        <NavItem href="/material">Material</NavItem>
 
-      <div className={classes.spacer}></div>
+        <div className={classes.spacer}></div>
 
-      <LoginLinks />
-    </header>
+        <LoginLinks />
+      </Toolbar>
+    </AppBar>
   );
 }
