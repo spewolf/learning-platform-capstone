@@ -8,41 +8,41 @@
     * test_i_uid_2 - test_course_2
   * All security rules tests can be done in the Rules Playground on the Google Cloud Firestore console.
   * Test: Ensure a student can access their own document:
-    1. Set location to /databases/{default}/documents/students/test_s_uid_1
+    1. Set location to /databases/{default}/documents/users/test_s_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_s_uid_1
     4. Click "Run"
-    5. This should be an allowed read.
+    5. This should be an **allowed** read.
   * Test: Ensure a student cannot access a document that does not belong to them:
-    1. Set location to /databases/{default}/documents/students/test_s_uid_1
+    1. Set location to /databases/{default}/documents/users/test_s_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_s_uid_2
     4. Click "Run"
-    5. This should throw a ```simulator.rules``` error
+    5. This should be a **denied** read.
   * Test: Ensure an instructor can access the documents belonging to students in their course:
-    1. Set location to /databases/{default}/documents/students/test_s_uid_1
+    1. Set location to /databases/{default}/documents/users/test_s_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_i_uid_1
     4. Click "Run"
-    5. This should be an allowed read.
+    5. This should be an **allowed** read.
   * Test: Ensure an instructor cannot access the documents belonging to students in another course:
-    1. Set location to /databases/{default}/documents/students/test_s_uid_1
+    1. Set location to /databases/{default}/documents/users/test_s_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_i_uid_2
     4. Click "Run"
-    5. This should be a denied read.
+    5. This should be a **denied** read.
   * Test: Ensure an instructor can access their own document:
-    1. Set location to /databases/{default}/documents/students/test_i_uid_1
+    1. Set location to /databases/{default}/documents/users/test_i_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_i_uid_1
     4. Click "Run"
-    5. This should be an allowed read.
+    5. This should be an **allowed** read.
   * Test: Ensure an instructor cannot access a document that does not belong to them:
-    1. Set location to /databases/{default}/documents/students/test_i_uid_1
+    1. Set location to /databases/{default}/documents/users/test_i_uid_1
     2. Set authenticated to ```true```
     3. Set Firebase UID to test_i_uid_2
     4. Click "Run"
-    5. This should throw a ```simulator.rules``` error
+    5. This should be a **denied** read.
    
 
 * Testing Register
