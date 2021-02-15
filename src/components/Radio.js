@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RadioButtonsGroup() {
+export default function RadioButtonsGroup(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(false);
@@ -26,7 +26,7 @@ export default function RadioButtonsGroup() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (value === 'three') {
+    if (value === props.correct) {
       setHelperText('Correct!');
       setError(false);
     }
@@ -43,12 +43,11 @@ export default function RadioButtonsGroup() {
   return (
     <form onSubmit={handleSubmit}>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
-        <FormLabel component="legend">What is 1 + 2?</FormLabel>
-        <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}>
-          <FormControlLabel value="one" control={<Radio />} label="1" />
-          <FormControlLabel value="two" control={<Radio />} label="2" />
-          <FormControlLabel value="three" control={<Radio />} label="3" />
-          <FormControlLabel value="four" control={<Radio />} label="4" /> 
+        <FormLabel component="legend">{props.content}</FormLabel>
+        <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}> {
+          props.options.map((option, i) => {
+            return (<FormControlLabel value={`ans${i}`} label={option} control={<Radio />} />);
+          })}
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
         <Button type="submit" variant="contained" color="primary" className={classes.button}>

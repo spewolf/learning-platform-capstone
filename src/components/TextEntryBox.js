@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Input, TextField, FormHelperText, FormControl, FormLabel, FormControlLabel, Button } from '@material-ui/core/';
+import { Input, FormHelperText, FormControl, FormLabel, FormControlLabel, Button } from '@material-ui/core/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TextEntryBox() {
+export default function TextEntryBox(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(false);
@@ -31,7 +31,7 @@ export default function TextEntryBox() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (value === '0100') {
+    if (value === props.correct) {
       setHelperText('Correct!');
       setError(false);
     }
@@ -48,7 +48,7 @@ export default function TextEntryBox() {
   return (
     <form onSubmit={handleSubmit}>
       <FormControl component="fieldset" className={classes.formControl} error={error} autoComplete="off">
-        <FormLabel component="legend">What is 4 in binary?</FormLabel>
+        <FormLabel component="legend">{props.content}</FormLabel>
         <FormControlLabel control={<Input placeholder="Answer" value={value} margin='100px' onChange={handleInput} />}/>
         <FormHelperText>{helperText}</FormHelperText> 
         <Button type="submit" variant="contained" color="primary" className={classes.button}>

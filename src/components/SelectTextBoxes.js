@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles'
-import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { InputLabel, MenuItem, FormControl, FormLabel, Select } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectTextBoxes() {
+export default function SelectTextBox(props) {
   const classes = useStyles();
   const [opts, setOpts] = React.useState('');
 
@@ -22,17 +22,19 @@ export default function SelectTextBoxes() {
 
   return (
     <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="simple-label">Field</InputLabel>
+      <FormLabel component="legend">{props.content}</FormLabel>
+      <FormControl className={classes.formControl} variant="outlined">
+        <InputLabel id="demo-simple-select-outlined-label">Select...</InputLabel>
         <Select
-          label="simple-label"
-          id="simple-select"
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          label="selections"
           value={opts}
           onChange={handleChange}
-        >
-          <MenuItem value={1}>Selection 1</MenuItem>
-          <MenuItem value={2}>Selection 2</MenuItem>
-          <MenuItem value={3}>Selection 3</MenuItem>
+        >{
+          props.options.map((option, i) => {
+            return <MenuItem value={`ans${i}`}>{option}</MenuItem>
+          })}
         </Select>
       </FormControl>
     </div>
