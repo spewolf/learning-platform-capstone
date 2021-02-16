@@ -1,8 +1,13 @@
 import { AuthContext } from "./AuthProvider.js";
 import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 
 export default function ProfilePage(props) {
   const { currentUser } = useContext(AuthContext);
+
+  if (!currentUser) {
+    return(<Redirect to="/login"></Redirect>)
+  }
 
   return (
     <div>
