@@ -8,9 +8,6 @@ import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
 import Checkboxes from './Checkbox';
-// import RadioButtonsGroup from './Radio';
-import SelectTextBox from './SelectTextBoxes';
-// import TextEntryBox from './TextEntryBox';
 
 export default class MaterialExamples extends React.Component {
   RegularButton(text) {
@@ -172,8 +169,6 @@ export default class MaterialExamples extends React.Component {
   }
 
   render() {
-    
-
     return (
       <div>
         <Container style={{ backgroundColor: '#ffffff', height: '125vh' }}>
@@ -190,9 +185,6 @@ export default class MaterialExamples extends React.Component {
           {this.KnownProgress()}
           {/* {this.PersistentSnackbar()} */}
           <Checkboxes />
-          {/* <RadioButtonsGroup /> */}
-          <SelectTextBox />
-          {/* <TextEntryBox /> */}
         </Container>
       </div>
     );

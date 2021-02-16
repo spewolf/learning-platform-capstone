@@ -68,7 +68,8 @@ export default function Header(props) {
     <AppBar position="sticky">
       <Toolbar>
         <LeftDrawer />
-        <NavItem href="/">React</NavItem>
+        <Button href="/" size="large">Binary Learning</Button>
+        {/* <NavItem href="/">React</NavItem> */}
         <NavItem href="/example">Example</NavItem>
         <NavItem href="/material">Material</NavItem>
 

@@ -12,7 +12,7 @@ export default class QuizExample extends React.Component {
           <Paper elevation={3}>
             <RadioButtonsGroup options={["1", "3", "5", "7"]} correct="ans2" content="What is 10 / 2?" />
             <TextEntryBox correct="0100" content="What is decimal 4 in binary?" />
-            <SelectTextBox content="Pick the third answer" correct="ans3" options={["first", "second", "third", "fourth"]} />
+            <SelectTextBox content="Pick the third answer" correct="ans2" options={["first", "second", "third", "fourth"]} />
           </Paper>
         </Container>
       </div>
