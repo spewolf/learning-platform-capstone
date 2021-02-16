@@ -19,7 +19,7 @@ export default function RadioButtonsGroup(props) {
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
-    setHelperText(' ');
+    setHelperText('');
     setError(false);
   };
 
