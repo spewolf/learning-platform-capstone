@@ -17,6 +17,10 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { Paper } from '@material-ui/core';
 import QuizExample from './components/QuizExample';
+import StudentOrTeacher from './components/StudentOrTeacher';
+import StudentInfo from './components/StudentInfo';
+import TeacherInfo from './components/TeacherInfo';
+import ProfilePage from './components/ProfilePage';
 
 const theme = createMuiTheme({
   palette: {
@@ -53,10 +57,14 @@ function App(props) {
             <Header />
             <Switch>
               <PrivateRoute path="/example" component={Example} />
-              <Route path="/login" component={Login} />
               <Route path="/material" component={MaterialExamples} />
-              <Route path="/register" component={Register} />
               <Route path="/quiz" component={QuizExample} />
+              <Route path="/login" component={Login} />
+              <Route path="/profile" component={ProfilePage} />
+              <Route path="/register/student-or-teacher" component={StudentOrTeacher}/>
+              <Route path="/register/student" component={StudentInfo}/>
+              <Route path="/register/teacher" component={TeacherInfo}/>
+              <Route path="/register" component={Register} />
               <Route path="/" component={ReactExample} />
             </Switch>
           </Router>
