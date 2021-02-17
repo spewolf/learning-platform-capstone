@@ -55,6 +55,9 @@
 * Testing login
     1. Enter credientials
     2. Verify you can access example page
+* Testing information gathering
+    1. After registering enter user information
+    2. Navigate to /profile and verify the information persists
 
 # Automated Tests
 
