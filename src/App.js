@@ -2,7 +2,6 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./components/AuthProvider";
 import Example from "./components/Example";
 import ReactExample from "./components/ReactExample";
@@ -58,10 +57,10 @@ function App(props) {
               <Route path="/register/teacher" component={TeacherInfo} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
+              <Route path="/example" component={Example} />
+              <Route path="/material" component={MaterialExamples} />
+              <Route path="/quiz" component={QuizExample} />
               <UserInfoGuard>
-                <PrivateRoute path="/example" component={Example} />
-                <Route path="/material" component={MaterialExamples} />
-                <Route path="/quiz" component={QuizExample} />
                 <Route path="/profile" component={ProfilePage} />
                 <Route path="/" component={ReactExample} />
               </UserInfoGuard>
