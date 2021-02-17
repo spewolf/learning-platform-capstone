@@ -19,7 +19,16 @@ Currently just a template.
 Allows for existing users to log into the website using their email and password.   
 
 ### Register   
-Allows for new users to create an account so that their progress can be tracked and they can join (for students) or create (for instructors) a course.   
+
+The Registration process allows users and teacher to sign up.
+
+1. Click on register
+2. Enter email and password
+3. Select teacher or student
+4. Enter user information
+    * Teachers will create a course code for their students
+    * Students will enter the course code provided by their teacher
+5. Click submit
 
 ### Example   
 Just a template for demonstration purposes.   
