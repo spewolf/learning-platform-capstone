@@ -16,7 +16,12 @@ To log out click the `log out` button.
 Currently just a template.   
 
 ### Login
+
 Allows for existing users to log into the website using their email and password.   
+
+1. Click on log in
+2. Enter information provided when registering
+3. Click sign in
 
 ### Register   
 
