@@ -11,9 +11,9 @@ export default function ProfilePage(props) {
 
   return (
     <div>
-      <h1>{currentUser.data.name}</h1>
-      <h2>{currentUser.data.type}</h2>
-      <p>Course Code: {currentUser.data.course}</p>
+      <h1>{currentUser.data?.name}</h1>
+      <h2>{currentUser.data?.type}</h2>
+      <p>Course Code: {currentUser.data?.course}</p>
       <p>Email: {currentUser.email}</p>
     </div>
   );

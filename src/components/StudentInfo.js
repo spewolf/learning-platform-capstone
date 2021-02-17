@@ -45,18 +45,20 @@ const StudentInfo = ({ history }) => {
       const { name, bgsu_id, course } = event.target.elements;
       const type = "student";
       try {
-        await db.collection("users").doc(currentUser.uid).set({
+        const data = {
           name: name.value,
           bgsu_id: bgsu_id.value,
           course: course.value,
           type: type,
-        });
+        }
+        await db.collection("users").doc(currentUser.uid).set(data);
+        currentUser.data = data;
         history.push("/");
       } catch (error) {
         alert(error);
       }
     },
-    [history, db, currentUser.uid]
+    [history, db, currentUser]
   );
 
   if (!currentUser) {

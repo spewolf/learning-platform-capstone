@@ -49,17 +49,19 @@ const TeacherInfo = ({ history }) => {
       const { name, course } = event.target.elements;
       const type = "instructor";
       try {
-        await db.collection("users").doc(currentUser.uid).set({
+        const data = {
           name: name.value,
           course: course.value,
           type: type,
-        });
+        }
+        await db.collection("users").doc(currentUser.uid).set(data);
+        currentUser.data = data;
         history.push("/");
       } catch (error) {
         alert(error);
       }
     },
-    [history, db, currentUser.uid]
+    [history, db, currentUser]
   );
 
   if (!currentUser) {
