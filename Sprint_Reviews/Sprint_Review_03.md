@@ -1,7 +1,7 @@
 # What went well?   
 
 * Tyler   
-    * 
+    * I feel like I learned a lot about front-end React development this week.
 * David   
     * Learned more about how React passes information between files
 * Spencer   
@@ -11,7 +11,7 @@
 # What didn't go so well?   
 
 * Tyler    
-    * 
+    * I accidentally assigned one of the issues to the wrong person so that issue never got done.
 * David  
     * Busy week and illness had me fall behind where I wanted to be
 * Spencer  
@@ -21,7 +21,7 @@
 # What have I learned?   
 
 * Tyler     
-    * 
+    * A lot about front-end development and a clearer view of the project going forward.
 * David   
     * How basic text information is sent between files (specifically to a parent)
 * Spencer   
@@ -31,7 +31,7 @@
 # What still puzzles me?   
 
 * Tyler   
-    * 
+    * We're still having some issues regarding how each part of the website is going to connect but I feel like we'll be able to figure that out as we go.
 * David   
     * How to have the parent handle the inputs of information input to a child class
 * Spencer   
@@ -41,7 +41,7 @@
 # What will we change to improve?   
 
 * Tyler   
-    * 
+    * I need to be more careful when assigning issues and planning out the sprints.
 * David   
     * Start sooner and get work in other classes out of the way so I can focus more time onto this
 * Spencer   
