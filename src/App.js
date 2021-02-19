@@ -8,6 +8,7 @@ import ReactExample from "./components/ReactExample";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import MaterialExamples from "./components/MaterialExamples";
+import PracticeModule from "./components/PracticeModule";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Paper } from "@material-ui/core";
@@ -60,6 +61,7 @@ function App(props) {
               <Route path="/example" component={Example} />
               <Route path="/material" component={MaterialExamples} />
               <Route path="/quiz" component={QuizExample} />
+              <Route path="/practice" component={PracticeModule} />
               <UserInfoGuard>
                 <Route path="/profile" component={ProfilePage} />
                 <Route path="/" component={ReactExample} />
