@@ -2,10 +2,17 @@ import { Button, Container, Paper } from '@material-ui/core';
 import Checkbox from './Checkbox.js'
 
 export default function PracticeModule(props) {
+  // Called when the user clicks the "begin" button.
+  // TODO: Must send info to Spencer's component at this point.
   const begin = (event) => {
     event.preventDefault();
     console.log("test")
   };
+
+  // Callback for when the checkboxes are changed.
+  function onCheckboxChanged(event) {
+    console.log(event.target.name + " is " + event.target.checked)
+  }
 
   return (
     <div>
@@ -24,13 +31,13 @@ export default function PracticeModule(props) {
               <h4>Custom</h4>
               <Paper elevation={3}>
                 <div style={{display: "flex"}}>
-                  <Checkbox/><p>Binary to Decimal Conversion</p>
+                <Checkbox name="BinToDec" onChange={onCheckboxChanged}/><p>Binary to Decimal Conversion</p>
                 </div>
                 <div style={{display: "flex"}}>
-                  <Checkbox/><p>Decimal to Binary Conversion</p>
+                  <Checkbox name="DecToBin" onChange={onCheckboxChanged}/><p>Decimal to Binary Conversion</p>
                 </div>
                 <div style={{display: "flex"}}>
-                  <Checkbox/><p>Binary Addition and Subtraction</p>
+                  <Checkbox name="AddSub" onChange={onCheckboxChanged}/><p>Binary Addition and Subtraction</p>
                 </div>
                 <div style={{display: "flex"}}>
                   <p>How many problems?</p>
