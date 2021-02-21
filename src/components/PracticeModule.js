@@ -1,17 +1,63 @@
-import { Button, Container, Paper } from '@material-ui/core';
+import React from 'react'
+
+import { Button, Container, Input, Paper } from '@material-ui/core';
 import Checkbox from './Checkbox.js'
 
+import {
+  generateBinToDecQuestion,
+  generateDecToBinQuestion,
+  generateAdditionQuestion,
+  generateSubtractionQuestion,
+  generateAssignment
+} from '../helpers/AssignmentGenerator'
+
 export default function PracticeModule(props) {
+  const [binToDec, setBinToDec] = React.useState(false)
+  const [decToBin, setDecToBin] = React.useState(false)
+  const [add, setAdd] = React.useState(false)
+  const [sub, setSub] = React.useState(false)
+  const [numberOfQuestions, setNumberOfQuestions] = React.useState("")
+
   // Called when the user clicks the "begin" button.
-  // TODO: Must send info to Spencer's component at this point.
   const begin = (event) => {
     event.preventDefault()
-    console.log("test")
+
+    // Decide which question functions to use.
+    const functions = []
+    if (binToDec) {
+      functions.push(generateBinToDecQuestion)
+    }
+    if (decToBin) {
+      functions.push(generateDecToBinQuestion)
+    }
+    if (add) {
+      functions.push(generateAdditionQuestion)
+    }
+    if (sub) {
+      functions.push(generateSubtractionQuestion)
+    }
+
+    // TODO: Must send info to Spencer's component at this point.
+    console.log(generateAssignment(functions, parseInt(numberOfQuestions), "ungraded", "dummyCourse", "dummyTitle"))
   };
 
-  // Callback for when the checkboxes are changed.
-  function onCheckboxChanged(event) {
-    console.log(event.target.name + " is " + event.target.checked)
+  // Checkbox onChange listeners
+  function onBinToDecChanged(event) {
+    setBinToDec(event.target.checked)
+  }
+  function onDecToBinChanged(event) {
+    setDecToBin(event.target.checked)
+  }
+  function onAddChanged(event) {
+    setAdd(event.target.checked)
+  }
+  function onSubChanged(event) {
+    setSub(event.target.checked)
+  }
+
+  // Input onChange listener
+  function onInputChanged(event) {
+    setNumberOfQuestions(event.target.value)
   }
 
   return (
@@ -31,21 +77,30 @@ export default function PracticeModule(props) {
               <h4>Custom</h4>
               <Paper elevation={3}>
                 <div style={{display: "flex"}}>
-                <Checkbox name="BinToDec" onChange={onCheckboxChanged}/><p>Binary to Decimal Conversion</p>
+                <Checkbox name="BinToDec" onChange={onBinToDecChanged}/><p>Binary to Decimal Conversion</p>
                 </div>
                 <div style={{display: "flex"}}>
-                  <Checkbox name="DecToBin" onChange={onCheckboxChanged}/><p>Decimal to Binary Conversion</p>
+                  <Checkbox name="DecToBin" onChange={onDecToBinChanged}/><p>Decimal to Binary Conversion</p>
                 </div>
                 <div style={{display: "flex"}}>
-                  <Checkbox name="AddSub" onChange={onCheckboxChanged}/><p>Binary Addition and Subtraction</p>
+                  <Checkbox name="Add" onChange={onAddChanged}/><p>Binary Addition</p>
                 </div>
                 <div style={{display: "flex"}}>
-                  <p>How many problems?</p>
+                  <Checkbox name="Sub" onChange={onSubChanged}/><p>Binary Subtraction</p>
+                </div>
+                <div style={{display: "flex"}}>
+                  <p>How many problems?</p><Input style={{margin: "1em"}} onChange={onInputChanged}/>
                 </div>
               </Paper>
             </div>
           </div>
           <Button
+            disabled={
+              // Disable the button if none of the checkboxes are checked or if the input is NaN.
+              !(binToDec || decToBin || add || sub)
+              || isNaN(parseInt(numberOfQuestions))
+              || numberOfQuestions.length === 0
+            }
             type="submit"
             fullWidth
             variant="contained"
