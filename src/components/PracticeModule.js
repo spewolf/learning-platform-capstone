@@ -5,7 +5,7 @@ export default function PracticeModule(props) {
   // Called when the user clicks the "begin" button.
   // TODO: Must send info to Spencer's component at this point.
   const begin = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     console.log("test")
   };
 

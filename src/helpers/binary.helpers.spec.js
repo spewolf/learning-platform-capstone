@@ -5,6 +5,7 @@ import {
   binarySubtract,
   cleanBinaryStr,
   binaryStrEquality,
+  padBinaryWithZeros
 } from "./binary.helpers";
 
 describe("binaryToDecimal", () => {
@@ -49,6 +50,35 @@ describe("cleanBinaryStr", () => {
   test("Cleans zero binary number", () => {
     const num = cleanBinaryStr("0x00000");
     expect(num).toBe("0");
+  });
+
+  test("Undoes padding by padBinaryWithZeros", () => {
+    const num = "10001"
+    const numWithPadding = padBinaryWithZeros(num, 8)
+    const numWithouPadding = cleanBinaryStr(numWithPadding);
+    expect(numWithouPadding).toBe(num);
+  });
+});
+
+describe("padBinaryWithZeros", () => {
+  test("Pads normal binary number", () => {
+    const num = padBinaryWithZeros("101", 8)
+    expect(num).toBe("00000101")
+  });
+
+  test("Pads zero binary number", () => {
+    const num = padBinaryWithZeros("0", 8)
+    expect(num).toBe("00000000")
+  });
+
+  test("Pads binary number that starts with proper length", () => {
+    const num = padBinaryWithZeros("10000001", 8)
+    expect(num).toBe("10000001")
+  });
+
+  test("Pads binary number that starts with length larger than requested", () => {
+    const num = padBinaryWithZeros("10000001", 4)
+    expect(num).toBe("10000001")
   });
 });
 
