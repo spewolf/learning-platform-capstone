@@ -3,7 +3,7 @@ import { Convert } from 'any-to-any';
 // Converts the given number from one base to another, specified as parameters.
 function ConvertWithZero(num, leftBase, rightBase) {
     const result = Convert(num, leftBase, rightBase);
-    return result != "" ? result : "0";
+    return result !== "" ? result : "0";
 }
 
 // Returns the base-10 equivalent of the given base-2 parameter.
@@ -34,7 +34,7 @@ export function binarySubtract(left, right) {
 export function binaryStrEquality(left, right) {
     left = cleanBinaryStr(left);
     right = cleanBinaryStr(right);
-    return ConvertWithZero(left == right);
+    return ConvertWithZero(left === right);
 }
 
 // Returns a base-2 number equivalent to the given base-2 parameter without any leading 0s.
