@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Input, FormHelperText, FormControl, FormLabel, FormControlLabel, Button } from '@material-ui/core/';
+import { Input, FormControl, FormLabel, FormControlLabel } from '@material-ui/core/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,40 +20,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TextEntryBox(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState('');
-  const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState('');
-
-  const handleInput = (event) => {
-    setValue(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (value === props.correct) {
-      setHelperText('Correct!');
-      setError(false);
-    }
-    else if (value !== '') {
-      setHelperText('Try again.');
-      setError(true);
-    }
-    else {
-      setHelperText('Enter your answer');
-      setError(true);
-    }
-  };
+  const [value] = React.useState(props.value);  // value is what will get returned as "response" in other files
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl component="fieldset" className={classes.formControl} error={error} autoComplete="off">
+    <form>
+      <FormControl component="fieldset" className={classes.formControl} autoComplete="off">
         <FormLabel component="legend">{props.content}</FormLabel>
-        <FormControlLabel control={<Input placeholder="Answer" value={value} margin='100px' onChange={handleInput} />}/>
-        <FormHelperText>{helperText}</FormHelperText> 
-        <Button type="submit" variant="contained" color="primary" className={classes.button}>
-          Check
-        </Button>
+        <FormControlLabel control={<Input placeholder="Answer" value={value} margin='100px' onChange={props.onChange} />}/>
       </FormControl>
     </form>
   );
