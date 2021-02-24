@@ -43,3 +43,10 @@ A showcase of various components that can/will be featured on the finished websi
 
 ### Quiz   
 A rough template of what an assessment could look like. Just for demonstration.
+
+### Practice   
+This is where the user can practice each of the core functions.  Right now, they can 
+can select any number of the 4 core functions and decide how many problems they would 
+like to complete.  As of now, when the "BEGIN" button is pressed, an assignment object 
+is output to the console.  Eventually this will be displayed to the user in the form 
+of a quiz.
