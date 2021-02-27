@@ -48,28 +48,26 @@ const theme = createMuiTheme({
 function App(props) {
   return (
     <ThemeProvider theme={theme}>
-      <Paper className={theme.background}>
-        <AuthProvider>
-          <Router>
-            <Header />
-            <Switch>
-              <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
-              <Route path="/register/student" component={StudentInfo} />
-              <Route path="/register/teacher" component={TeacherInfo} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
-              <Route path="/example" component={Example} />
-              <Route path="/material" component={MaterialExamples} />
-              <Route path="/quiz" component={QuizExample} />
-              <Route path="/practice" component={PracticeModule} />
-              <UserInfoGuard>
-                <Route path="/profile" component={ProfilePage} />
-                <Route path="/" component={ReactExample} />
-              </UserInfoGuard>
-            </Switch>
-          </Router>
-        </AuthProvider>
-      </Paper>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
+            <Route path="/register/student" component={StudentInfo} />
+            <Route path="/register/teacher" component={TeacherInfo} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/example" component={Example} />
+            <Route path="/material" component={MaterialExamples} />
+            <Route path="/quiz" component={QuizExample} />
+            <Route path="/practice" component={PracticeModule} />
+            <UserInfoGuard>
+              <Route path="/profile" component={ProfilePage} />
+              <Route path="/" component={ReactExample} />
+            </UserInfoGuard>
+          </Switch>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
