@@ -20,7 +20,7 @@ export default function LearnBinaryToDecimal(props) {
 
     return (
         <div>
-            <Container style={{display: "flex", height: "80vh"}}>
+            <Container style={{display: "flex"}}>
                 <Zoom in={stepCounter === 1} style={stepCounter === 1 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
                         <h3>Step 1 - Understanding the Decimal System</h3>
@@ -62,7 +62,7 @@ export default function LearnBinaryToDecimal(props) {
                                 value of 10.  These two are multiplied together to get the actual value that the digit 5 represents in the number 256, which is 50.
                                 We do this for all of the digits and add them all up, and that gets us back to our original number of 256.  Notice that, to get the
                                 place value for each of the digits, raise 10 to some power, starting at zero on the right and incrementing by one each digit to the
-                                right.  The reason we use 10 here is because we are working with a base-10 system.  Now, click the arrow to the right to proceed to 
+                                right.  The reason we use 10 here is because we are working with a base-10 system.  Now, click the right arrow below to proceed to 
                                 step 2 and see how this is different for base-2 numbers.
                             </p>
                         </Paper>
@@ -73,7 +73,7 @@ export default function LearnBinaryToDecimal(props) {
                         <h3>Step 2 - Understanding the Binary System</h3>
                         <Paper elevation="3">
                             <p>
-                                Now that you have a frim grasp on the decimal (base-10) system, now it's time to learn about the binary (base-2) system. TODO
+                                Now that you have a frim grasp on the decimal (base-10) system, it's time to learn about the binary (base-2) system. TODO
                             </p>
                         </Paper>
                     </div>
@@ -88,7 +88,7 @@ export default function LearnBinaryToDecimal(props) {
                     </div>
                 </Zoom>
             </Container>
-            <Container>
+            <Container style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>1</Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>2</Button>
