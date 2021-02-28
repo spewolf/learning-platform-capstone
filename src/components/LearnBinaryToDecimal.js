@@ -286,11 +286,21 @@ export default function LearnBinaryToDecimal(props) {
             </Container>
             <Container style={{marginTop: "1em"}}>
                 <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
-                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>1</Button>
-                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>2</Button>
-                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>3</Button>
-                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>4</Button>
-                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>5</Button>
+                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
+                    <a style={stepCounter === 1 ? {textDecoration: "underline"} : {}}>1</a>
+                </Button>
+                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
+                    <a style={stepCounter === 2 ? {textDecoration: "underline"} : {}}>2</a>
+                </Button>
+                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
+                    <a style={stepCounter === 3 ? {textDecoration: "underline"} : {}}>3</a>
+                </Button>
+                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
+                    <a style={stepCounter === 4 ? {textDecoration: "underline"} : {}}>4</a>
+                </Button>
+                <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
+                    <a style={stepCounter === 5 ? {textDecoration: "underline"} : {}}>5</a>
+                </Button>
                 <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
             </Container>
         </div>
