@@ -11,7 +11,6 @@ import MaterialExamples from "./components/MaterialExamples";
 import PracticeModule from "./components/PracticeModule";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import { Paper } from "@material-ui/core";
 import QuizExample from "./components/QuizExample";
 import StudentOrTeacher from "./components/StudentOrTeacher";
 import StudentInfo from "./components/StudentInfo";
