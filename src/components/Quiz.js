@@ -65,6 +65,9 @@ export default function Quiz(props) {
   };
 
   const handleNext = (e) => {
+    const result = checkAnswer(question, value);
+    props.assignment.questions[numberCompleted].answer = value;
+    props.assignment.questions[numberCompleted].result = result;
     setNumberCompleted(numberCompleted + 1);
   };
 

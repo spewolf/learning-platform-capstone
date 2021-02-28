@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper, TextField } from "@material-ui/core";
 
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Question(props) {
   // may need type="submit" etc in Buttons
   const classes = useStyles();
+  const [value, setValue] = useState("");
 
   var checkText = <></>;
   if (props.result !== undefined) {
@@ -32,6 +33,16 @@ export default function Question(props) {
     );
   }
 
+  const handleNext = (e) => {
+    props.onNext(e);
+    setValue("");
+  };
+
+  const handleChange = (e) => {
+    props.onChange(e);
+    setValue(e.target.value);
+  };
+
   return (
     <Paper className={classes.container}>
       <form>
@@ -40,15 +51,16 @@ export default function Question(props) {
           required
           fullWidth
           label="Answer"
-          onChange={props.onChange}
+          onChange={handleChange}
           placeholder="Type your answer"
+          value={value}
         />
         {checkText}
         <div className={classes.buttonBar}>
           <Button onClick={props.onCheck} variant="contained" color="primary">
             Check
           </Button>
-          <Button onClick={props.onNext} variant="contained" color="primary">
+          <Button onClick={handleNext} variant="contained" color="primary">
             Next
           </Button>
         </div>
