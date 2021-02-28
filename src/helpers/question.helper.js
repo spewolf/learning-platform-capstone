@@ -1,4 +1,4 @@
-import { binaryToDecimal, cleanBinaryStr, decimalToBinary } from "./binary.helpers";
+import { binaryAdd, binarySubtract, binaryToDecimal, cleanBinaryStr, decimalToBinary } from "./binary.helpers";
 
 export default function checkAnswer(q, a) {
   switch (q.type) {
@@ -20,13 +20,18 @@ function checkDecimalToBinary(q, answer) {
 }
 
 function checkBinaryToDecimal(q, answer) {
-  return true;
+  const correct = binaryToDecimal(q.arguments[0]);
+  return correct == answer;
 }
 
 function checkBinaryAddition(q, answer) {
-  return false;
+  const correct = binaryAdd(q.arguments[0], q.arguments[1]);
+  const answer_base2 = cleanBinaryStr(answer);
+  return correct == answer_base2;
 }
 
 function checkBinarySubtraction(q, answer) {
-  return false;
+  const correct = binarySubtract(q.arguments[0], q.arguments[1]);
+  const answer_base2 = cleanBinaryStr(answer);
+  return correct == answer_base2;
 }

@@ -71,6 +71,7 @@ export default function Quiz(props) {
     props.assignment.questions[numberCompleted].result = result;
     setNumberCompleted(numberCompleted + 1);
     setValue("");
+    setResult(undefined);
   };
 
   const handleValueChange = (e) => {
