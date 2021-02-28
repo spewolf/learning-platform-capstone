@@ -16,6 +16,9 @@ export default function checkAnswer(q, a) {
       return checkBinaryAddition(q, a);
     case "binarySubtraction":
       return checkBinarySubtraction(q, a);
+    default:
+      console.log("Question type non-existent");
+      break;
   }
 }
 
