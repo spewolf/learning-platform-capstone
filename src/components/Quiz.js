@@ -34,6 +34,23 @@ export default function Quiz(props) {
     setQuestion(props.assignment.questions[numberCompleted]);
   }, [numberCompleted, props]);
 
+  const handleCheck = (e) => {
+    setResult(checkAnswer(question, value));
+  };
+
+  const handleNext = (e) => {
+    const result = checkAnswer(question, value);
+    props.assignment.questions[numberCompleted].answer = value;
+    props.assignment.questions[numberCompleted].result = result;
+    setNumberCompleted(numberCompleted + 1);
+    setValue("");
+    setResult(undefined);
+  };
+
+  const handleValueChange = (e) => {
+    setValue(e.target.value);
+  };
+  
   // Render question section content
   useEffect(() => {
     if (numberCompleted < numberQuestions) {
@@ -60,23 +77,6 @@ export default function Quiz(props) {
       );
     }
   }, [numberCompleted, numberQuestions, result, question, value]);
-
-  const handleCheck = (e) => {
-    setResult(checkAnswer(question, value));
-  };
-
-  const handleNext = (e) => {
-    const result = checkAnswer(question, value);
-    props.assignment.questions[numberCompleted].answer = value;
-    props.assignment.questions[numberCompleted].result = result;
-    setNumberCompleted(numberCompleted + 1);
-    setValue("");
-    setResult(undefined);
-  };
-
-  const handleValueChange = (e) => {
-    setValue(e.target.value);
-  };
 
   return (
     <div className={classes.container}>
