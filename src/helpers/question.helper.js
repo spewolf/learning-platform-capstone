@@ -1,3 +1,5 @@
+import { binaryToDecimal, cleanBinaryStr, decimalToBinary } from "./binary.helpers";
+
 export default function checkAnswer(q, a) {
   switch (q.type) {
     case "decimalToBinary":
@@ -12,7 +14,9 @@ export default function checkAnswer(q, a) {
 }
 
 function checkDecimalToBinary(q, answer) {
-  return true;
+  const correct = decimalToBinary(q.arguments[0]);
+  const answer_base2 = cleanBinaryStr(answer);
+  return correct == answer_base2;
 }
 
 function checkBinaryToDecimal(q, answer) {

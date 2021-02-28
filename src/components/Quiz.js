@@ -42,8 +42,9 @@ export default function Quiz(props) {
           question={question}
           onCheck={handleCheck}
           onNext={handleNext}
-          onChange={handleChange}
+          onValueChange={handleValueChange}
           result={result}
+          value={value}
         />
       );
     } else {
@@ -58,7 +59,7 @@ export default function Quiz(props) {
         </div>
       );
     }
-  }, [numberCompleted, numberQuestions, result, question]);
+  }, [numberCompleted, numberQuestions, result, question, value]);
 
   const handleCheck = (e) => {
     setResult(checkAnswer(question, value));
@@ -69,13 +70,12 @@ export default function Quiz(props) {
     props.assignment.questions[numberCompleted].answer = value;
     props.assignment.questions[numberCompleted].result = result;
     setNumberCompleted(numberCompleted + 1);
+    setValue("");
   };
 
-  const handleChange = (e) => {
+  const handleValueChange = (e) => {
     setValue(e.target.value);
   };
-
-  const body = "";
 
   return (
     <div className={classes.container}>
