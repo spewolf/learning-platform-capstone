@@ -50,7 +50,25 @@ export default function Quiz(props) {
   const handleValueChange = (e) => {
     setValue(e.target.value);
   };
-  
+
+  function calculateScore(a) {
+    let score = 0;
+    a.questions.forEach((question) => {
+      if (question.result === true) {
+        score += question.points ?? 1;
+      }
+    });
+    return score;
+  }
+
+  function calculateTotal(a) {
+    let total = 0;
+    a.questions.forEach((question) => {
+      total += question.points ?? 1;
+    });
+    return total;
+  }
+
   // Render question section content
   useEffect(() => {
     if (numberCompleted < numberQuestions) {
@@ -65,8 +83,8 @@ export default function Quiz(props) {
         />
       );
     } else {
-      const score = 50;
-      const total = 50;
+      const score = calculateScore(props.assignment);
+      const total = calculateTotal(props.assignment);
       setContent(
         <div>
           <h2>Quiz Complete</h2>
@@ -76,7 +94,7 @@ export default function Quiz(props) {
         </div>
       );
     }
-  }, [numberCompleted, numberQuestions, result, question, value]);
+  }, [numberCompleted, numberQuestions, result, question, value, props]);
 
   return (
     <div className={classes.container}>
