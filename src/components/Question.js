@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       marginLeft: ".5rem",
     },
-    marginTop: ".5rem",
+    marginTop: "1rem",
     height: "3rem",
   },
 }));
@@ -38,7 +38,8 @@ export default function Question(props) {
         <h2>{props.question.content}</h2>
         <TextField
           required
-          disables={true}
+          fullWidth
+          label="Answer"
           onChange={props.onChange}
           placeholder="Type your answer"
         />
