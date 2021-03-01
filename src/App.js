@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import PracticeModule from "./components/PracticeModule";
+import LearnBinaryToDecimal from "./components/LearnBinaryToDecimal";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import QuizExample from "./components/QuizExample";
@@ -59,6 +60,7 @@ function App(props) {
             <Route path="/example" component={Example} />
             <Route path="/material" component={Dashboard} />
             <Route path="/quiz" component={QuizExample} />
+            <Route path="/learning" component={LearnBinaryToDecimal} />
             <Route path="/practice" component={PracticeModule} />
             <UserInfoGuard>
               <Route path="/profile" component={ProfilePage} />
