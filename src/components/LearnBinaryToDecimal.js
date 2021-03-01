@@ -1,10 +1,20 @@
 import React from 'react'
 
 import { Button, Container, Paper, Zoom } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+      fontFamily: theme.typography.fontFamily,
+    },
+}));
+  
 
 export default function LearnBinaryToDecimal(props) {
     const TOTAL_STEPS = 5;
     const [stepCounter, setStepCounter] = React.useState(1)
+
+    const classes = useStyles();
 
     function decrementStep() {
         if (stepCounter > 1) {
@@ -19,7 +29,7 @@ export default function LearnBinaryToDecimal(props) {
     }
 
     return (
-        <div>
+        <div className={classes.container}>
             <Container style={{display: "flex"}}>
                 <Zoom in={stepCounter === 1} style={stepCounter === 1 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
@@ -287,19 +297,19 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{marginTop: "1em"}}>
                 <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                    <a style={stepCounter === 1 ? {textDecoration: "underline"} : {}}>1</a>
+                    <div style={stepCounter === 1 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>1</div>
                 </Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                    <a style={stepCounter === 2 ? {textDecoration: "underline"} : {}}>2</a>
+                    <div style={stepCounter === 2 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>2</div>
                 </Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                    <a style={stepCounter === 3 ? {textDecoration: "underline"} : {}}>3</a>
+                    <div style={stepCounter === 3 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>3</div>
                 </Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                    <a style={stepCounter === 4 ? {textDecoration: "underline"} : {}}>4</a>
+                    <div style={stepCounter === 4 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>4</div>
                 </Button>
                 <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                    <a style={stepCounter === 5 ? {textDecoration: "underline"} : {}}>5</a>
+                    <div style={stepCounter === 5 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>5</div>
                 </Button>
                 <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
             </Container>
