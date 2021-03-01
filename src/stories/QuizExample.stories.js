@@ -16,7 +16,7 @@ const Template = (args) => <Question {...args} />
 
 export const DecimalToBinary = Template.bind({});
 DecimalToBinary.args = {
-  content: mockPractice.questions[0].content,
+  question: mockPractice.questions[0],
   onCheck: () => { alert(response); },
   onNext: () => { alert("Next"); },
   onChange: (event) => {response = event.target.value;},
@@ -24,7 +24,7 @@ DecimalToBinary.args = {
 
 export const BinaryToDecimal = Template.bind({});
 BinaryToDecimal.args = {
-  content: mockPractice.questions[1].content,
+  question: mockPractice.questions[1],
   onCheck: () => { alert(response); },
   onNext: () => { alert("Next"); },
   onChange: (event) => {response = event.target.value;},
@@ -32,7 +32,7 @@ BinaryToDecimal.args = {
 
 export const BinaryAddition = Template.bind({});
 BinaryAddition.args = {
-  content: mockPractice.questions[2].content,
+  question: mockPractice.questions[2],
   onCheck: () => { alert(response); },
   onNext: () => { alert("Next"); },
   onChange: (event) => {response = event.target.value;},
@@ -40,7 +40,7 @@ BinaryAddition.args = {
 
 export const BinarySubtraction = Template.bind({});
 BinarySubtraction.args = {
-  content: mockPractice.questions[4].content,
+  question: mockPractice.questions[4],
   onCheck: () => { alert(response); },
   onNext: () => { alert("Next"); },
   onChange: (event) => {response = event.target.value;},
