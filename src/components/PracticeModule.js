@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Container, Input, Paper } from '@material-ui/core';
+import { Button, Container, FormControlLabel, Input, Paper } from '@material-ui/core';
 import Checkbox from './Checkbox.js'
 
 import {
@@ -89,23 +89,11 @@ export default function PracticeModule(props) {
               </div>
               <div style={{width: "50%", margin: ".3em"}}>
                 <h4>Custom</h4>
-                <Paper elevation={3}>
-                  <div style={{display: "flex"}}>
-                    <Checkbox name="BinToDec" onChange={onBinToDecChanged}/>
-                    <p>Binary to Decimal Conversion</p>
-                  </div>
-                  <div style={{display: "flex"}}>
-                    <Checkbox name="DecToBin" onChange={onDecToBinChanged}/>
-                    <p>Decimal to Binary Conversion</p>
-                  </div>
-                  <div style={{display: "flex"}}>
-                    <Checkbox name="Add" onChange={onAddChanged}/>
-                    <p>Binary Addition</p>
-                  </div>
-                  <div style={{display: "flex"}}>
-                    <Checkbox name="Sub" onChange={onSubChanged}/>
-                    <p>Binary Subtraction</p>
-                  </div>
+                <Paper elevation={3} style={{paddingLeft: ".3em"}}>
+                  <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
+                  <FormControlLabel style={{display: "block"}} value="DecToBin" control={<Checkbox name="DecToBin" onChange={onDecToBinChanged}/>} label="Decimal to Binary Conversion" />
+                  <FormControlLabel style={{display: "block"}} value="Add" control={<Checkbox name="Add" onChange={onAddChanged}/>} label="Binary Addition" />
+                  <FormControlLabel style={{display: "block"}} value="Sub" control={<Checkbox name="Sub" onChange={onSubChanged}/>} label="Binary Subtraction" />
                   <div style={{display: "flex"}}>
                     <p>How many problems?</p>
                     <Input style={{margin: "1em"}} onChange={onInputChanged}/>
