@@ -1,21 +1,25 @@
 import React from 'react'
 
-import { Button, Container, Paper } from '@material-ui/core';
+import { Button, Container, FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core'
+import LearnBinaryToDecimal from './LearnBinaryToDecimal'
+import LearnDecimalToBinary from './LearnDecimalToBinary'
+import LearnBinaryAddition from './LearnBinaryAddition'
+import LearnBinarySubtraction from './LearnBinarySubtraction'
 
 export default function LearningModule(props) {
-  const [coreFunction, setCoreFunction] = React.useState("No module type selected.")
+  const [coreFunction, setCoreFunction] = React.useState("none")
   const [showAssignment, setShowAssignment] = React.useState(false)
 
   // Called when the user clicks the "begin" button.
   const begin = (event) => {
     event.preventDefault()
 
-    // TODO: Set core function.
-    setCoreFunction("No module type selected.")
     setShowAssignment(true)
   };
 
-  // TODO: Add radio button listener
+  function radioChange(event) {
+    setCoreFunction(event.target.value)
+  }
 
   return (
     <div>
@@ -33,17 +37,18 @@ export default function LearningModule(props) {
               </div>
               <div style={{width: "50%", margin: ".3em"}}>
                 <h4>Custom</h4>
-                <Paper elevation={3}>
-                  {/* TODO: Radio buttons */}
-                  <p>Radio buttons go here.</p>
+                <Paper elevation={3} style={{paddingLeft: ".3em"}}>
+                  <RadioGroup aria-label="moduleSelection" onChange={radioChange}>
+                    <FormControlLabel value="BinToDec" control={<Radio />} label="Binary to Decimal Conversion" />
+                    <FormControlLabel value="DecToBin" control={<Radio />} label="Decimal to Binary Conversion" />
+                    <FormControlLabel value="Add" control={<Radio />} label="Binary Addition" />
+                    <FormControlLabel value="Sub" control={<Radio />} label="Binary Subtraction" />
+                  </RadioGroup>
                 </Paper>
               </div>
             </div>
             <Button
-              disabled={
-                // TODO: Disable the button if none of the radio buttons are clicked.
-                false
-              }
+              disabled={ coreFunction === "none" }
               type="submit"
               fullWidth
               variant="contained"
@@ -54,10 +59,18 @@ export default function LearningModule(props) {
           </form>
         </Container>
       </div>
-      <Container style={showAssignment ? {} : {display: "none"}}>
-        {/* TODO: Learning modules */}
-        <p>{coreFunction}</p>
-      </Container>
+      <div style={(coreFunction === "BinToDec" && showAssignment) ? {} : {display: "none"}}>
+        <LearnBinaryToDecimal/>
+      </div>
+      <div style={(coreFunction === "DecToBin" && showAssignment) ? {} : {display: "none"}}>
+        <LearnDecimalToBinary/>
+      </div>
+      <div style={(coreFunction === "Add" && showAssignment) ? {} : {display: "none"}}>
+        <LearnBinaryAddition/>
+      </div>
+      <div style={(coreFunction === "Sub" && showAssignment) ? {} : {display: "none"}}>
+        <LearnBinarySubtraction/>
+      </div>
     </div>
   )
 }

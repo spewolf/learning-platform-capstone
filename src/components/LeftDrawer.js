@@ -6,6 +6,7 @@ import HomeIcon from '@material-ui/icons/Home'; // React
 import DashboardIcon from '@material-ui/icons/Dashboard'; // Material
 import ShortTextIcon from '@material-ui/icons/ShortText'; // Example
 import MenuIcon from '@material-ui/icons/Menu';
+import SchoolIcon from '@material-ui/icons/School'
 import Alarm from '@material-ui/icons/Alarm'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 
@@ -22,8 +23,8 @@ export default function LeftDrawer() {
   const classes = useStyles();
   const [state, setState] = React.useState(false);
 
-  const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <AssessmentIcon />, <Alarm />];
-  const addresses = ['/', '/example', '/material', '/quiz', '/practice'];
+  const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <AssessmentIcon />, <SchoolIcon />, <Alarm />];
+  const addresses = ['/', '/example', '/material', '/quiz', '/learning', '/practice'];
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -43,7 +44,7 @@ export default function LeftDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Home', 'Example', 'Material', 'Quiz', 'Pratice'].map((text, index) => (
+        {['Home', 'Example', 'Material', 'Quiz', 'Learn', 'Pratice'].map((text, index) => (
           <ListItem button key={text} component="a" href={addresses[index]}>
             <ListItemIcon>
               {icons[index]}
