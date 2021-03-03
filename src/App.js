@@ -16,7 +16,7 @@ import StudentOrTeacher from "./components/StudentOrTeacher";
 import StudentInfo from "./components/StudentInfo";
 import TeacherInfo from "./components/TeacherInfo";
 import ProfilePage from "./components/ProfilePage";
-import UserInfoGuard from "./components/UserInfoGuard";
+import PrivateRoute from "./components/PrivateRoute";
 
 const theme = createMuiTheme({
   palette: {
@@ -46,12 +46,12 @@ const theme = createMuiTheme({
 
 function App(props) {
   return (
-    <div style={{display: "flex"}}>
+    <div style={{ display: "flex" }}>
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <Router>
             <HeaderWithDrawer />
-            <main style={{flexGrow: 1, padding: theme.spacing(8)}}>
+            <main style={{ flexGrow: 1, padding: theme.spacing(8) }}>
               <Switch>
                 <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
                 <Route path="/register/student" component={StudentInfo} />
@@ -62,10 +62,8 @@ function App(props) {
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/learning" component={LearningModule} />
                 <Route path="/practice" component={PracticeModule} />
-                <UserInfoGuard>
-                  <Route path="/profile" component={ProfilePage} />
-                  <Route path="/" component={ReactExample} />
-                </UserInfoGuard>
+                <PrivateRoute path="/profile" component={ProfilePage} />
+                <PrivateRoute path="/" component={ReactExample} />
               </Switch>
             </main>
           </Router>
