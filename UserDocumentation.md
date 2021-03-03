@@ -33,7 +33,7 @@ The Registration process allows users and teacher to sign up.
 4. Enter user information
     * Teachers will create a course code for their students
     * Students will enter the course code provided by their teacher
-5. Click submit
+5. Click submit   
 
 ### Example   
 Just a template for demonstration purposes.   
@@ -42,11 +42,16 @@ Just a template for demonstration purposes.
 A showcase of various components that can/will be featured on the finished website.   
 
 ### Quiz   
-A rough template of what an assessment could look like. Just for demonstration.
+A rough template of what an assessment could look like. Just for demonstration.   
+
+### Learn   
+This is where the user can initially learn about each of the core functions.  The 
+user starts by selecting which learning module they want to complete and then they 
+press the "BEGIN" button.  Then, the website shows a learning module for the user 
+to read through before begining the practice module.   
 
 ### Practice   
 This is where the user can practice each of the core functions.  Right now, they can 
 can select any number of the 4 core functions and decide how many problems they would 
-like to complete.  As of now, when the "BEGIN" button is pressed, an assignment object 
-is output to the console.  Eventually this will be displayed to the user in the form 
-of a quiz.
+like to complete.  When the user clicks the "BEGIN" button, they will be taken to a
+practice quiz based on the settings they selected.   
