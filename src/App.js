@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "./components/Header";
+import HeaderWithDrawer from "./components/HeaderWithDrawer";
 import { AuthProvider } from "./components/AuthProvider";
 import Example from "./components/Example";
 import ReactExample from "./components/ReactExample";
@@ -12,7 +12,6 @@ import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import QuizExample from "./components/QuizExample";
 import StudentOrTeacher from "./components/StudentOrTeacher";
 import StudentInfo from "./components/StudentInfo";
 import TeacherInfo from "./components/TeacherInfo";
@@ -47,29 +46,32 @@ const theme = createMuiTheme({
 
 function App(props) {
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <Router>
-          <Header />
-          <Switch>
-            <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
-            <Route path="/register/student" component={StudentInfo} />
-            <Route path="/register/teacher" component={TeacherInfo} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/example" component={Example} />
-            <Route path="/material" component={Dashboard} />
-            <Route path="/quiz" component={QuizExample} />
-            <Route path="/learning" component={LearningModule} />
-            <Route path="/practice" component={PracticeModule} />
-            <UserInfoGuard>
-              <Route path="/profile" component={ProfilePage} />
-              <Route path="/" component={ReactExample} />
-            </UserInfoGuard>
-          </Switch>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
+    <div style={{display: "flex"}}>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <Router>
+            <HeaderWithDrawer />
+            <main style={{flexGrow: 1, padding: theme.spacing(8)}}>
+              <Switch>
+                <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
+                <Route path="/register/student" component={StudentInfo} />
+                <Route path="/register/teacher" component={TeacherInfo} />
+                <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
+                <Route path="/example" component={Example} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/learning" component={LearningModule} />
+                <Route path="/practice" component={PracticeModule} />
+                <UserInfoGuard>
+                  <Route path="/profile" component={ProfilePage} />
+                  <Route path="/" component={ReactExample} />
+                </UserInfoGuard>
+              </Switch>
+            </main>
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
+    </div>
   );
 }
 

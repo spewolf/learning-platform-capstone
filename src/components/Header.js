@@ -65,18 +65,20 @@ export default function Header(props) {
   const classes = useStyles();
 
   return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <LeftDrawer />
-        <Button href="/" size="large">Binary Learning</Button>
-        {/* <NavItem href="/">React</NavItem> */}
-        <NavItem href="/example">Example</NavItem>
-        <NavItem href="/material">Material</NavItem>
+    <React.Fragment>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Button href="/" size="large">Binary Learning</Button>
+          {/* <NavItem href="/">React</NavItem> */}
+          <NavItem href="/example">Example</NavItem>
+          <NavItem href="/material">Material</NavItem>
 
-        <div className={classes.spacer}></div>
+          <div className={classes.spacer}></div>
 
-        <LoginLinks />
-      </Toolbar>
-    </AppBar>
+          <LoginLinks />
+        </Toolbar>
+      </AppBar>
+    <LeftDrawer />
+  </React.Fragment>
   );
 }
