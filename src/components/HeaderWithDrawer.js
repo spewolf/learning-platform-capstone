@@ -79,9 +79,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: 'relative',
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
     whiteSpace: 'nowrap',
+  },
+  drawerPaper: {
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -174,7 +177,7 @@ export default function HeaderWithDrawer(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -198,8 +201,15 @@ export default function HeaderWithDrawer(props) {
       </AppBar>
       <Drawer
         variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerPaper]: open, 
+          [classes.drawerPaperClose]: !open
+        })}
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx({
+            [classes.drawerPaper]: open,
+            [classes.drawerPaperClose] : !open
+          })
         }}
         open={open}
       >

@@ -51,7 +51,7 @@ function App(props) {
         <AuthProvider>
           <Router>
             <HeaderWithDrawer />
-            <main style={{ flexGrow: 1, padding: theme.spacing(8) }}>
+            <main style={{ flexGrow: 1, paddingTop: theme.spacing(8) }}>
               <Switch>
                 <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
                 <Route path="/register/student" component={StudentInfo} />
