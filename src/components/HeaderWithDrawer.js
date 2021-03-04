@@ -167,11 +167,26 @@ export default function HeaderWithDrawer(props) {
   const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <SchoolIcon />, <AlarmIcon />];
   const addresses = ['/', '/example', '/dashboard', '/learning', '/practice'];
   const labels = ['Home', 'Example', 'Dashboard', 'Learn', 'Practice'];
+  const [tempOpen, setTempOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
+    setTempOpen(false);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+    setTempOpen(false);
+  };
+  const hoverDrawerOpen = () => {
+    if(!open) {
+      handleDrawerOpen();
+      setTempOpen(true);
+    }
+  };
+  const hoverDrawerClose = () => {
+    if (tempOpen) {
+      handleDrawerClose();
+    }
+    setTempOpen(false);
   };
   
   return (
@@ -212,6 +227,8 @@ export default function HeaderWithDrawer(props) {
           })
         }}
         open={open}
+        onMouseEnter={hoverDrawerOpen}
+        onMouseLeave={hoverDrawerClose}
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
