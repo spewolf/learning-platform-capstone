@@ -2,6 +2,8 @@ import React from 'react'
 
 import { Button, Container, Grid, Paper, Zoom } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
+
+// Diagrams
 import DecToBinOverview from '../diagrams/DecToBinOverview.png'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,10 +45,16 @@ export default function LearnBinaryToDecimal(props) {
                             <p>
                                 To convert from a decimal number to a binary number, we use a rather different strategy.  The general strategy is to which power of 2
                                 the decimal number will fit into and use that information to get a 0 or a 1.  If the decimal number does fit into a power of two, we
-                                subtract the two numbers to get a new number.  A short example is below with the number 10.  If it isn't clear how it works at this point,
-                                don't worry; the next steps will go into detail with a step-by-step example.
+                                subtract the two numbers to get a new number.  A short example is below with the number 10<sub>dec</sub>.  If it isn't clear how it works
+                                at this point, don't worry; the next steps will go into detail with a step-by-step example.
                             </p>
-                            <Grid style={{textAlign: "center"}}><img src={DecToBinOverview}/></Grid>
+                            <Grid style={{textAlign: "center"}}>
+                                <img
+                                    src={DecToBinOverview}
+                                    alt="Diagram showing an overview of how the decimal to binary conversion process works by converting the decimal number 10 to the
+                                    binary number 1010."
+                                />
+                            </Grid>
                         </Paper>
                     </div>
                 </Zoom>
