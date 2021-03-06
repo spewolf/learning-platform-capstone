@@ -128,7 +128,7 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 5} style={stepCounter === 5 ? {} : {display: "none"}}>
                     <div style={{width:"100%"}}>
-                        <h3>Tips and Tricks</h3>
+                        <h3>Tips and Tricks!</h3>
                         <Paper elevation="3" style={{padding: ".3em"}}>
                             <p>
                                 Because binary numbers can only consist of 0s and 1s, we can simplify the previous process a bit.  Let's start by listing the powers of
@@ -153,19 +153,19 @@ export default function LearnBinaryToDecimal(props) {
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>1</div>
+                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>Decimal System</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>2</div>
+                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>Binary System</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>3</div>
+                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>Step 1</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>4</div>
+                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>Step 2</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                        <div style={stepCounter === 5 ? {textDecoration: "underline", fontWeight: "bold"} : {}}>5</div>
+                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>Tips &amp; Tricks</div>
                     </Button>
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>

@@ -28,7 +28,7 @@ export default function Question(props) {
     checkText = props.result ? (
       <p style={{ color: "green" }}>Correct!</p>
     ) : (
-      <p style={{ color: "red" }}>Incorrect!  If you need help, check out the <a href="/learning">learning module!</a></p>
+      <p style={{ color: "red" }}>Incorrect!  If you need help, check out the <a href="/learning">learning module</a>!</p>
     );
   }
 
