@@ -10,6 +10,7 @@ import DecToBinStep2 from '../diagrams/DecToBinStep2.png'
 import DecToBinStep3 from '../diagrams/DecToBinStep3.png'
 import DecToBinStep4 from '../diagrams/DecToBinStep4.png'
 import DecToBinStep5 from '../diagrams/DecToBinStep5.png'
+import DecToBinTipsAndTricks from '../diagrams/DecToBinTipsAndTricks.png'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -197,11 +198,20 @@ export default function LearnBinaryToDecimal(props) {
                             <Grid container spacing="3">
                                 <Grid item xs={9}>
                                     <p>
-                                        Coming soon!
+                                        A helpful tip you might be able to use to do these conversions quicker is to notice what happens when the number we're working
+                                        with is equal to the power of 2 that we're comparing it to.  On the right, you'll see the conversion for the decimal number, 72.
+                                        In this example, 64 fits into 72, giving us 8 left over to work with.  Once we compare that 8 with the 8 from 2<sup>3</sup>, notice
+                                        that we are left with just a zero.  Since we know that none of the powers of 2 will be less than or equal to zero, we can simply
+                                        fill in zeros for the rest of the binary number.  Hence, the last three gray boxes on the right are not really necessary if you
+                                        know this trick.
                                     </p>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    
+                                    <img
+                                        width="90%"
+                                        src={DecToBinTipsAndTricks}
+                                        alt="Diagram showing the convertion of the decimal number 72 to binary."
+                                    />
                                 </Grid>
                             </Grid>
                         </Paper>
