@@ -208,7 +208,7 @@ export default function LearnBinaryToDecimal(props) {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <img
-                                        width="90%"
+                                        width="100%"
                                         src={DecToBinTipsAndTricks}
                                         alt="Diagram showing the convertion of the decimal number 72 to binary."
                                     />
