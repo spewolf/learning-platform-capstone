@@ -19,5 +19,6 @@ PracticeQuiz.args = {
 
 export const GradedQuiz = Template.bind({});
 GradedQuiz.args = {
-  assignment: gradedAssignment
+  assignment: gradedAssignment,
+  handleSubmission: s => console.log(s)
 };

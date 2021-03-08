@@ -12,9 +12,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Quiz(props) {
   const [numberCompleted, setNumberCompleted] = useState(0);
-  const [numberQuestions, setNumberQuestions] = useState(0);
+  const [numberQuestions, setNumberQuestions] = useState(1);
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("0 of 0");
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [value, setValue] = useState("");
   const [content, setContent] = useState(<></>);
@@ -85,6 +86,10 @@ export default function Quiz(props) {
     } else {
       const score = calculateScore(props.assignment);
       const total = calculateTotal(props.assignment);
+      if (props.assignment.type == "graded" && !quizCompleted) {
+        props.handleSubmission({ ...props.assignment });
+        setQuizCompleted(true);
+      }
       setContent(
         <div>
           <h2>Quiz Complete</h2>
