@@ -75,7 +75,7 @@ export default function Quiz(props) {
       setContent(
         <Question
           question={question}
-          onCheck={handleCheck}
+          onCheck={props.assignment.type == "graded" ? undefined : handleCheck}
           onNext={handleNext}
           onValueChange={handleValueChange}
           result={result}

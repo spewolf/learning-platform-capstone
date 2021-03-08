@@ -28,9 +28,19 @@ export default function Question(props) {
     checkText = props.result ? (
       <p style={{ color: "green" }}>Correct!</p>
     ) : (
-      <p style={{ color: "red" }}>Incorrect!  If you need help, check out the <a href="/learning">learning module!</a></p>
+      <p style={{ color: "red" }}>
+        Incorrect! If you need help, check out the <a href="/learning">learning module!</a>
+      </p>
     );
   }
+
+  var checkButton = props.onCheck ? (
+    <Button onClick={props.onCheck} variant="contained" color="primary">
+      Check
+    </Button>
+  ) : (
+    <></>
+  );
 
   return (
     <Paper className={classes.container}>
@@ -45,9 +55,7 @@ export default function Question(props) {
         />
         {checkText}
         <div className={classes.buttonBar}>
-          <Button onClick={props.onCheck} variant="contained" color="primary">
-            Check
-          </Button>
+          {checkButton}
           <Button onClick={props.onNext} variant="contained" color="primary">
             Next
           </Button>

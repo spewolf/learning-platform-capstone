@@ -1,5 +1,6 @@
 import React from 'react';
-import mockAssignment from '../mocks/practiceAssignment.mock.json';
+import practiceAssignment from '../mocks/practiceAssignment.mock.json';
+import gradedAssignment from '../mocks/gradedAssignment.mock.json';
 
 import Quiz from '../components/Quiz';
 
@@ -11,7 +12,12 @@ export default storyMetaData;
 
 const Template = (args) => <Quiz {...args} />;
 
-export const BasicQuiz = Template.bind({});
-BasicQuiz.args = {
-  assignment: mockAssignment
+export const PracticeQuiz = Template.bind({});
+PracticeQuiz.args = {
+  assignment: practiceAssignment
+};
+
+export const GradedQuiz = Template.bind({});
+GradedQuiz.args = {
+  assignment: gradedAssignment
 };
