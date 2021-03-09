@@ -71,7 +71,7 @@ export default function LearnBinaryToDecimal(props) {
                             <Grid container spacing="3">
                                 <Grid item xs={9}>
                                     <p>
-                                        The first step of converting any deicmal number into binary is to write out the powers of 2 vertically in decending order.  However,
+                                        The first step of converting any decimal number into binary is to write out the powers of 2 vertically in descending order.  However,
                                         This presents a problem as it's unclear exactly which power of 2 to start with.  In order to know this, we must first know either
                                         one of two things:
                                         <ol>
@@ -80,7 +80,7 @@ export default function LearnBinaryToDecimal(props) {
                                         </ol>
                                         For these examples, we will be working with 8-bit (or 1 byte) numbers.  So, we can always just start at 2<sup>7</sup>.  If you already
                                         know the number you're about to convert, you can start with the largest power of 2 that is smaller than the number you're trying to
-                                        convert.  To the right, you can see all of the powers of 2 listed out top-to-bottom in decending order.
+                                        convert.  To the right, you can see all of the powers of 2 listed out top-to-bottom in descending order.
                                     </p>
                                     <p>
                                         TIP: It may be helpful to follow along on a piece of paper to get in the flow of solving these problems on your own.
@@ -131,7 +131,7 @@ export default function LearnBinaryToDecimal(props) {
                                     <p>
                                         The next power of 2, 64, is less than or equal to the number we're working with, 87.  In this case, the bit will be a 1.
                                         But there is also another step when this happens.  We need to subtract the power of 2 from the number we're working with
-                                        to get a new number to work with.  We have to do this, because the 1 in the 64ths place already accounts for the value of
+                                        to get a new number to work with.  We have to do this because the 1 in the 64ths place already accounts for the value of
                                         64.  So, now we have to find the rest of the binary number for 23 (87 - 64).
                                     </p>
                                 </Grid>
@@ -200,7 +200,7 @@ export default function LearnBinaryToDecimal(props) {
                                     <p>
                                         A helpful tip you might be able to use to do these conversions quicker is to notice what happens when the number we're working
                                         with is equal to the power of 2 that we're comparing it to.  On the right, you'll see the conversion for the decimal number, 72.
-                                        In this example, 64 fits into 72, giving us 8 left over to work with.  Once we compare that 8 with the 8 from 2<sup>3</sup>, notice
+                                        In this example, 64 fits into 72, giving us 8 leftover to work with.  Once we compare that 8 with the 8 from 2<sup>3</sup>, notice
                                         that we are left with just a zero.  Since we know that none of the powers of 2 will be less than or equal to zero, we can simply
                                         fill in zeros for the rest of the binary number.  Hence, the last three gray boxes on the right are not really necessary if you
                                         know this trick.

@@ -58,8 +58,8 @@ export default function LearnBinaryToDecimal(props) {
                                 value of 10.  These two are multiplied together to get the actual value that the digit 5 represents in the number 256, which is 50.
                                 We do this for all of the digits and add them all up, and that gets us back to our original number of 256.  Notice that, to get the
                                 place value for each of the digits, raise 10 to some power, starting at zero on the right and incrementing by one each digit to the
-                                right.  The reason we use 10 here is because we are working with a base-10 system.  Now, click the right arrow below to proceed to 
-                                step 2 and see how this is different for base-2 numbers.
+                                right.  Note that we use the number 10 as our base because we are working with a base-10 system.  Now, click the right arrow below to
+                                proceed to step 2 and see how this is different for base-2 numbers.
                             </p>
                         </Paper>
                     </div>
@@ -69,7 +69,7 @@ export default function LearnBinaryToDecimal(props) {
                         <h3>Understanding the Binary System</h3>
                         <Paper elevation="3" style={{padding: ".3em"}}>
                             <p>
-                                Now that you have a frim grasp on the decimal (base-10) system, it's time to learn about the binary (base-2) system. Let's take a look
+                                Now that you have a firm grasp on the decimal (base-10) system, it's time to learn about the binary (base-2) system. Let's take a look
                                 at the binary number 1010.  This binary number has 4 digits (or bits - short for <strong>b</strong>inary dig<strong>its</strong>).  We
                                 can break this number apart just like we did with the base-10 number, except this time, we will use a 2 to calculate each bit's place
                                 value instead of a 10.
@@ -143,7 +143,7 @@ export default function LearnBinaryToDecimal(props) {
                             </Grid>
                             <p>
                                 The result remains the same as before.  However, if this is too confusing, you are welcome to continue using the previous
-                                steps without taking any shortcuts.  You are now ready for <a href="/practice">some practice!</a>
+                                steps without taking any shortcuts.  You are now ready for some <a href="/practice">practice!</a>
                             </p>
                         </Paper>
                     </div>
