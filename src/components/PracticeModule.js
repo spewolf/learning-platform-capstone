@@ -20,6 +20,7 @@ export default function PracticeModule(props) {
     "course": "",
     "title": "",
     "questions": [
+      {"content": ""}
     ]
   }
 
@@ -78,29 +79,16 @@ export default function PracticeModule(props) {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container>
           <form onSubmit={begin}>
-            <h1>Practice</h1>
-            <div style={{display: "flex"}}>
-              <div style={{width: "50%", margin: ".3em"}}>
-                <h4>From Assignments</h4>
-                <Paper elevation={3}>
-                  {/* TODO: This should pull from the db to see whether or not the user has any assignments. */}
-                  <p>You have no practice assignments.</p>
-                </Paper>
-              </div>
-              <div style={{width: "50%", margin: ".3em"}}>
-                <h4>Custom</h4>
-                <Paper elevation={3} style={{paddingLeft: ".3em"}}>
-                  <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
-                  <FormControlLabel style={{display: "block"}} value="DecToBin" control={<Checkbox name="DecToBin" onChange={onDecToBinChanged}/>} label="Decimal to Binary Conversion" />
-                  <FormControlLabel style={{display: "block"}} value="Add" control={<Checkbox name="Add" onChange={onAddChanged}/>} label="Binary Addition" />
-                  <FormControlLabel style={{display: "block"}} value="Sub" control={<Checkbox name="Sub" onChange={onSubChanged}/>} label="Binary Subtraction" />
-                  <div style={{display: "flex"}}>
-                    <p>How many problems?</p>
-                    <Input style={{margin: "1em"}} onChange={onInputChanged}/>
-                  </div>
-                </Paper>
-              </div>
-            </div>
+              <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
+                <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
+                <FormControlLabel style={{display: "block"}} value="DecToBin" control={<Checkbox name="DecToBin" onChange={onDecToBinChanged}/>} label="Decimal to Binary Conversion" />
+                <FormControlLabel style={{display: "block"}} value="Add" control={<Checkbox name="Add" onChange={onAddChanged}/>} label="Binary Addition" />
+                <FormControlLabel style={{display: "block"}} value="Sub" control={<Checkbox name="Sub" onChange={onSubChanged}/>} label="Binary Subtraction" />
+                <div style={{display: "flex"}}>
+                  <p>How many problems?</p>
+                  <Input style={{margin: "1em"}} onChange={onInputChanged}/>
+                </div>
+              </Paper>
             <Button
               disabled={
                 // Disable the button if none of the checkboxes are checked or if the input is NaN.
