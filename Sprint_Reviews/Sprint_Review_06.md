@@ -5,7 +5,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I got all of my work done and it looks good!
     
 # What didn't go so well?   
 
@@ -14,7 +14,7 @@
 * David  
     * 
 * Spencer  
-    * 
+    * I did some of my work last minute.
 
 # What have I learned?   
 
@@ -23,7 +23,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * Inline code in react is really powerful
 
 # What still puzzles me?   
 
@@ -32,7 +32,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I am feeling good. Also @Tyler an event will give you the info and you just add to database
 
 # What will we change to improve?   
 
@@ -41,4 +41,4 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I should have explained the plan more clearly which I will attempt in the future
