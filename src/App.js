@@ -10,16 +10,18 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import StudentOrTeacher from "./components/StudentOrTeacher";
 import StudentInfo from "./components/StudentInfo";
 import TeacherInfo from "./components/TeacherInfo";
 import ProfilePage from "./components/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
+import CssBaseline from "@material-ui/core/CssBaseline"
 
 const theme = createMuiTheme({
   palette: {
+    spacing: 8,
     typography: {
       fontFamily: ["Roboto", '"Seqoe UI"', "Arial", "sans-serif"].join(","),
     },
@@ -36,22 +38,28 @@ const theme = createMuiTheme({
       contrastText: "#ffffff",
     },
     background: {
-      main: "#000000",
+      default: "#fafafa",
       light: "#ffffff",
       dark: "#000000",
+      paper: "#ffffff"
     },
-    type: "light",
+    text: {
+      primary: "#000",
+      secondary: "#rgba(0, 0, 0, 0.54)",
+      disabled: "rgba(0, 0, 0, 0.38)",
+    },
+    divider: "rgb(0,0,0,0.2)",
   },
 });
 
 function App(props) {
   return (
     <div style={{ display: "flex" }}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}> <CssBaseline />
         <AuthProvider>
           <Router>
             <HeaderWithDrawer />
-            <main style={{ flexGrow: 1, paddingTop: theme.spacing(8) }}>
+            <main style={{ flexGrow: 1, paddingTop: theme.spacing(8), paddingLeft: theme.spacing(3) }}>
               <Switch>
                 <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
                 <Route path="/register/student" component={StudentInfo} />

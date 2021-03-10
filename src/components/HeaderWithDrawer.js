@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
     color: "palette.primary.text",
   },
   navItem: {
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(0),
   },
   spacer: {
     marginRight: "auto",
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: theme.spacing(9),
   },
   toolbarIcon: {
     display: 'flex',
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 16,
   },
   menuButtonHidden: {
     display: 'none',
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+      width: theme.spacing(10),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -176,6 +176,7 @@ export default function HeaderWithDrawer(props) {
     setOpen(false);
     setTempOpen(false);
   };
+  // may want to adjust hover open to have a delay
   const hoverDrawerOpen = () => {
     if(!open) {
       handleDrawerOpen();
@@ -203,7 +204,7 @@ export default function HeaderWithDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-            <Button href='/'>Binary Learning</Button>
+            <Button href='/' size="large"><Typography style={{fontSize: 26, fontWeight: 700}}>Binary Learning</Typography></Button>
             <div style={{width: "1%"}} />
             <Divider dark orientation="vertical" flexItem />
             <div style={{width: "1.5%"}} />
@@ -236,14 +237,14 @@ export default function HeaderWithDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List style={{paddingLeft: "0.21em"}}>
         {labels.map((text, index) => (
           <ListItem button key={text} component="a" href={addresses[index]}>
             <ListItemIcon>
             <div style={{width: "8%"}} />
               {icons[index]}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText style={{paddingLeft: "0.5em"}} primary={text} />
           </ListItem>
         ))}
         </List>

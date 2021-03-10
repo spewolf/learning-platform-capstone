@@ -27,15 +27,15 @@ export default function Dashboard(props) {
   const classes = useStyles();
   return (
     <Container component="main" className={classes.content} maxWidth="" style={{display: "flex", height: "75vh"}}>
-      <div className={classes.appBarSpacer} />
       <div style={{display: "flex", width: "100%", margin: "1em"}}>
+        <div style={{width: "3.5%"}} />
         <div style={{width: "43%"}}>
           <Typography>
 
           </Typography>
           <Paper elevation={3}>
-            <h1>Learn</h1>
-            <Accordion>
+            <h1 style={{paddingLeft: "1em", paddingTop: "0.6em"}}>Learn</h1>
+            <Accordion style={{paddingLeft: "1em"}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -49,7 +49,7 @@ export default function Dashboard(props) {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion style={{paddingLeft: "1em"}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -63,7 +63,7 @@ export default function Dashboard(props) {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion style={{paddingLeft: "1em"}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -77,7 +77,7 @@ export default function Dashboard(props) {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion style={{paddingLeft: "1em"}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -96,16 +96,16 @@ export default function Dashboard(props) {
         <div style={{width: "4%"}} />
         <div style={{width: "43%"}}>
           <Paper elevation={3}>
-            <h1>Assignments</h1>
+            <h1 style={{paddingLeft: "1em", paddingTop: "0.6em"}}>Assignments</h1>
             <LinearProgress variant="definite" />
-            <List className={classes.root} subheader={<ListSubheader>Upcoming</ListSubheader>} >
-              <ListItem role={undefined} button>
+            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Upcoming</ListSubheader>} >
+              <ListItem role={undefined} style={{paddingLeft: "2em"}} button>
                 <ListItemText primary="Assignment 1" />
               </ListItem>
-              <ListItem button>
+              <ListItem style={{paddingLeft: "2em"}} button>
                 <ListItemText primary="Assignment 2" />
               </ListItem>
-              <ListItem button disabled>
+              <ListItem style={{paddingLeft: "2em"}} button disabled>
                 <ListItemText primary="Quiz 1" />
               </ListItem>
             </List>

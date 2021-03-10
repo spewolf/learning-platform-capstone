@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   }, [db, app]);
 
   if (pending) {
-    return <CircularProgress size="7em" style={{position: "fixed", top: `calc(50% - 3.5em)`, left: `calc(50% - 3.5em)`}}/>;
+    return <CircularProgress size="7em" style={{position: "fixed", top: `calc(50% - 5em)`, left: `calc(50% - 5em)`}}/>;
   }
 
   return (
