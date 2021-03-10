@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         setPending(false);
       }
     });
-  }, [app, db]);
+  }, [db]);
 
   if (pending) {
     return <CircularProgress size="7em" style={{position: "fixed", top: `calc(50% - 3.5em)`, left: `calc(50% - 3.5em)`}}/>;

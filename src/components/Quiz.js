@@ -76,7 +76,7 @@ export default function Quiz(props) {
       setContent(
         <Question
           question={question}
-          onCheck={props.assignment.type == "graded" ? undefined : handleCheck}
+          onCheck={props.assignment.type === "graded" ? undefined : handleCheck}
           onNext={handleNext}
           onValueChange={handleValueChange}
           result={result}
@@ -86,7 +86,7 @@ export default function Quiz(props) {
     } else {
       const score = calculateScore(props.assignment);
       const total = calculateTotal(props.assignment);
-      if (props.assignment.type == "graded" && !quizCompleted) {
+      if (props.assignment.type === "graded" && !quizCompleted) {
         props.handleSubmission({ ...props.assignment });
         setQuizCompleted(true);
       }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Paper, Typography, LinearProgress, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListSubheader, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Container, Paper, Typography, LinearProgress, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListSubheader, ListItemText } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 

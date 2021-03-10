@@ -51,7 +51,7 @@ const Login = ({ history }) => {
         alert(error);
       }
     },
-    [history, app]
+    [history]
   );
 
   const { currentUser } = useContext(AuthContext);
