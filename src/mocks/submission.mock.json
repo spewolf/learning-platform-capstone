@@ -1,0 +1,51 @@
+{
+  "uid": "j3rf4ofjo4",
+  "type": "graded",
+  "due": "2021-08-01T11:59:59.00",
+  "course": "storybook",
+  "title": "Unit 1: Binary Addition and Subtraction",
+  "score": 2,
+  "total": 5,
+  "questions": [
+    {
+      "answer": "10010",
+      "result": true,
+      "type": "decimalToBinary",
+      "content": "What is binary form of 34?",
+      "arguments": ["34"],
+      "points": 1
+    },
+    {
+      "answer": "12",
+      "result": true,
+      "type": "binaryToDecimal",
+      "content": "What is decimal form of 1100?",
+      "arguments": ["1100"],
+      "points": 1
+    },
+    {
+      "answer": "10",
+      "result": false,
+      "type": "binaryAddition",
+      "content": "What is 1100 + 0011?",
+      "arguments": ["1100", "0011"],
+      "points": 1
+    },
+    {
+      "answer": "doge to moon?",
+      "result": false,
+      "type": "decimalToBinary",
+      "content": "What is the binary form of 34?",
+      "arguments": ["34"],
+      "points": 1
+    },
+    {
+      "answer": "1000",
+      "result": false,
+      "type": "binarySubtraction",
+      "content": "What is 1100 - 0001?",
+      "arguments": ["1100", "0001"],
+      "points": 1
+    }
+  ]
+}

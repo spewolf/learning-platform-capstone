@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Question from "./Question";
 import checkAnswer from "../helpers/question.helper";
+import Results from "./Results";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -84,18 +85,15 @@ export default function Quiz(props) {
         />
       );
     } else {
-      const score = calculateScore(props.assignment);
-      const total = calculateTotal(props.assignment);
+      props.assignment.score = calculateScore(props.assignment);
+      props.assignment.total = calculateTotal(props.assignment);
       if (props.assignment.type === "graded" && !quizCompleted) {
         props.handleSubmission({ ...props.assignment });
         setQuizCompleted(true);
       }
       setContent(
         <div>
-          <h2>Quiz Complete</h2>
-          <p>
-            Score: {score} / {total}
-          </p>
+          <Results submission={{...props.assignment}} />
         </div>
       );
     }
