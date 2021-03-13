@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({ history }) => {
+const Register = (props, { history }) => {
+  props.setLocation("Register")
+
   const app = firebase.apps[0];
 
   const classes = useStyles();

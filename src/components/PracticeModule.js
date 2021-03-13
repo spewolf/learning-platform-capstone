@@ -13,6 +13,7 @@ import {
 import Quiz from './Quiz'
 
 export default function PracticeModule(props) {
+  props.setLocation("Practice")
   const emptyAssignment = {
     "uid": "",
     "type": "",

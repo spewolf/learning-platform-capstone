@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ history }) => {
+const Login = (props, { history }) => {
+  props.setLocation("Login")
+
   const app = firebase.apps[0];
 
   const classes = useStyles();

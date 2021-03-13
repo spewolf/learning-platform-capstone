@@ -7,6 +7,8 @@ import LearnBinaryAddition from './LearnBinaryAddition'
 import LearnBinarySubtraction from './LearnBinarySubtraction'
 
 export default function LearningModule(props) {
+  props.setLocation("Learn")
+  
   const [coreFunction, setCoreFunction] = React.useState("none")
   const [showAssignment, setShowAssignment] = React.useState(false)
 

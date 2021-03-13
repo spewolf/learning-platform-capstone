@@ -10,6 +10,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
+import AssessmentModule from "./components/AssessmentModule";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import StudentOrTeacher from "./components/StudentOrTeacher";
@@ -53,25 +54,28 @@ const theme = createMuiTheme({
 });
 
 function App(props) {
+  const [location, setLocation] = React.useState("");
+
   return (
     <div style={{ display: "flex" }}>
       <ThemeProvider theme={theme}> <CssBaseline />
         <AuthProvider>
           <Router>
-            <HeaderWithDrawer />
+            <HeaderWithDrawer location={location}/>
             <main style={{ flexGrow: 1, paddingTop: theme.spacing(8), paddingLeft: theme.spacing(3) }}>
               <Switch>
-                <Route path="/register/student-or-teacher" component={StudentOrTeacher} />
-                <Route path="/register/student" component={StudentInfo} />
-                <Route path="/register/teacher" component={TeacherInfo} />
-                <Route path="/register" component={Register} />
-                <Route path="/login" component={Login} />
-                <Route path="/example" component={Example} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/learning" component={LearningModule} />
-                <Route path="/practice" component={PracticeModule} />
-                <PrivateRoute path="/profile" component={ProfilePage} />
-                <PrivateRoute path="/" component={ReactExample} />
+                <Route path="/register/student-or-teacher" render={() => <StudentOrTeacher setLocation={setLocation}/>} />
+                <Route path="/register/student" render={() => <StudentInfo setLocation={setLocation}/>} />
+                <Route path="/register/teacher" render={() => <TeacherInfo setLocation={setLocation}/>} />
+                <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
+                <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
+                <Route path="/example" render={() => <Example setLocation={setLocation}/>}/>
+                <Route path="/dashboard" render={() => <Dashboard setLocation={setLocation}/>} />
+                <Route path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
+                <Route path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
+                <Route path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
+                <PrivateRoute path="/profile" render={() => <ProfilePage setLocation={setLocation}/>} />
+                <PrivateRoute path="/" render={() => <ReactExample setLocation={setLocation}/>} />
               </Switch>
             </main>
           </Router>

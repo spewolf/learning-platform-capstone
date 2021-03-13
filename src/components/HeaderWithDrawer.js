@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,6 +20,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'; // Material
 import ShortTextIcon from '@material-ui/icons/ShortText'; // Example
 import AlarmIcon from '@material-ui/icons/Alarm' // Practice
 import SchoolIcon from '@material-ui/icons/School' // Learning
+import AssessmentIcon from '@material-ui/icons/Assessment' // Assessment
 import { useContext } from "react";
 import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
@@ -163,10 +165,9 @@ function LoginLinks(props) {
 export default function HeaderWithDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [location, setLocation] = React.useState("Location"); // TODO: Change to update upon page change
-  const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <SchoolIcon />, <AlarmIcon />];
-  const addresses = ['/', '/example', '/dashboard', '/learning', '/practice'];
-  const labels = ['Home', 'Example', 'Dashboard', 'Learn', 'Practice'];
+  const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon/>];
+  const addresses = ['/', '/example', '/dashboard', '/learning', '/practice', '/assessment'];
+  const labels = ['Home', 'Example', 'Dashboard', 'Learn', 'Practice', 'Assessments'];
   const [tempOpen, setTempOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -209,7 +210,7 @@ export default function HeaderWithDrawer(props) {
             <Divider dark orientation="vertical" flexItem />
             <div style={{width: "1.5%"}} />
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-              {location}
+              {props.location}
             </Typography>
           <div className={classes.spacer} />
           <LoginLinks />

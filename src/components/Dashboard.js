@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Dashboard(props) {
+  props.setLocation("Dashboard")
+
   const classes = useStyles();
   return (
     <Container component="main" className={classes.content} maxWidth="" style={{display: "flex", height: "75vh"}}>
