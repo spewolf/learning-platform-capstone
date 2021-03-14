@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { withRouter } from 'react-router'
+
+import queryString from 'query-string'
 
 import { Button, Container, FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core'
 import LearnBinaryToDecimal from './LearnBinaryToDecimal'
@@ -6,11 +9,23 @@ import LearnDecimalToBinary from './LearnDecimalToBinary'
 import LearnBinaryAddition from './LearnBinaryAddition'
 import LearnBinarySubtraction from './LearnBinarySubtraction'
 
-export default function LearningModule(props) {
+const LearningModule = (props) => {
   props.setLocation("Learn")
   
   const [coreFunction, setCoreFunction] = React.useState("none")
   const [showAssignment, setShowAssignment] = React.useState(false)
+
+  // Set up module directly if it's specified in query strings.
+  useEffect(() => {
+    const queryModule = queryString.parse(props.location.search).module
+    if (queryModule === "BinToDec"
+     || queryModule === "DecToBin"
+     || queryModule === "Add"
+     || queryModule === "Sub") {
+      setCoreFunction(queryModule)
+      setShowAssignment(true)
+    }
+  }, [props.location.search])
 
   // Called when the user clicks the "begin" button.
   const begin = (event) => {
@@ -63,3 +78,5 @@ export default function LearningModule(props) {
     </div>
   )
 }
+
+export default withRouter(LearningModule)

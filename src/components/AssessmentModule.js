@@ -3,10 +3,6 @@ import React from 'react'
 import { Button, Container, Paper } from '@material-ui/core';
 
 import {
-  generateBinToDecQuestion,
-  generateDecToBinQuestion,
-  generateAdditionQuestion,
-  generateSubtractionQuestion,
   generateAssignment
 } from '../helpers/AssignmentGenerator'
 import Quiz from './Quiz'
@@ -24,7 +20,7 @@ export default function AssessmentModule(props) {
     ]
   }
 
-  const [numberOfQuestions, setNumberOfQuestions] = React.useState("5")
+  const [numberOfQuestions, setNumberOfQuestions] = React.useState("")
   const [assignment, setAssignment] = React.useState(emptyAssignment)
   const [showAssignment, setShowAssignment] = React.useState(false)
 
@@ -34,6 +30,7 @@ export default function AssessmentModule(props) {
 
     // TODO: Decide which question functions to use.
     const functions = []
+    setNumberOfQuestions("5")
 
     setAssignment(generateAssignment(functions, parseInt(numberOfQuestions), "graded", "dummyCourse", "dummyTitle"));
     setShowAssignment(true);
