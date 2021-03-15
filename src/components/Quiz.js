@@ -88,6 +88,7 @@ export default function Quiz(props) {
       props.assignment.score = calculateScore(props.assignment);
       props.assignment.total = calculateTotal(props.assignment);
       if (props.assignment.type === "graded" && !quizCompleted) {
+        // NOTE PARENT MUST ATTACH studentID
         props.handleSubmission({ ...props.assignment });
         setQuizCompleted(true);
       }

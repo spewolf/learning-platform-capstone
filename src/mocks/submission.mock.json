@@ -1,5 +1,6 @@
 {
   "uid": "j3rf4ofjo4",
+  "studentID": "fakeuid123",
   "type": "graded",
   "due": "2021-08-01T11:59:59.00",
   "course": "storybook",
