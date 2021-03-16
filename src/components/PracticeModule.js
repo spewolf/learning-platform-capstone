@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { Button, Container, FormControlLabel, Input, Paper } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+
 import Checkbox from './Checkbox.js'
 
 import {
@@ -12,8 +14,16 @@ import {
 } from '../helpers/AssignmentGenerator'
 import Quiz from './Quiz'
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  }
+}))
+
 export default function PracticeModule(props) {
   props.setLocation("Practice")
+
   const emptyAssignment = {
     "uid": "",
     "type": "",
@@ -32,6 +42,8 @@ export default function PracticeModule(props) {
   const [numberOfQuestions, setNumberOfQuestions] = React.useState("")
   const [assignment, setAssignment] = React.useState(emptyAssignment)
   const [showAssignment, setShowAssignment] = React.useState(false)
+
+  const classes = useStyles()
 
   // Called when the user clicks the "begin" button.
   const begin = (event) => {
@@ -52,7 +64,7 @@ export default function PracticeModule(props) {
       functions.push(generateSubtractionQuestion)
     }
 
-    setAssignment(generateAssignment(functions, parseInt(numberOfQuestions), "ungraded", "dummyCourse", "dummyTitle"));
+    setAssignment(generateAssignment(functions, parseInt(numberOfQuestions), "ungraded", "dummyCourse", "Practice"));
     setShowAssignment(true);
   };
 
@@ -78,7 +90,7 @@ export default function PracticeModule(props) {
   return (
     <div>
       <div style={showAssignment ? {display: "none"} : {}}>
-        <Container>
+        <Container className={classes.container}>
           <form onSubmit={begin}>
               <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
                 <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
@@ -107,7 +119,7 @@ export default function PracticeModule(props) {
           </form>
         </Container>
       </div>
-      <Container style={showAssignment ? {} : {display: "none"}}>
+      <Container className={classes.container} style={showAssignment ? {} : {display: "none"}}>
         <Quiz assignment={assignment}/>
       </Container>
     </div>

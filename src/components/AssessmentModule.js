@@ -1,11 +1,19 @@
 import React from 'react'
 
 import { Button, Container, Paper } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
 
 import {
   generateAssignment
 } from '../helpers/AssignmentGenerator'
 import Quiz from './Quiz'
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  }
+}))
 
 export default function AssessmentModule(props) {
   props.setLocation("Assessments")
@@ -23,6 +31,8 @@ export default function AssessmentModule(props) {
   const [numberOfQuestions, setNumberOfQuestions] = React.useState("")
   const [assignment, setAssignment] = React.useState(emptyAssignment)
   const [showAssignment, setShowAssignment] = React.useState(false)
+
+  const classes = useStyles()
 
   // Called when the user clicks the "begin" button.
   const begin = (event) => {
@@ -43,7 +53,7 @@ export default function AssessmentModule(props) {
   return (
     <div>
       <div style={showAssignment ? {display: "none"} : {}}>
-        <Container>
+        <Container className={classes.container}>
           <form>
               <h4>Choose an assessment to start</h4>
               <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
@@ -64,7 +74,7 @@ export default function AssessmentModule(props) {
           </form>
         </Container>
       </div>
-      <Container style={showAssignment ? {} : {display: "none"}}>
+      <Container className={classes.container} style={showAssignment ? {} : {display: "none"}}>
         <Quiz assignment={assignment} handleSubmission={handleSubmission}/>
       </Container>
     </div>

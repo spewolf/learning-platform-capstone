@@ -4,10 +4,19 @@ import { withRouter } from 'react-router'
 import queryString from 'query-string'
 
 import { Button, Container, FormControlLabel, Paper, Radio, RadioGroup } from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles";
+
 import LearnBinaryToDecimal from './LearnBinaryToDecimal'
 import LearnDecimalToBinary from './LearnDecimalToBinary'
 import LearnBinaryAddition from './LearnBinaryAddition'
 import LearnBinarySubtraction from './LearnBinarySubtraction'
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  }
+}))
 
 const LearningModule = (props) => {
   props.setLocation("Learn")
@@ -15,6 +24,8 @@ const LearningModule = (props) => {
   const [coreFunction, setCoreFunction] = React.useState("none")
   const [pageNumber, setPageNumber] = React.useState(1)
   const [showAssignment, setShowAssignment] = React.useState(false)
+  
+  const classes = useStyles()
 
   // Set up module directly if it's specified in query strings.
   useEffect(() => {
@@ -48,7 +59,7 @@ const LearningModule = (props) => {
   return (
     <div>
       <div style={showAssignment ? {display: "none"} : {}}>
-        <Container>
+        <Container className={classes.container}>
           <form onSubmit={begin}>
               <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
                 <RadioGroup aria-label="moduleSelection" onChange={radioChange}>
@@ -70,16 +81,16 @@ const LearningModule = (props) => {
           </form>
         </Container>
       </div>
-      <div style={(coreFunction === "BinToDec" && showAssignment) ? {} : {display: "none"}}>
+      <div className={classes.container} style={(coreFunction === "BinToDec" && showAssignment) ? {} : {display: "none"}}>
         <LearnBinaryToDecimal page={pageNumber}/>
       </div>
-      <div style={(coreFunction === "DecToBin" && showAssignment) ? {} : {display: "none"}}>
+      <div className={classes.container} style={(coreFunction === "DecToBin" && showAssignment) ? {} : {display: "none"}}>
         <LearnDecimalToBinary page={pageNumber}/>
       </div>
-      <div style={(coreFunction === "Add" && showAssignment) ? {} : {display: "none"}}>
+      <div className={classes.container} style={(coreFunction === "Add" && showAssignment) ? {} : {display: "none"}}>
         <LearnBinaryAddition page={pageNumber}/>
       </div>
-      <div style={(coreFunction === "Sub" && showAssignment) ? {} : {display: "none"}}>
+      <div className={classes.container} style={(coreFunction === "Sub" && showAssignment) ? {} : {display: "none"}}>
         <LearnBinarySubtraction page={pageNumber}/>
       </div>
     </div>
