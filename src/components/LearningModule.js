@@ -13,17 +13,24 @@ const LearningModule = (props) => {
   props.setLocation("Learn")
   
   const [coreFunction, setCoreFunction] = React.useState("none")
+  const [pageNumber, setPageNumber] = React.useState(1)
   const [showAssignment, setShowAssignment] = React.useState(false)
 
   // Set up module directly if it's specified in query strings.
   useEffect(() => {
-    const queryModule = queryString.parse(props.location.search).module
+    const qs = queryString.parse(props.location.search)
+    const queryModule = qs.module
     if (queryModule === "BinToDec"
      || queryModule === "DecToBin"
      || queryModule === "Add"
      || queryModule === "Sub") {
       setCoreFunction(queryModule)
       setShowAssignment(true)
+    }
+
+    const page = qs.page
+    if (page) {
+      setPageNumber(page)
     }
   }, [props.location.search])
 
@@ -64,16 +71,16 @@ const LearningModule = (props) => {
         </Container>
       </div>
       <div style={(coreFunction === "BinToDec" && showAssignment) ? {} : {display: "none"}}>
-        <LearnBinaryToDecimal/>
+        <LearnBinaryToDecimal page={pageNumber}/>
       </div>
       <div style={(coreFunction === "DecToBin" && showAssignment) ? {} : {display: "none"}}>
-        <LearnDecimalToBinary/>
+        <LearnDecimalToBinary page={pageNumber}/>
       </div>
       <div style={(coreFunction === "Add" && showAssignment) ? {} : {display: "none"}}>
-        <LearnBinaryAddition/>
+        <LearnBinaryAddition page={pageNumber}/>
       </div>
       <div style={(coreFunction === "Sub" && showAssignment) ? {} : {display: "none"}}>
-        <LearnBinarySubtraction/>
+        <LearnBinarySubtraction page={pageNumber}/>
       </div>
     </div>
   )
