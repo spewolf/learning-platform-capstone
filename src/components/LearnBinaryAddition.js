@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Button, Container, Grid, Paper, Zoom } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,6 +21,16 @@ export default function LearnBinaryToDecimal(props) {
     const [stepCounter, setStepCounter] = React.useState(1)
 
     const classes = useStyles();
+
+    // Set page number if it's specified in props.
+    useEffect(() => {
+        if (props.page) {
+            const page = parseInt(props.page)
+            if (page > 0 && page <= TOTAL_STEPS) {
+                setStepCounter(parseInt(props.page))
+            }
+        }
+    }, [props.page])
 
     function decrementStep() {
         if (stepCounter > 1) {
