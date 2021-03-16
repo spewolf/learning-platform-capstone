@@ -3,15 +3,13 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HeaderWithDrawer from "./components/HeaderWithDrawer";
 import { AuthProvider } from "./components/AuthProvider";
-import Example from "./components/Example";
-import ReactExample from "./components/ReactExample";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
 import AssessmentModule from "./components/AssessmentModule";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import StudentOrTeacher from "./components/StudentOrTeacher";
 import StudentInfo from "./components/StudentInfo";
@@ -58,7 +56,8 @@ function App(props) {
 
   return (
     <div style={{ display: "flex" }}>
-      <ThemeProvider theme={theme}> <CssBaseline />
+      <ThemeProvider theme={theme}> 
+      <CssBaseline />
         <AuthProvider>
           <Router>
             <HeaderWithDrawer location={location}/>
@@ -69,13 +68,12 @@ function App(props) {
                 <Route path="/register/teacher" render={() => <TeacherInfo setLocation={setLocation}/>} />
                 <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
                 <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
-                <Route path="/example" render={() => <Example setLocation={setLocation}/>}/>
                 <Route path="/dashboard" render={() => <Dashboard setLocation={setLocation}/>} />
                 <Route path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
                 <Route path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
                 <Route path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/profile" render={() => <ProfilePage setLocation={setLocation}/>} />
-                <PrivateRoute path="/" render={() => <ReactExample setLocation={setLocation}/>} />
+                <PrivateRoute path="/" render={() => <Dashboard setLocation={setLocation}/>} />
               </Switch>
             </main>
           </Router>
