@@ -166,6 +166,14 @@ export default function HeaderWithDrawer(props) {
   const addresses = ['/dashboard', '/learning', '/practice', '/assessment'];
   const labels = ['Dashboard', 'Learn', 'Practice', 'Assessments'];
   const [tempOpen, setTempOpen] = React.useState(false);
+  const drawerTimer = React.useRef();
+
+  React.useEffect(() => () => {
+      clearTimeout(drawerTimer.current);
+    },
+    [],
+  );
+
   const handleDrawerOpen = () => {
     setOpen(true);
     setTempOpen(false);
@@ -174,15 +182,18 @@ export default function HeaderWithDrawer(props) {
     setOpen(false);
     setTempOpen(false);
   };
-  // may want to adjust hover open to have a delay
+
   const hoverDrawerOpen = () => {
-    if(!open) {
-      handleDrawerOpen();
-      setTempOpen(true);
-    }
+    drawerTimer.current = window.setTimeout(() => {
+      if(!open) {
+        handleDrawerOpen();
+        setTempOpen(true);
+      }
+    }, 140);
   };
   const hoverDrawerClose = () => {
-    if (tempOpen) {
+    if(!open) clearTimeout(drawerTimer.current);
+    else if (tempOpen) {
       handleDrawerClose();
     }
     setTempOpen(false);
