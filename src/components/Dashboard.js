@@ -13,7 +13,7 @@ export default function Dashboard(props) {
     return(<Redirect to="/login"></Redirect>)
   }
 
-  let isStudent = currentUser.data?.type == "student";
+  let isStudent = currentUser.data?.type === "student";
 
   return (
     <div>

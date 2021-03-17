@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Paper, Typography, LinearProgress, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListSubheader, ListItemText } from '@material-ui/core';
+import { Container, Paper, LinearProgress, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListSubheader, ListItemText, Link } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -26,24 +25,26 @@ const useStyles = makeStyles((theme) => ({
 export default function StudentDashboard(props) {
   const classes = useStyles();
   return (
-    <Container component="main" className={classes.content} maxWidth="" style={{display: "flex", height: "75vh"}}>
+    <Container component="main" className={classes.content} maxWidth="" style={{display: "flex"}}>
       <div style={{display: "flex", width: "100%", margin: "1em"}}>
         <div style={{width: "3.5%"}} />
         <div style={{width: "43%"}}>
           <Paper elevation={3}>
-            <h1 style={{paddingLeft: "1em", paddingTop: "0.6em"}}>Learn</h1>
+            <h1 style={{paddingLeft: "0.9em", paddingTop: "0.6em"}}>Learn</h1>
             <Accordion style={{paddingLeft: "1em"}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.header}>Chapter 1</Typography>
+                <Link href="/learning?module=BinToDec" className={classes.heading}>Binary to Decimal Conversion</Link>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Links to individual pages go here
-                </Typography>
+              <AccordionDetails style={{display: "table"}}>
+                <Link href="/learning?module=BinToDec&page=1" style={{display: "table-row"}} button>Decimal System</Link>
+                <Link href="/learning?module=BinToDec&page=2" style={{display: "table-row"}} button>Binary System</Link>
+                <Link href="/learning?module=BinToDec&page=3" style={{display: "table-row"}} button>Conversion: Step 1</Link>
+                <Link href="/learning?module=BinToDec&page=4" style={{display: "table-row"}} button>Conversion: Step 2</Link>
+                <Link href="/learning?module=BinToDec&page=5" style={{display: "table-row"}} button>Tips and Tricks</Link>
               </AccordionDetails>
             </Accordion>
             <Accordion style={{paddingLeft: "1em"}}>
@@ -52,12 +53,16 @@ export default function StudentDashboard(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.header}>Chapter 2</Typography>
+                <Link href="/learning?module=DecToBin" className={classes.heading}>Decimal to Binary Conversion</Link>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Links to individual pages go here
-                </Typography>
+              <AccordionDetails style={{display: "table"}}>
+                <Link href="/learning?module=DecToBin&page=1" style={{display: "table-row"}} button>Overview</Link>
+                <Link href="/learning?module=DecToBin&page=2" style={{display: "table-row"}} button>Conversion: Step 1</Link>
+                <Link href="/learning?module=DecToBin&page=3" style={{display: "table-row"}} button>Conversion: Step 2</Link>
+                <Link href="/learning?module=DecToBin&page=4" style={{display: "table-row"}} button>Conversion: Step 3</Link>
+                <Link href="/learning?module=DecToBin&page=5" style={{display: "table-row"}} button>Conversion: Step 4</Link>
+                <Link href="/learning?module=DecToBin&page=6" style={{display: "table-row"}} button>Conversion: Step 5</Link>
+                <Link href="/learning?module=DecToBin&page=7" style={{display: "table-row"}} button>Tips and Tricks</Link>
               </AccordionDetails>
             </Accordion>
             <Accordion style={{paddingLeft: "1em"}}>
@@ -66,12 +71,13 @@ export default function StudentDashboard(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.header}>Chapter 3</Typography>
+                <Link href="/learning?module=Add" className={classes.heading}>Binary Addition</Link>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Links to individual pages go here
-                </Typography>
+              <AccordionDetails style={{display: "table"}}>
+                <Link href="/learning?module=Add&page=1" style={{display: "table-row"}} button>1-Bit Numbers</Link>
+                <Link href="/learning?module=Add&page=2" style={{display: "table-row"}} button>More Than 1 Bit</Link>
+                <Link href="/learning?module=Add&page=3" style={{display: "table-row"}} button>1-Byte Numbers</Link>
+                <Link href="/learning?module=Add&page=4" style={{display: "table-row"}} button>1-Byte Solution</Link>
               </AccordionDetails>
             </Accordion>
             <Accordion style={{paddingLeft: "1em"}}>
@@ -80,12 +86,16 @@ export default function StudentDashboard(props) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.header}>Chapter 4</Typography>
+                <Link href="/learning?module=Sub" className={classes.heading}>Binary Subtraction</Link>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Links to individual pages go here
-                </Typography>
+              <AccordionDetails style={{display: "table"}}>
+                <Link href="/learning?module=Sub&page=1" style={{display: "table-row"}} button>Introduction</Link>
+                <Link href="/learning?module=Sub&page=2" style={{display: "table-row"}} button>One's Complement</Link>
+                <Link href="/learning?module=Sub&page=3" style={{display: "table-row"}} button>Two's Complement</Link>
+                <Link href="/learning?module=Sub&page=4" style={{display: "table-row"}} button>4-Bit Solution</Link>
+                <Link href="/learning?module=Sub&page=5" style={{display: "table-row"}} button>1-Byte</Link>
+                <Link href="/learning?module=Sub&page=6" style={{display: "table-row"}} button>1-Byte Complements</Link>
+                <Link href="/learning?module=Sub&page=7" style={{display: "table-row"}} button>1-Byte Solution</Link>
               </AccordionDetails>
             </Accordion>
           </Paper>
@@ -93,7 +103,7 @@ export default function StudentDashboard(props) {
         <div style={{width: "4%"}} />
         <div style={{width: "43%"}}>
           <Paper elevation={3}>
-            <h1 style={{paddingLeft: "1em", paddingTop: "0.6em"}}>Assignments</h1>
+            <h1 style={{paddingLeft: "0.9em", paddingTop: "0.6em"}}>Assignments</h1>
             <LinearProgress variant="definite" />
             <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Upcoming</ListSubheader>} >
               <ListItem role={undefined} style={{paddingLeft: "2em"}} button>
