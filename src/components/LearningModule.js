@@ -61,7 +61,7 @@ const LearningModule = (props) => {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
           <form onSubmit={begin}>
-              <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
+              <Paper elevation={3} style={{paddingLeft: "1em", paddingTop: ".6em", paddingBottom: ".6em", margin: "1em"}}>
                 <RadioGroup aria-label="moduleSelection" onChange={radioChange}>
                   <FormControlLabel value="BinToDec" control={<Radio />} label="Binary to Decimal Conversion" />
                   <FormControlLabel value="DecToBin" control={<Radio />} label="Decimal to Binary Conversion" />

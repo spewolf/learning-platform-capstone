@@ -9,7 +9,18 @@ import AddNibble from '../diagrams/AddNibble.png'
 import AddOneByte from '../diagrams/AddOneByte.png'
 import AddOneByteSolution from '../diagrams/AddOneByteSolution.png'
 
+import * as names from '../LearningModuleNames'
+
 const useStyles = makeStyles((theme) => ({
+    h3: {
+        paddingLeft: ".9em"
+    },
+    paper: {
+        paddingLeft: "1em",
+        paddingTop: ".6em",
+        paddingBottom: ".6em",
+        paddingRight: "1em"
+    },
     container: {
       fontFamily: theme.typography.fontFamily,
     },
@@ -49,8 +60,8 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{display: "flex", height: "40em"}}>
                 <Zoom in={stepCounter === 1} style={stepCounter === 1 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Adding Two 1-bit Numbers in Binary</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Adding Two 1-bit Numbers in Binary</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <p>
                                 We can add numbers in binary similar to how we can add numbers in decimal.  Below, you can see all of the solutions to adding two bits
                                 together.  The first three are pretty straight-forward as they are the same in both decimal and binary.  But the last one is a little
@@ -68,8 +79,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 2} style={stepCounter === 2 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Adding Numbers with More than 1 Bit in Binary</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Adding Numbers with More than 1 Bit in Binary</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <p>
                                 Now, what if we wanted to add two numbers with more than one bit?  We can do this just like we would with decimal numbers as well.
                                 First, we line up the numbers with one above the other.  Then, we add one bit at a time starting from the right and working our way
@@ -104,8 +115,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 3} style={stepCounter === 3 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Adding Two 1-Byte Numbers in Binary</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Adding Two 1-Byte Numbers in Binary</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <p>
                                 Now, try this one on your own.  Don't forget to check your answer by converting all of the numbers to decimal!  Once you're done, you
                                 can find the solution on the next step.
@@ -121,8 +132,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 4} style={stepCounter === 4 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>1-Byte Solution</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>1-Byte Solution</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <p>
                                 Here is the solution worked out:
                             </p>
@@ -144,16 +155,16 @@ export default function LearnBinaryToDecimal(props) {
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>1-Bit Numbers</div>
+                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.Add1}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>More than 1 Bit</div>
+                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.Add2}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>1-Byte Numbers</div>
+                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.Add3}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>1 Byte Solution</div>
+                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.Add4}</div>
                     </Button>
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>

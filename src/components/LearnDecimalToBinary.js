@@ -12,7 +12,18 @@ import DecToBinStep4 from '../diagrams/DecToBinStep4.png'
 import DecToBinStep5 from '../diagrams/DecToBinStep5.png'
 import DecToBinTipsAndTricks from '../diagrams/DecToBinTipsAndTricks.png'
 
+import * as names from '../LearningModuleNames'
+
 const useStyles = makeStyles((theme) => ({
+    h3: {
+        paddingLeft: ".9em"
+    },
+    paper: {
+        paddingLeft: "1em",
+        paddingTop: ".6em",
+        paddingBottom: ".6em",
+        paddingRight: "1em"
+    },
     container: {
       fontFamily: theme.typography.fontFamily,
     },
@@ -49,11 +60,11 @@ export default function LearnBinaryToDecimal(props) {
 
     return (
         <div className={classes.container}>
-            <Container style={{display: "flex", height: "45.5em"}}>
+            <Container style={{display: "flex", height: "46em"}}>
                 <Zoom in={stepCounter === 1} style={stepCounter === 1 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion Overview</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion Overview</h3>
+                        <Paper elevation="3"  className={classes.paper}>
                             <p>
                                 Note: It's helpful to have completed the binary to decimal conversion module before this one as it explains how the binary system works
                                 relative to the decimal system.
@@ -76,8 +87,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 2} style={stepCounter === 2 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion - Step 1</h3>
-                        <Paper elevation="3" style={{padding: ".3em", flexGrow: 1}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion - Step 1</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={9}>
                                     <p>
@@ -108,8 +119,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 3} style={stepCounter === 3 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion - Step 2</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion - Step 2</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={8}>
                                     <p>
@@ -134,8 +145,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 4} style={stepCounter === 4 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion - Step 3</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion - Step 3</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={8}>
                                     <p>
@@ -157,8 +168,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 5} style={stepCounter === 5 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion - Step 4</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion - Step 4</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={8}>
                                     <p>
@@ -181,8 +192,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 6} style={stepCounter === 6 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Decimal to Binary Conversion - Step 5</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Decimal to Binary Conversion - Step 5</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={9}>
                                     <p>
@@ -203,8 +214,8 @@ export default function LearnBinaryToDecimal(props) {
                 </Zoom>
                 <Zoom in={stepCounter === 7} style={stepCounter === 7 ? {} : {display: "none"}}>
                     <div style={{width: "100%"}}>
-                        <h3>Tips and Tricks!</h3>
-                        <Paper elevation="3" style={{padding: ".3em"}}>
+                        <h3 className={classes.h3}>Tips and Tricks!</h3>
+                        <Paper elevation="3" className={classes.paper}>
                             <Grid container spacing="3">
                                 <Grid item xs={9}>
                                     <p>
@@ -232,25 +243,25 @@ export default function LearnBinaryToDecimal(props) {
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>Overview</div>
+                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.DecToBin1}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>Step 1</div>
+                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.DecToBin2}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>Step 2</div>
+                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.DecToBin3}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>Step 3</div>
+                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.DecToBin4}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>Step 4</div>
+                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>{names.DecToBin5}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(6)}>
-                        <div style={stepCounter === 6 ? { fontWeight: "bold"} : {}}>Step 5</div>
+                        <div style={stepCounter === 6 ? {fontWeight: "bold"} : {}}>{names.DecToBin6}</div>
                     </Button>
                     <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(7)}>
-                        <div style={stepCounter === 7 ? { fontWeight: "bold"} : {}}>Tips &amp; Tricks</div>
+                        <div style={stepCounter === 7 ? {fontWeight: "bold"} : {}}>{names.DecToBin7}</div>
                     </Button>
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>
