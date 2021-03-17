@@ -5,7 +5,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * We took some time to prep for the coming modules
     
 # What didn't go so well?   
 
@@ -14,7 +14,7 @@
 * David  
     * 
 * Spencer  
-    * 
+    * I didn't realize that tylers changes would conflict with my code which led to bugs
 
 # What have I learned?   
 
@@ -23,7 +23,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I learned all about firebase rules!
 
 # What still puzzles me?   
 
@@ -32,7 +32,7 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I am not sure what the best way is to display assignments for a student
 
 # What will we change to improve?   
 
@@ -41,4 +41,4 @@
 * David   
     * 
 * Spencer   
-    * 
+    * I will need to be more proactive with how other changes will affect my code
