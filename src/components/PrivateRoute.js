@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
         } else if (currentUser.data === undefined) {
           return <Redirect to={"/register/student-or-teacher"} />;
         } else {
-          return <Redirect to={"/dashboard"} />;
+          return <RouteComponent {...routeProps} />;
         }
       }}
     />

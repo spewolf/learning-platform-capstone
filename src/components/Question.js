@@ -28,7 +28,9 @@ export default function Question(props) {
     checkText = props.result ? (
       <p style={{ color: "green" }}>Correct!</p>
     ) : (
-      <p style={{ color: "red" }}>Incorrect!  If you need help, check out the <a href="/learning">learning module</a>!</p>
+      <p style={{ color: "red" }}>
+        Incorrect! If you need help, check out the <a href="/learning">learning module</a>!
+      </p>
     );
   }
 
@@ -42,23 +44,21 @@ export default function Question(props) {
 
   return (
     <Paper className={classes.container}>
-      <form>
-        <h2>{props.question.content}</h2>
-        <TextField
-          fullWidth
-          label="Answer"
-          onChange={props.onValueChange}
-          value={props.value}
-          placeholder="Type your answer"
-        />
-        {checkText}
-        <div className={classes.buttonBar}>
-          {checkButton}
-          <Button onClick={props.onNext} variant="contained" color="primary">
-            Next
-          </Button>
-        </div>
-      </form>
+      <h2>{props.question.content}</h2>
+      <TextField
+        fullWidth
+        label="Answer"
+        onChange={props.onValueChange}
+        value={props.value}
+        placeholder="Type your answer"
+      />
+      {checkText}
+      <div className={classes.buttonBar}>
+        {checkButton}
+        <Button onClick={props.onNext} variant="contained" color="primary">
+          Next
+        </Button>
+      </div>
     </Paper>
   );
 }
