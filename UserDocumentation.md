@@ -30,6 +30,23 @@ The Registration process allows users and teacher to sign up.
     * Students will enter the course code provided by their teacher
 5. Click submit   
 
+### Dashboard
+Based on the account type, a variant of the dashboard will appear.  
+
+**Students** will have two main sections: Learning and Assignments.  
+By expanding the Learning elements, a student can choose to go to  
+a specific page of the corresponding Learn module. The Assignments  
+section will provide information about an assignment (such as its  
+title and due date) and allow a student to click on an assignment  
+to work on it.  
+
+**Instructors** will have two main sections: Ongoing and Completed.  
+These refer to the status of assignments. Both sections will allow an  
+instructor to expand an assignment to see a short summary of information  
+about the assignment along with some statistics about them, such as  
+average score. Expanding an assignment will also reveal a link to a more  
+detailed statistics page.
+
 ### Learn   
 This is where the user can initially learn about each of the core functions.  The 
 user starts by selecting which learning module they want to complete and then they 
