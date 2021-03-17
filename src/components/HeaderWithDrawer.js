@@ -14,9 +14,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from '@material-ui/icons/Home'; // Dashboard?
-import DashboardIcon from '@material-ui/icons/Dashboard'; // Material
-import ShortTextIcon from '@material-ui/icons/ShortText'; // Example
+import DashboardIcon from '@material-ui/icons/Dashboard'; // Dashboard
 import AlarmIcon from '@material-ui/icons/Alarm' // Practice
 import SchoolIcon from '@material-ui/icons/School' // Learning
 import AssessmentIcon from '@material-ui/icons/Assessment' // Assessment
@@ -25,7 +23,7 @@ import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
 import Button from "@material-ui/core/Button";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -164,10 +162,18 @@ function LoginLinks(props) {
 export default function HeaderWithDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const icons = [<HomeIcon />, <ShortTextIcon />, <DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon/>];
-  const addresses = ['/', '/example', '/dashboard', '/learning', '/practice', '/assessment'];
-  const labels = ['Home', 'Example', 'Dashboard', 'Learn', 'Practice', 'Assessments'];
+  const icons = [<DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon/>];
+  const addresses = ['/dashboard', '/learning', '/practice', '/assessment'];
+  const labels = ['Dashboard', 'Learn', 'Practice', 'Assessments'];
   const [tempOpen, setTempOpen] = React.useState(false);
+  const drawerTimer = React.useRef();
+
+  React.useEffect(() => () => {
+      clearTimeout(drawerTimer.current);
+    },
+    [],
+  );
+
   const handleDrawerOpen = () => {
     setOpen(true);
     setTempOpen(false);
@@ -176,15 +182,18 @@ export default function HeaderWithDrawer(props) {
     setOpen(false);
     setTempOpen(false);
   };
-  // may want to adjust hover open to have a delay
+
   const hoverDrawerOpen = () => {
-    if(!open) {
-      handleDrawerOpen();
-      setTempOpen(true);
-    }
+    drawerTimer.current = window.setTimeout(() => {
+      if(!open) {
+        handleDrawerOpen();
+        setTempOpen(true);
+      }
+    }, 140);
   };
   const hoverDrawerClose = () => {
-    if (tempOpen) {
+    if(!open) clearTimeout(drawerTimer.current);
+    else if (tempOpen) {
       handleDrawerClose();
     }
     setTempOpen(false);
@@ -237,6 +246,7 @@ export default function HeaderWithDrawer(props) {
           </IconButton>
         </div>
         <Divider />
+        <div style={{height: "0.21em"}} />
         <List style={{paddingLeft: "0.21em"}}>
         {labels.map((text, index) => (
           <ListItem button key={text} component="a" href={addresses[index]}>
