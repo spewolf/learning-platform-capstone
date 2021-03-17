@@ -68,10 +68,9 @@ function App(props) {
                 <Route path="/register/teacher" render={() => <TeacherInfo setLocation={setLocation}/>} />
                 <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
                 <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
-                <Route path="/dashboard" render={() => <Dashboard setLocation={setLocation}/>} />
-                <Route path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
-                <Route path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
-                <Route path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
+                <PrivateRoute path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
+                <PrivateRoute path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
+                <PrivateRoute path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/profile" render={() => <ProfilePage setLocation={setLocation}/>} />
                 <PrivateRoute path="/" render={() => <Dashboard setLocation={setLocation}/>} />
               </Switch>

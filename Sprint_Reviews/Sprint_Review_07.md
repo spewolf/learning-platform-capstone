@@ -5,7 +5,7 @@
 * David   
     * I'm pleased with the progress we made this week. Everything is really coming together well. Also, I got to clean up some of the older files we don't need any more.
 * Spencer   
-    * 
+    * We took some time to prep for the coming modules
     
 # What didn't go so well?   
 
@@ -14,7 +14,7 @@
 * David  
     * I'd like to have had time to better prepare the dashboards being connected to assignments / assessments.
 * Spencer  
-    * 
+    * I didn't realize that tylers changes would conflict with my code which led to bugs
 
 # What have I learned?   
 
@@ -23,7 +23,7 @@
 * David   
     * I learned how to show different content to different users based on an attribute of their account.
 * Spencer   
-    * 
+    * I learned all about firebase rules!
 
 # What still puzzles me?   
 
@@ -32,7 +32,7 @@
 * David   
     * Off-hand, I still don't know much about how assignment / assessment / statistics modules will get linked with the dashboard, but I'm not worried about it.
 * Spencer   
-    * 
+    * I am not sure what the best way is to display assignments for a student
 
 # What will we change to improve?   
 
@@ -41,4 +41,4 @@
 * David   
     * Occasionally, I need to think ahead more when programming. Even now, I find myself putting in placeholders a little too often when I should be more focused on dynamic implementations.
 * Spencer   
-    * 
+    * I will need to be more proactive with how other changes will affect my code

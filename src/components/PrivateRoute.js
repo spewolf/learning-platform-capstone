@@ -2,20 +2,20 @@ import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
+const PrivateRoute = ({ render: reqRender, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
+
+  var render = reqRender
+  if (!currentUser) {
+    render = () => <Redirect to={"/login"} />;
+  } else if (currentUser.data === undefined) {
+    render = () => <Redirect to={"/register/student-or-teacher"} />;
+  }
+
   return (
     <Route
       {...rest}
-      render={(routeProps) => {
-        if (!currentUser) {
-          return <Redirect to={"/login"} />;
-        } else if (currentUser.data === undefined) {
-          return <Redirect to={"/register/student-or-teacher"} />;
-        } else {
-          return <Redirect to={"/dashboard"} />;
-        }
-      }}
+      render={render}
     />
   );
 };

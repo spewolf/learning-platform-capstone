@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = (props, { history }) => {
+const Register = (props) => {
   props.setLocation("Register")
 
   const app = firebase.apps[0];
@@ -48,12 +48,12 @@ const Register = (props, { history }) => {
         await app
           ?.auth()
           .createUserWithEmailAndPassword(email.value, password.value);
-        history.push("/register/student-or-teacher");
+        props.history.push("/register/student-or-teacher");
       } catch (error) {
         alert(error);
       }
     },
-    [history, app]
+    [props.history, app]
   );
 
   const { currentUser } = useContext(AuthContext);
