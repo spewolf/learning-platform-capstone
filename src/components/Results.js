@@ -20,10 +20,10 @@ export default function Results(props) {
       <p>
         Score: {props.submission.score} / {props.submission.total}
       </p>
-      {props.submission.questions.map((e) => {
+      {props.submission.questions.map((e, i) => {
         const bar = e.result ? {borderTop: "4px solid green"} : {borderTop: "4px solid red"}
         return (
-          <Card className={classes.question} style={bar}>
+          <Card className={classes.question} style={bar} key={i}>
             <h3>{e.content}</h3>
             <h5>You answered {e.result ? " correctly" : " incorrectly"}:</h5>
             {e.answer}
