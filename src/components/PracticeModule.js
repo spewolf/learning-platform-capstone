@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+  },
+  paper: {
+      paddingLeft: "1em",
+      paddingTop: ".6em",
+      paddingBottom: ".6em",
+      paddingRight: "1em",
+      marginBottom: "1em"
   }
 }))
 
@@ -92,7 +99,7 @@ export default function PracticeModule(props) {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
           <form onSubmit={begin}>
-              <Paper elevation={3} style={{paddingLeft: ".3em", margin: "1em"}}>
+              <Paper elevation={3} className={classes.paper}>
                 <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
                 <FormControlLabel style={{display: "block"}} value="DecToBin" control={<Checkbox name="DecToBin" onChange={onDecToBinChanged}/>} label="Decimal to Binary Conversion" />
                 <FormControlLabel style={{display: "block"}} value="Add" control={<Checkbox name="Add" onChange={onAddChanged}/>} label="Binary Addition" />

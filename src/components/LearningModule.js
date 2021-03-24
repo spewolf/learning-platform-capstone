@@ -15,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+  },
+  paper: {
+      paddingLeft: "1em",
+      paddingTop: ".6em",
+      paddingBottom: ".6em",
+      paddingRight: "1em",
+      marginBottom: "1em"
   }
 }))
 
@@ -61,7 +68,7 @@ const LearningModule = (props) => {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
           <form onSubmit={begin}>
-              <Paper elevation={3} style={{paddingLeft: "1em", paddingTop: ".6em", paddingBottom: ".6em", margin: "1em"}}>
+              <Paper elevation={3} className={classes.paper}>
                 <RadioGroup aria-label="moduleSelection" onChange={radioChange}>
                   <FormControlLabel value="BinToDec" control={<Radio />} label="Binary to Decimal Conversion" />
                   <FormControlLabel value="DecToBin" control={<Radio />} label="Decimal to Binary Conversion" />
