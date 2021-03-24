@@ -1,7 +1,8 @@
 # What went well?   
 
 * Tyler   
-    * 
+    * I felt like I was more productive than usual and I think the assessment module looks pretty good.
+    * Everything is coming together really well.
 * David   
     * 
 * Spencer   
@@ -10,7 +11,7 @@
 # What didn't go so well?   
 
 * Tyler    
-    * 
+    * There were some issues with the database that I'm not sure if we've 100% fixed yet.  But we have work arounds, worst case.
 * David  
     * 
 * Spencer  
@@ -19,7 +20,7 @@
 # What have I learned?   
 
 * Tyler     
-    * 
+    * I learned a lot about async functions, date-time formating, and advanced javadoc
 * David   
     * 
 * Spencer   
@@ -28,7 +29,7 @@
 # What still puzzles me?   
 
 * Tyler   
-    * 
+    * We're gonna look at firebase rules again to see what's up with those, but we should be able to fix it.  And there are work-arounds if we can't.
 * David   
     * 
 * Spencer   
@@ -37,7 +38,7 @@
 # What will we change to improve?   
 
 * Tyler   
-    * 
+    * I would have liked to have gotten my stuff done sooner but I had a pretty busy weekend.
 * David   
     * 
 * Spencer   
