@@ -20,3 +20,17 @@ export async function getAssignmentsForCourse(db, userCourse) {
     // Return list of assignment objects.
     return assignmentData
 }
+
+/**
+ * Get data from the database for a given assignment.
+ * @param {firebase.firestore.Firestore} db A reference to the Firestore database.
+ * @param {string} id The Assignment id to retrieve
+ * @returns A promise to get the assignment data requested.
+ */
+export async function getAssignment(db, id) {
+    const assignment = await db.collection("assignments").doc(id).get()
+    var data = {...assignment.data()}
+    data.id = assignment.id
+
+    return data
+}

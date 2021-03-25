@@ -1,13 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import { withRouter } from 'react-router'
 import { AuthContext } from "./AuthProvider.js";
 import firebase from "firebase";
+
+import queryString from 'query-string'
 
 import { Button, Container, Paper } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 import GradedQuiz from './GradedQuiz'
 import { cleanDate } from '../helpers/Formatting'
-import { getAssignmentsForCourse } from '../helpers/DatabaseHelper'
+import { getAssignment, getAssignmentsForCourse } from '../helpers/DatabaseHelper'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function AssessmentModule(props) {
+const AssessmentModule = (props) => {
   props.setLocation("Assessments")
 
   const emptyAssignment = {
@@ -50,13 +53,33 @@ export default function AssessmentModule(props) {
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
 
-  // Get all of the user's assignments from the database.
+  
   useEffect(() => {
-    const promise = getAssignmentsForCourse(db, userCourse)
-    promise.then((assignments) => {
-      setAssignmentObjects(assignments)
-    })
-  }, [db, setAssignmentObjects, userCourse])
+    // Only called if no assignment was provided in the query strings or if the provided assignment is invalid.
+    function getValidAssignments() {
+      const promise = getAssignmentsForCourse(db, userCourse)
+      promise.then((assignments) => {
+        setAssignmentObjects(assignments)
+      })
+    }
+
+    const qs = queryString.parse(props.location.search)
+    if (qs.id) { // An assignment was specified via the query strings.
+      const promise = getAssignment(db, qs.id)
+      promise.then((assignment) => {
+        console.log(assignment)
+        const isValidAssignment = assignment.course && assignment.course === userCourse
+        if (isValidAssignment) { // Show assignment.
+          setAssignment(assignment)
+          setShowAssignment(true)
+        } else { // Get list of valid assignments to show instead.
+          getValidAssignments()
+        }
+      })
+    } else {
+      getValidAssignments()
+    }
+  }, [setAssignment, setShowAssignment, setAssignmentObjects, db, userCourse, props.location.search])
 
   // Called when the user clicks on one of the assignment buttons to begin the assignment.
   const startAssignment = (index) => {
@@ -92,3 +115,5 @@ export default function AssessmentModule(props) {
     </div>
   )
 }
+
+export default withRouter(AssessmentModule)
