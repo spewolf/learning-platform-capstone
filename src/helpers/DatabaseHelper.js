@@ -12,7 +12,9 @@ export async function getAssignmentsForCourse(db, userCourse) {
 
     // Add each assignment to a list.
     assignments.forEach(doc => {
-        assignmentData.push(doc.data())
+        const data = {...doc.data()}
+        data.id = doc.id
+        assignmentData.push(data)
     })
 
     // Return list of assignment objects.

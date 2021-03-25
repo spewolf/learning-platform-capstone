@@ -5,7 +5,7 @@ import firebase from "firebase";
 import { Button, Container, Paper } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
-import Quiz from './Quiz'
+import GradedQuiz from './GradedQuiz'
 import { cleanDate } from '../helpers/Formatting'
 import { getAssignmentsForCourse } from '../helpers/DatabaseHelper'
 
@@ -58,10 +58,6 @@ export default function AssessmentModule(props) {
     })
   }, [db, setAssignmentObjects, userCourse])
 
-  const handleSubmission = (submission) => {
-    // TODO: Send submission to db.
-  }
-
   // Called when the user clicks on one of the assignment buttons to begin the assignment.
   const startAssignment = (index) => {
     setAssignment(assignmentObjects[index])
@@ -91,7 +87,7 @@ export default function AssessmentModule(props) {
         </Container>
       </div>
       <Container className={classes.container} style={showAssignment ? {} : {display: "none"}}>
-        <Quiz assignment={assignment} handleSubmission={handleSubmission}/>
+        <GradedQuiz assignment={assignment}/>
       </Container>
     </div>
   )
