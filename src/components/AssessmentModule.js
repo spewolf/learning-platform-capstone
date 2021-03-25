@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Quiz from './Quiz'
 import { cleanDate } from '../helpers/Formatting'
+import { getAssignmentsForCourse } from '../helpers/DatabaseHelper'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,20 +52,10 @@ export default function AssessmentModule(props) {
 
   // Get all of the user's assignments from the database.
   useEffect(() => {
-    async function setAssignments(db, setAssignmentObjects) {
-      // Get assignments collection.
-      const assignments = await db.collection("assignments").where('course', '==', userCourse).get()
-
-      // Add each assignment to a list and update state.
-      var assignmentData = [];
-      assignments.forEach(doc => {
-        assignmentData.push(doc.data())
-      })
-      setAssignmentObjects(assignmentData)
-    }
-
-    // Actually call the above async function.
-    setAssignments(db, setAssignmentObjects)
+    const promise = getAssignmentsForCourse(db, userCourse)
+    promise.then((assignments) => {
+      setAssignmentObjects(assignments)
+    })
   }, [db, setAssignmentObjects, userCourse])
 
   const handleSubmission = (submission) => {
