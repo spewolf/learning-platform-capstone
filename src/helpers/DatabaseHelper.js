@@ -10,10 +10,11 @@ export async function getAssignmentsForCourse(db, userCourse) {
     // Get assignments collection.
     const assignments = await db.collection("assignments").where('course', '==', userCourse).get()
 
-    // Add each assignment to a list and update state.
+    // Add each assignment to a list.
     assignments.forEach(doc => {
         assignmentData.push(doc.data())
     })
 
+    // Return list of assignment objects.
     return assignmentData
 }
