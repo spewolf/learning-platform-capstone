@@ -45,6 +45,42 @@ function checkBinarySubtraction(q, answer) {
   return correct === answer_base2;
 }
 
+export function getHelp(q) {
+  switch (q.type) {
+    case "decimalToBinary":
+      return getDecimalToBinaryHelp(q);
+    case "binaryToDecimal":
+      return getBinaryToDecimalHelp(q);
+    case "binaryAddition":
+      return getBinaryAdditionHelp(q);
+    case "binarySubtraction":
+      return getBinarySubtractionHelp(q);
+    default:
+      console.log("Question type non-existent");
+      break;
+  }
+}
+
+function getDecimalToBinaryHelp(q) {
+  const correct = decimalToBinary(q.arguments[0]);
+  return correct;
+}
+
+function getBinaryToDecimalHelp(q) {
+  const correct = binaryToDecimal(q.arguments[0]);
+  return correct;
+}
+
+function getBinaryAdditionHelp(q) {
+  const correct = binaryAdd(q.arguments[0], q.arguments[1]);
+  return correct;
+}
+
+function getBinarySubtractionHelp(q) {
+  const correct = binarySubtract(q.arguments[0], q.arguments[1]);
+  return correct;
+}
+
 export function getAnswer(q) {
   switch (q.type) {
     case "decimalToBinary":
