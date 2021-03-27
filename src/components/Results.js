@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { getAnswer } from "../helpers/question.helper";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -9,6 +10,21 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1em",
     paddingBottom: "1em",
     paddingLeft: "1em",
+    "& h3": {
+      margin: "0",
+    },
+  },
+  header: {
+    display: "flex",
+    paddingTop: "1rem",
+  },
+  points: {
+    marginLeft: "auto",
+    marginRight: "1rem",
+  },
+  middleText: {
+    textAlign: "center",
+    width: "100%",
   },
 }));
 
@@ -21,12 +37,25 @@ export default function Results(props) {
         Score: {props.submission.score} / {props.submission.total}
       </p>
       {props.submission.questions.map((e, i) => {
-        const bar = e.result ? {borderTop: "4px solid green"} : {borderTop: "4px solid red"}
+        const bar = e.result ? { borderTop: "4px solid green" } : { borderTop: "4px solid red" };
         return (
           <Card className={classes.question} style={bar} key={i}>
-            <h3>{e.content}</h3>
-            <h5>You answered {e.result ? " correctly" : " incorrectly"}:</h5>
-            {e.answer}
+            <div className={classes.header}>
+              <h3>{e.content}</h3>
+              <div className={classes.points}>{e.points}pts</div>
+            </div>
+            <div className={classes.middleText}>
+              <h5>You answered {e.result ? " correctly" : " incorrectly"}:</h5>
+              {e.answer}
+              {!props.hideAnswers && !e.result ? (
+                <>
+                  <h5>The correct answer was:</h5>
+                  {getAnswer(e)}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
           </Card>
         );
       })}

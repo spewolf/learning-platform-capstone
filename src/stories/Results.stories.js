@@ -11,7 +11,13 @@ export default storyMetaData;
 
 const Template = (args) => <Results {...args} />;
 
-export const GradedResult = Template.bind({});
-GradedResult.args = {
+export const GradedResults = Template.bind({});
+GradedResults.args = {
   submission: mockSubmission
+};
+
+export const HiddenAnswersResults = Template.bind({});
+HiddenAnswersResults.args = {
+  submission: mockSubmission,
+  hideAnswers: true
 };

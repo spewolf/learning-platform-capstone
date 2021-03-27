@@ -2,7 +2,7 @@ import { LinearProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Question from "./Question";
-import checkAnswer from "../helpers/question.helper";
+import { checkAnswer } from "../helpers/question.helper";
 import Results from "./Results";
 
 const useStyles = makeStyles((theme) => ({

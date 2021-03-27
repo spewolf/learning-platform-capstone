@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1rem",
     height: "3rem",
   },
+  points: {
+    marginRight: "auto",
+    marginTop: "auto",
+    marginLeft: "0",
+    fontWeight: "bold",
+  }
 }));
 
 export default function Question(props) {
@@ -39,7 +45,7 @@ export default function Question(props) {
       Check
     </Button>
   ) : (
-    <></>
+    <div className={classes.points}>{props.question.points}pts</div>
   );
 
   return (

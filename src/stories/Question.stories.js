@@ -1,5 +1,6 @@
 import React from 'react';
 import mockAssignment from '../mocks/practiceAssignment.mock.json';
+import gradedAssignment from '../mocks/gradedAssignment.mock.json';
 
 import Question from '../components/Question';
 
@@ -18,6 +19,11 @@ PracticeQuestion.args = {
   onCheck: () => console.log("Checking"),
   onNext: () => console.log("Nexting"),
 };
+
+export const GradedQuestion = Template.bind({});
+GradedQuestion.args = {
+  question: gradedAssignment.questions[0]
+}
 
 export const CorrectPracticeQuestion = Template.bind({});
 CorrectPracticeQuestion.args = {
