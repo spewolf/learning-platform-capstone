@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper, TextField } from "@material-ui/core";
+import { getHelp } from "../helpers/question.helper";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     marginLeft: "0",
     fontWeight: "bold",
-  }
+  },
 }));
 
 export default function Question(props) {
@@ -34,9 +35,7 @@ export default function Question(props) {
     checkText = props.result ? (
       <p style={{ color: "green" }}>Correct!</p>
     ) : (
-      <p style={{ color: "red" }}>
-        Incorrect! If you need help, check out the <a href="/learning">learning module</a>!
-      </p>
+      (getHelp(props.question))
     );
   }
 

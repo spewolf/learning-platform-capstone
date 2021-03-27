@@ -62,23 +62,39 @@ export function getHelp(q) {
 }
 
 function getDecimalToBinaryHelp(q) {
-  const correct = decimalToBinary(q.arguments[0]);
-  return correct;
+  return (
+    <p style={{ color: "red" }}>
+      Incorrect! If you need help, check out the{" "}
+      <a href="/learning?module=DecToBin" target="_blank">Decimal to Binary module</a>!
+    </p>
+  );
 }
 
 function getBinaryToDecimalHelp(q) {
-  const correct = binaryToDecimal(q.arguments[0]);
-  return correct;
+  return (
+    <p style={{ color: "red" }}>
+      Incorrect! If you need help, check out the{" "}
+      <a href="/learning?module=BinToDec" target="_blank">Binary to Decimal module</a>!
+    </p>
+  );
 }
 
 function getBinaryAdditionHelp(q) {
-  const correct = binaryAdd(q.arguments[0], q.arguments[1]);
-  return correct;
+  return (
+    <p style={{ color: "red" }}>
+      Incorrect! If you need help, check out the{" "}
+      <a href="/learning?module=Add" target="_blank">Binary Addition module</a>!
+    </p>
+  );
 }
 
 function getBinarySubtractionHelp(q) {
-  const correct = binarySubtract(q.arguments[0], q.arguments[1]);
-  return correct;
+  return (
+    <p style={{ color: "red" }}>
+      Incorrect! If you need help, check out the{" "}
+      <a href="/learning?module=Sub" target="_blank">Binary Subtraction module</a>!
+    </p>
+  );
 }
 
 export function getAnswer(q) {

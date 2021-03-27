@@ -1,6 +1,6 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getAnswer } from "../helpers/question.helper";
+import { getAnswer, getHelp } from "../helpers/question.helper";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,6 +51,7 @@ export default function Results(props) {
                 <>
                   <h5>The correct answer was:</h5>
                   {getAnswer(e)}
+                  {getHelp(e)}
                 </>
               ) : (
                 <></>
