@@ -23,6 +23,8 @@ import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
 import Button from "@material-ui/core/Button";
 
+import logo from "../assets/bl_logo.png";
+
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
@@ -120,6 +122,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  logo: {
+    maxHeight: "3rem",
+  },
 }));
 
 function NavItem(props) {
@@ -213,7 +218,7 @@ export default function HeaderWithDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-            <Button href='/' size="large"><Typography style={{fontSize: 26, fontWeight: 700}}>Binary Learning</Typography></Button>
+            <Button href='/' size="large"><img className={classes.logo} src={logo} alt="Logo"/></Button>
             <div style={{width: "1%"}} />
             <Divider dark orientation="vertical" flexItem />
             <div style={{width: "1.5%"}} />
