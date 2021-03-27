@@ -1,23 +1,23 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DashboardIcon from '@material-ui/icons/Dashboard'; // Dashboard
-import AlarmIcon from '@material-ui/icons/Alarm' // Practice
-import SchoolIcon from '@material-ui/icons/School' // Learning
-import AssessmentIcon from '@material-ui/icons/Assessment' // Assessment
+import DashboardIcon from "@material-ui/icons/Dashboard"; // Dashboard
+import AlarmIcon from "@material-ui/icons/Alarm"; // Practice
+import SchoolIcon from "@material-ui/icons/School"; // Learning
+import AssessmentIcon from "@material-ui/icons/Assessment"; // Assessment
 import { useContext } from "react";
 import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
@@ -29,7 +29,7 @@ const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   header: {
     display: "flex",
@@ -50,15 +50,15 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(9),
   },
   toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
     ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 16,
   },
   menuButtonHidden: {
-    display: 'none',
+    display: "none",
   },
   title: {
     flexGrow: 1,
@@ -83,31 +83,31 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
   },
   drawerPaper: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
+    overflowX: "hidden",
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: theme.spacing(10),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+    height: "100vh",
+    overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -115,15 +115,18 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
   },
   fixedHeight: {
     height: 240,
   },
   logo: {
     maxHeight: "3rem",
+    marginTop: ".5rem",
+    paddingRight: "2rem",
+    paddingLeft: "1rem",
   },
 }));
 
@@ -140,14 +143,12 @@ function NavItem(props) {
 function LoginLinks(props) {
   const app = firebase.apps[0];
 
-  const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   let loginLinks;
 
   if (currentUser) {
-    loginLinks = (
-      <NavItem onClick={() => app.auth().signOut()}>Sign out</NavItem>
-    );
+    loginLinks = <NavItem onClick={() => app.auth().signOut()}>Sign out</NavItem>;
   } else {
     loginLinks = (
       <React.Fragment>
@@ -157,26 +158,23 @@ function LoginLinks(props) {
     );
   }
 
-  return (
-    <React.Fragment>
-      {loginLinks}
-    </React.Fragment>
-  );
+  return <React.Fragment>{loginLinks}</React.Fragment>;
 }
 
 export default function HeaderWithDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const icons = [<DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon/>];
-  const addresses = ['/dashboard', '/learning', '/practice', '/assessment'];
-  const labels = ['Dashboard', 'Learn', 'Practice', 'Assessments'];
+  const icons = [<DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon />];
+  const addresses = ["/dashboard", "/learning", "/practice", "/assessment"];
+  const labels = ["Dashboard", "Learn", "Practice", "Assessments"];
   const [tempOpen, setTempOpen] = React.useState(false);
   const drawerTimer = React.useRef();
 
-  React.useEffect(() => () => {
+  React.useEffect(
+    () => () => {
       clearTimeout(drawerTimer.current);
     },
-    [],
+    []
   );
 
   const handleDrawerOpen = () => {
@@ -190,20 +188,20 @@ export default function HeaderWithDrawer(props) {
 
   const hoverDrawerOpen = () => {
     drawerTimer.current = window.setTimeout(() => {
-      if(!open) {
+      if (!open) {
         handleDrawerOpen();
         setTempOpen(true);
       }
     }, 140);
   };
   const hoverDrawerClose = () => {
-    if(!open) clearTimeout(drawerTimer.current);
+    if (!open) clearTimeout(drawerTimer.current);
     else if (tempOpen) {
       handleDrawerClose();
     }
     setTempOpen(false);
   };
-  
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -218,13 +216,15 @@ export default function HeaderWithDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-            <Button href='/' size="large"><img className={classes.logo} src={logo} alt="Logo"/></Button>
-            <div style={{width: "1%"}} />
-            <Divider dark orientation="vertical" flexItem />
-            <div style={{width: "1.5%"}} />
-            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-              {props.location}
-            </Typography>
+          <a href="/" size="large">
+            <img className={classes.logo} src={logo} alt="Logo" />
+          </a>
+          <div style={{ width: "1%" }} />
+          <Divider dark orientation="vertical" flexItem />
+          <div style={{ width: "1.5%" }} />
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            {props.location}
+          </Typography>
           <div className={classes.spacer} />
           <LoginLinks />
         </Toolbar>
@@ -232,14 +232,14 @@ export default function HeaderWithDrawer(props) {
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
-          [classes.drawerPaper]: open, 
-          [classes.drawerPaperClose]: !open
+          [classes.drawerPaper]: open,
+          [classes.drawerPaperClose]: !open,
         })}
         classes={{
           paper: clsx({
             [classes.drawerPaper]: open,
-            [classes.drawerPaperClose] : !open
-          })
+            [classes.drawerPaperClose]: !open,
+          }),
         }}
         open={open}
         onMouseEnter={hoverDrawerOpen}
@@ -251,17 +251,17 @@ export default function HeaderWithDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        <div style={{height: "0.21em"}} />
-        <List style={{paddingLeft: "0.21em"}}>
-        {labels.map((text, index) => (
-          <ListItem button key={text} component="a" href={addresses[index]}>
-            <ListItemIcon>
-            <div style={{width: "8%"}} />
-              {icons[index]}
-            </ListItemIcon>
-            <ListItemText style={{paddingLeft: "0.5em"}} primary={text} />
-          </ListItem>
-        ))}
+        <div style={{ height: "0.21em" }} />
+        <List style={{ paddingLeft: "0.21em" }}>
+          {labels.map((text, index) => (
+            <ListItem button key={text} component="a" href={addresses[index]}>
+              <ListItemIcon>
+                <div style={{ width: "8%" }} />
+                {icons[index]}
+              </ListItemIcon>
+              <ListItemText style={{ paddingLeft: "0.5em" }} primary={text} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
     </React.Fragment>
