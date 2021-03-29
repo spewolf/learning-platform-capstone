@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
   logo: {
-    maxHeight: "3rem",
+    maxHeight: "2.25rem",
     marginTop: ".5rem",
     paddingRight: "2rem",
     paddingLeft: "1rem",
