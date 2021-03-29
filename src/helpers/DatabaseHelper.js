@@ -34,3 +34,15 @@ export async function getAssignment(db, id) {
 
     return data
 }
+
+/**
+ * Checks whether a given student has taken a given assignment already.
+ * @param {firebase.firestore.Firestore} db A reference to the Firestore database.
+ * @param {string} studentUID The UID of the student to search for.
+ * @param {string} assignmentUID The UID of the assignment to search for.
+ * @returns As a promise, true if the student has taken the assignment, false otherwise.
+ */
+export async function hasStudentTakenAssignment(db, studentUID, assignmentUID) {
+    const submissions = await db.collection("assignments").doc(assignmentUID).collection("submissions").where("studentID", "==", studentUID).get()
+    return !submissions.empty
+}
