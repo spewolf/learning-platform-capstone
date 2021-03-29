@@ -10,7 +10,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import GradedQuiz from './GradedQuiz'
 import { cleanDate } from '../helpers/Formatting'
-import { getAssignment, getAssignmentsForCourse } from '../helpers/DatabaseHelper'
+import {
+  getAssignment,
+  getAssignmentsForCourse,
+  hasStudentTakenAssignment
+} from '../helpers/DatabaseHelper'
+import { getTotalAssignmentPoints } from '../helpers/Statistics'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -57,9 +62,25 @@ const AssessmentModule = (props) => {
   useEffect(() => {
     // Only called if no assignment was provided in the query strings or if the provided assignment is invalid.
     function getValidAssignments() {
-      const promise = getAssignmentsForCourse(db, userCourse)
-      promise.then((assignments) => {
-        setAssignmentObjects(assignments)
+      const assignmentsPromise = getAssignmentsForCourse(db, userCourse)
+      assignmentsPromise.then((assignments) => {
+        var validAssignments = []
+
+        // For each assignment, check if the student has already taken it
+        assignments.forEach((assignment, index) => {
+          const hasTakenPromise = hasStudentTakenAssignment(db, currentUser.uid, assignment.id)
+          hasTakenPromise.then((hasTaken) => {
+
+            // Student has not taken this assignment, so we can add it to validAssignments
+            assignment.hasTaken = hasTaken
+            validAssignments.push(assignment)
+
+            // If this is the last assignment, update the assignment objects array state.
+            if(index === assignments.length-1) {
+              setAssignmentObjects(validAssignments)
+            }
+          })
+        })
       })
     }
 
@@ -67,19 +88,22 @@ const AssessmentModule = (props) => {
     if (qs.id) { // An assignment was specified via the query strings.
       const promise = getAssignment(db, qs.id)
       promise.then((assignment) => {
-        console.log(assignment)
-        const isValidAssignment = assignment.course && assignment.course === userCourse
-        if (isValidAssignment) { // Show assignment.
-          setAssignment(assignment)
-          setShowAssignment(true)
-        } else { // Get list of valid assignments to show instead.
-          getValidAssignments()
-        }
+        const hasTakenPromise = hasStudentTakenAssignment(db, currentUser.uid, assignment.id)
+        hasTakenPromise.then((hasTaken) => {
+          // Valid if the assignment has a course name, it's equal to the user's course, and the user has not taken it yet.
+          const isValidAssignment = assignment.course && assignment.course === userCourse && !hasTaken
+          if (isValidAssignment) { // Show assignment.
+            setAssignment(assignment)
+            setShowAssignment(true)
+          } else { // Get list of valid assignments to show instead.
+            getValidAssignments()
+          }
+        })
       })
     } else {
       getValidAssignments()
     }
-  }, [setAssignment, setShowAssignment, setAssignmentObjects, db, userCourse, props.location.search])
+  }, [setAssignment, setShowAssignment, setAssignmentObjects, db, userCourse, currentUser, props.location.search])
 
   // Called when the user clicks on one of the assignment buttons to begin the assignment.
   const startAssignment = (index) => {
@@ -97,9 +121,15 @@ const AssessmentModule = (props) => {
                 <p style={assignmentObjects.length>0 ? {display: "none"} : {}}>You have no assignments.</p>
                 <div style={assignmentObjects.length>0 ? {} : {display: "none"}}>
                   {assignmentObjects.map((data, index) => (
-                    <div style={{padding: ".3em"}}>
-                      <Button color="primary" onClick={() => startAssignment(index)} style={{padding: "0em"}}><strong>{data.title}</strong></Button>
-                      <p style={{margin: "0em"}}>{data.questions.length} {data.questions.length === 1 ? "Question" : "Questions"}</p>
+                    <div style={{padding: ".3em"}} key={index}>
+                      <Button
+                        disabled={data.hasTaken}
+                        color="primary"
+                        onClick={() => startAssignment(index)}
+                        style={{padding: "0em"}}>
+                          <strong>{(data.hasTaken ? "[ALREADY SUBMITTED] " : "") + data.title}</strong>
+                        </Button>
+                      <p style={{margin: "0em"}}>{getTotalAssignmentPoints(data)} {getTotalAssignmentPoints(data) === 1 ? "Point" : "Points"} | {data.questions.length} {data.questions.length === 1 ? "Question" : "Questions"}</p>
                       <p style={{margin: "0em"}}>Due {cleanDate(new Date(data.due.seconds*1000))}</p>
                       <hr/>
                     </div>
