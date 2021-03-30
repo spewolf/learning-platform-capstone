@@ -1,7 +1,7 @@
 import {padBinaryWithZeros, decimalToBinary} from './binary.helpers'
 import {getRandomBase10, getRandomBase2} from './Random'
 
-export function generateBinToDecQuestion() {
+export function generateBinToDecQuestion(points) {
     const num = getRandomBase2("00000000", "100000000");
     const type = "binaryToDecimal"
     const content = "What is the decimal form of " + padBinaryWithZeros(num, 8) + "(base2)?"
@@ -10,13 +10,14 @@ export function generateBinToDecQuestion() {
     const JSON = {
         "type": type,
         "content": content,
-        "arguments": args
+        "arguments": args,
+        "points": points
     }
 
     return JSON
 }
 
-export function generateDecToBinQuestion() {
+export function generateDecToBinQuestion(points) {
     const num = getRandomBase10(0, 256);
     const type = "decimalToBinary"
     const content = "What is the binary form of " + num + "(base10)?"
@@ -25,13 +26,14 @@ export function generateDecToBinQuestion() {
     const JSON = {
         "type": type,
         "content": content,
-        "arguments": args
+        "arguments": args,
+        "points": points
     }
 
     return JSON
 }
 
-export function generateAdditionQuestion() {
+export function generateAdditionQuestion(points) {
     const num1 = getRandomBase10(0, 256);
     const num2 = getRandomBase10(0, 256-num1); // Lower upper bound to avoid overflow in solution.
     const num1Bin = decimalToBinary(num1)
@@ -44,13 +46,14 @@ export function generateAdditionQuestion() {
     const JSON = {
         "type": type,
         "content": content,
-        "arguments": args
+        "arguments": args,
+        "points": points
     }
 
     return JSON
 }
 
-export function generateSubtractionQuestion() {
+export function generateSubtractionQuestion(points) {
     const num1 = getRandomBase10(0, 256);
     const num2 = getRandomBase10(0, num1); // Lower upper bound to avoid underflow in solution.
     const num1Bin = decimalToBinary(num1)
@@ -63,7 +66,8 @@ export function generateSubtractionQuestion() {
     const JSON = {
         "type": type,
         "content": content,
-        "arguments": args
+        "arguments": args,
+        "points": points
     }
 
     return JSON
@@ -72,29 +76,52 @@ export function generateSubtractionQuestion() {
 /**
  * @param questionGenerators An array of pointers to functions that generate desired questions.
  * @param numberOfQuestions The number of questions in the assignment.
- * @param type The type of assignment ("graded" or "ungraded")
- * @param course The course ID of the course which created this assignment.
- * @param title The title of the assignment.
  * 
  * @returns An assignment JSON with randomly generated questions.
  */
-export function generateAssignment(questionGenerators, numberOfQuestions, type, course, title) {
+export function generatePracticeAssignment(questionGenerators, numberOfQuestions) {
     // Set up JSON
     var JSON = {
-        "type": type,
+        "type": "ungraded",
+        "course": "N/A",
+        "title": "Practice",
+        "questions": []
+    }
+
+    // Fill with questions based on given questionGenerators.
+    if (questionGenerators.length > 0) {
+        for (var i = 0; i < numberOfQuestions; i++) {
+            const questionType = getRandomBase10(0, questionGenerators.length)
+
+            JSON.questions.push(questionGenerators[questionType](0))
+        }
+    }
+
+    return JSON
+}
+
+/**
+ * Generates a graded assignment with the given question information, course name, and title.
+ * @param {Map<Function, Object} questionGeneratorMap A map from a question generator function to an object containing "quantity" and "points" elements.
+ * @param {String} course The course ID of the course which created this assignment.
+ * @param {String} title The title of this assignment.
+ */
+export function generateGradedAssignment(questionGeneratorMap, course, title) {
+    // Set up JSON
+    var JSON = {
+        "type": "graded",
         "course": course,
         "title": title,
         "questions": []
     }
 
-    // Fill with questions based on questionTypes parameter.
-    if (questionGenerators.length > 0) {
-        for (var i = 0; i < numberOfQuestions; i++) {
-            const questionType = getRandomBase10(0, questionGenerators.length)
-
-            JSON.questions.push(questionGenerators[questionType]())
+    // Fill questions based on given question information.
+    questionGeneratorMap.forEach((info, generator) => {
+        console.log(info)
+        for (var i = 0; i < info.quantity; i++) {
+            JSON.questions.push(generator(info.points))
         }
-    }
+    })
 
     return JSON
 }
