@@ -108,7 +108,7 @@ export default function InstructorDashboard(props) {
       });
     }
     getAllAssignments();
-  }, [false]);
+  }, [db, userCourse]);
 
   return (
     <div>

@@ -1,15 +1,16 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, Paper, LinearProgress, Accordion, AccordionSummary, 
-         AccordionDetails, List, ListItem, ListSubheader, ListItemText, 
-         Link } from '@material-ui/core';
+import { Container, Paper, Link, Accordion, AccordionSummary, 
+         AccordionDetails, List, ListItem, ListSubheader, ListItemText 
+       } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getAssignmentsForCourse } from "../helpers/DatabaseHelper";
 import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
 
-
 import * as names from '../LearningModuleNames'
+
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +55,7 @@ export default function StudentDashboard(props) {
       });
     }
     getAllAssignments();
-  }, [false]);
+  }, [db, userCourse]);
 
   return (
     <Container component="main" className={classes.content} maxWidth="" style={{display: "flex"}}>
@@ -136,23 +137,26 @@ export default function StudentDashboard(props) {
         <div style={{width: "43%"}}>
           <Paper elevation={3}>
             <h1 style={{paddingLeft: "0.9em", paddingTop: "0.6em"}}>Assignments</h1>
-            <LinearProgress variant="definite" />
-            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Current</ListSubheader>} >
+            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1em"}}>Current</ListSubheader>} >
               {ongoingAssignments.map((a) => 
-                <Link href={`/assessment?id=${a.id}`}>
-                  <ListItem style={{paddingLeft: "2em"}} button>
-                    <ListItemText primary={a.title} />
-                  </ListItem>
-                </Link>
+                <ListItem button component="a" href={`/assessment?id=${a.id}`}>
+                  <ListItemText style={{paddingLeft: "1em"}} primary={a.title} />
+                  <ListItemText 
+                    style={{textAlign: "right", paddingRight: "1em"}} 
+                    primary={`${months[a.due.toDate().getMonth()]} ${a.due.toDate().getDate()}`} 
+                  />
+                </ListItem>
               )}
             </List>
-            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Past</ListSubheader>} >
+            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1em"}}>Past</ListSubheader>} >
               {completedAssignments.map((a) => 
-                <Link href={`/assessment?id=${a.id}`}>
-                  <ListItem style={{paddingLeft: "2em"}} button href={`/assessment?id=${a.id}`}>
-                    <ListItemText primary={a.title} href={`/assessment?id=${a.id}`}/>
-                  </ListItem>
-                </Link>
+                <ListItem button disabled component="a" href={`/assessment?id=${a.id}`}>
+                  <ListItemText style={{paddingLeft: "1em"}} primary={a.title} />
+                  <ListItemText 
+                    style={{textAlign: "right", paddingRight: "1em"}} 
+                    primary={`${months[a.due.toDate().getMonth()]} ${a.due.toDate().getDate()}`}
+                  />
+                </ListItem>
               )}
             </List>
           </Paper>
