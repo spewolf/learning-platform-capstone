@@ -98,6 +98,7 @@ export default function Quiz(props) {
         </div>
       );
     }
+    // eslint-disable-next-line
   }, [numberCompleted, numberQuestions, result, question, value, props]);
 
   return (

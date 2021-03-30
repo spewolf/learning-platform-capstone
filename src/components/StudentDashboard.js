@@ -1,7 +1,13 @@
-import React from 'react';
-import { Container, Paper, LinearProgress, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListSubheader, ListItemText, Link } from '@material-ui/core';
+import React, { useEffect, useContext } from 'react';
+import { Container, Paper, LinearProgress, Accordion, AccordionSummary, 
+         AccordionDetails, List, ListItem, ListSubheader, ListItemText, 
+         Link } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getAssignmentsForCourse } from "../helpers/DatabaseHelper";
+import firebase from "firebase";
+import { AuthContext } from "./AuthProvider";
+
 
 import * as names from '../LearningModuleNames'
 
@@ -26,6 +32,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StudentDashboard(props) {
   const classes = useStyles();
+  const [ongoingAssignments, setOngoing] = React.useState([]);
+  const [completedAssignments, setCompleted] = React.useState([]);
+
+  const app = firebase.apps[0];
+  const db = firebase.firestore(app);
+  const { currentUser } = useContext(AuthContext);
+  const userCourse = currentUser.data.course;
+
+  useEffect(() => {
+    function getAllAssignments() {
+      getAssignmentsForCourse(db, userCourse)
+      .then((assignments) => {
+        let ongoing = [];
+        let completed = [];
+        assignments.forEach((a) => {
+          a.due.toDate() > Date.now() ? ongoing.push(a) : completed.push(a);
+        })
+        setOngoing(ongoing);
+        setCompleted(completed);
+      });
+    }
+    getAllAssignments();
+  }, [false]);
+
   return (
     <Container component="main" className={classes.content} maxWidth="" style={{display: "flex"}}>
       <div style={{display: "flex", width: "100%", margin: "1em"}}>
@@ -107,16 +137,23 @@ export default function StudentDashboard(props) {
           <Paper elevation={3}>
             <h1 style={{paddingLeft: "0.9em", paddingTop: "0.6em"}}>Assignments</h1>
             <LinearProgress variant="definite" />
-            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Upcoming</ListSubheader>} >
-              <ListItem role={undefined} style={{paddingLeft: "2em"}} button>
-                <ListItemText primary="Assignment 1" />
-              </ListItem>
-              <ListItem style={{paddingLeft: "2em"}} button>
-                <ListItemText primary="Assignment 2" />
-              </ListItem>
-              <ListItem style={{paddingLeft: "2em"}} button disabled>
-                <ListItemText primary="Quiz 1" />
-              </ListItem>
+            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Current</ListSubheader>} >
+              {ongoingAssignments.map((a) => 
+                <Link href={`/assessment?id=${a.id}`}>
+                  <ListItem style={{paddingLeft: "2em"}} button>
+                    <ListItemText primary={a.title} />
+                  </ListItem>
+                </Link>
+              )}
+            </List>
+            <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1.5em"}}>Past</ListSubheader>} >
+              {completedAssignments.map((a) => 
+                <Link href={`/assessment?id=${a.id}`}>
+                  <ListItem style={{paddingLeft: "2em"}} button href={`/assessment?id=${a.id}`}>
+                    <ListItemText primary={a.title} href={`/assessment?id=${a.id}`}/>
+                  </ListItem>
+                </Link>
+              )}
             </List>
           </Paper>
         </div>

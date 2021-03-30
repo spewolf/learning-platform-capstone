@@ -16,7 +16,7 @@ import StudentInfo from "./components/StudentInfo";
 import TeacherInfo from "./components/TeacherInfo";
 import ProfilePage from "./components/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
-import CssBaseline from "@material-ui/core/CssBaseline"
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {

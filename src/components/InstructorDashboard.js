@@ -1,9 +1,14 @@
-import React from 'react';
-import { Container, Paper, Typography, Accordion, AccordionSummary, AccordionDetails, IconButton, FormLabel, List, ListItem, ListItemText, Link, Button, Grid, Backdrop, TextField } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react';
+import { Container, Paper, Typography, Accordion, AccordionSummary, 
+         AccordionDetails, IconButton, FormLabel, List, ListItem, 
+         ListItemText, Link, Button, Grid, Backdrop, TextField } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CreateIcon from "@material-ui/icons/Create";
 import CloseIcon from "@material-ui/icons/Close";
+import { getAssignmentsForCourse } from "../helpers/DatabaseHelper";
+import firebase from "firebase";
+import { AuthContext } from "./AuthProvider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,48 +50,65 @@ const useStyles = makeStyles((theme) => ({
 export default function InstructorDashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [submittable, setSubmit] = React.useState(false);
-  const [numBinToDec, setBinToDec] = React.useState("");
-  const [numDecToBin, setDecToBin] = React.useState("");
-  const [numBinAdd, setBinAdd] = React.useState("");
-  const [numBinSub, setBinSub] = React.useState("");
+  const [ongoingAssignments, setOngoing] = React.useState([]);
+  const [completedAssignments, setCompleted] = React.useState([]);
+  const [numBinToDec, setBinToDec] = React.useState("0");
+  const [numDecToBin, setDecToBin] = React.useState("0");
+  const [numBinAdd, setBinAdd] = React.useState("0");
+  const [numBinSub, setBinSub] = React.useState("0");
+  const submittable = !(isNaN(parseInt(numBinToDec)) || isNaN(parseInt(numDecToBin)) || 
+                        isNaN(parseInt(numBinAdd)) || isNaN(parseInt(numBinSub)) || 
+                        (parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
+                        parseInt(numBinAdd) === 0 && parseInt(numBinSub) === 0) ||
+                        parseInt(numBinToDec) < 0 ||  parseInt(numDecToBin) < 0 ||
+                        parseInt(numBinAdd) < 0 ||  parseInt(numBinSub) < 0);
   const handleToggle = (e) => {
     setOpen(!open);
   };
-  const handleSubmittable = () => {
-    if (isNaN(parseInt(numBinToDec)) || 
-    isNaN(parseInt(numDecToBin)) || 
-    isNaN(parseInt(numBinAdd)) || 
-    isNaN(parseInt(numBinSub)) || 
-    (parseInt(numBinToDec) === 0 && 
-    parseInt(numDecToBin) === 0 && 
-    parseInt(numBinAdd) === 0 && 
-    parseInt(numBinSub) === 0) ||
-    parseInt(numBinToDec) < 0 ||
-    parseInt(numDecToBin) < 0 ||
-    parseInt(numBinAdd) < 0 ||
-    parseInt(numBinSub) < 0) setSubmit(false);
-    else setSubmit(true);
-  };
   const handleSubmit = (e) => {
-    // TODO: pass quiz object up to database
   };
   const handleBinToDec = (e) => {
     setBinToDec(e.target.value);
-    handleSubmittable();
   };
   const handleDecToBin = (e) => {
     setDecToBin(e.target.value);
-    handleSubmittable();
   };
   const handleBinAdd = (e) => {
     setBinAdd(e.target.value);
-    handleSubmittable();
   };
   const handleBinSub = (e) => {
     setBinSub(e.target.value);
-    handleSubmittable();
   };
+  const emptyAssignment = {
+    "uid": "",
+    "type": "",
+    "due": "",
+    "course": "",
+    "title": "",
+    "questions": [
+      {"content": ""}
+    ]
+  };
+  const app = firebase.apps[0];
+  const db = firebase.firestore(app);
+  const { currentUser } = useContext(AuthContext);
+  const userCourse = currentUser.data.course;
+
+  useEffect(() => {
+    function getAllAssignments() {
+      getAssignmentsForCourse(db, userCourse)
+      .then((assignments) => {
+        let ongoing = [];
+        let completed = [];
+        assignments.forEach((a) => {
+          a.due.toDate() > Date.now() ? ongoing.push(a) : completed.push(a);
+        })
+        setOngoing(ongoing);
+        setCompleted(completed);
+      });
+    }
+    getAllAssignments();
+  }, [false]);
 
   return (
     <div>
@@ -101,28 +123,28 @@ export default function InstructorDashboard(props) {
             </Grid>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
-                <FormLabel label="Binary to Decimal:" value="BinToDec">Binary to Decimal:</FormLabel>
+                <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleBinToDec} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
-                <FormLabel label="Decimal to Binary:" value="DecToBin">Decimal to Binary:</FormLabel>
+                <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleDecToBin} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
-                <FormLabel label="Binary Addition:" value="BinAdd">Binary Addition:</FormLabel>
+                <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleBinAdd} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
-                <FormLabel label="Binary Subtraction" value="BinSub">Binary Subtraction:</FormLabel>
+                <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleBinSub} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
@@ -153,72 +175,51 @@ export default function InstructorDashboard(props) {
                   Create
                 </Button>
               </Grid>
-              {/* TODO: pull all ongoing assignments from database, map to an accordion */}
-              <Accordion style={{paddingLeft: "1em"}}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography className={classes.header}>Assignment 1</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List>
-                    <ListItem style={{paddingLeft: "2em"}}>
-                      <ListItemText primary="Mean: ">
-                        {/* Implement mean */}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem style={{paddingLeft: "2em"}}>
-                      <ListItemText primary="Median: ">
-                        {/* Implement median */}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <Link href="/stats" button>More...</Link>
-                    </ListItem>
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion style={{paddingLeft: "1em"}}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography className={classes.header}>Assignment 2</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  
-                </AccordionDetails>
-              </Accordion>
-              <Accordion style={{paddingLeft: "1em"}}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography className={classes.header}>Quiz 1</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-
-                </AccordionDetails>
-              </Accordion>
+              {ongoingAssignments.map((a) =>
+                <Accordion style={{paddingLeft: "1em", width: "100%"}}>
+                  <AccordionSummary 
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography className={classes.header}>{a.title}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <List>
+                      <ListItem style={{paddingLeft: "2em"}}>
+                        <ListItemText primary="Mean: ">
+                          {/* Implement mean */}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem style={{paddingLeft: "2em"}}>
+                        <ListItemText primary="Median: ">
+                          {/* Implement median */}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <Link href="/stats" button>More...</Link>
+                      </ListItem>
+                    </List>
+                  </AccordionDetails>
+                </Accordion>
+              )}
             </Paper>
           </div>
           <div style={{width: "4%"}} />
           <div style={{width: "43%"}}>
             <Paper elevation={3}>
               <h1 style={{paddingLeft: "0.9em", paddingTop: "0.6em"}}>Completed</h1>
-              <Accordion style={{paddingLeft: "1em"}}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography className={classes.header}>Assignment 0</Typography>
-                </AccordionSummary>
-              </Accordion>
+              {completedAssignments.map((a, index) => (
+                <Accordion style={{paddingLeft: "1em", width: "100%"}}>
+                  <AccordionSummary 
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography className={classes.header}>{a.title}</Typography>
+                  </AccordionSummary>
+                </Accordion>
+              ))}
             </Paper>
           </div>
         </div>
