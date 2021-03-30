@@ -10,7 +10,7 @@ import {
   generateDecToBinQuestion,
   generateAdditionQuestion,
   generateSubtractionQuestion,
-  generateAssignment
+  generatePracticeAssignment
 } from '../helpers/AssignmentGenerator'
 import Quiz from './Quiz'
 
@@ -71,7 +71,7 @@ export default function PracticeModule(props) {
       functions.push(generateSubtractionQuestion)
     }
 
-    setAssignment(generateAssignment(functions, parseInt(numberOfQuestions), "ungraded", "dummyCourse", "Practice"));
+    setAssignment(generatePracticeAssignment(functions, parseInt(numberOfQuestions)));
     setShowAssignment(true);
   };
 

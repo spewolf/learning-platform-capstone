@@ -5,6 +5,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CreateIcon from "@material-ui/icons/Create";
 import CloseIcon from "@material-ui/icons/Close";
 
+import {
+  generateBinToDecQuestion,
+  generateDecToBinQuestion,
+  generateAdditionQuestion,
+  generateSubtractionQuestion,
+  generateGradedAssignment
+} from '../helpers/AssignmentGenerator'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -43,6 +51,15 @@ const useStyles = makeStyles((theme) => ({
 // });
 
 export default function InstructorDashboard(props) {
+  // DAVID!  THIS IS HOW YOU CAN NOW GENERATE ASSIGNMENTS :D
+  var generatorMap = new Map()
+  generatorMap.set(generateBinToDecQuestion, {"quantity": 10, "points": 1})
+  generatorMap.set(generateDecToBinQuestion, {"quantity": 1, "points": 10})
+  generatorMap.set(generateAdditionQuestion, {"quantity": 5, "points": 3})
+  generatorMap.set(generateSubtractionQuestion, {"quantity": 1, "points": 42})
+  var newAssignment = generateGradedAssignment(generatorMap, "Course Name", "Title")
+  console.log(newAssignment)
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [submittable, setSubmit] = React.useState(false);
