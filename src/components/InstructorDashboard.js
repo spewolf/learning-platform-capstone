@@ -39,17 +39,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// let docQuery = this._db.collection('communityProgramPost');
-// const response = await docQuery.get();
-// const post = response.docs.map(doc => {
-//   const post = doc.data();
-//   post.id = doc.id;
-//   return post;
-// });
-
 export default function InstructorDashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [assignmentName, setAssignmentName] = React.useState("");
   const [ongoingAssignments, setOngoing] = React.useState([]);
   const [completedAssignments, setCompleted] = React.useState([]);
   const [numBinToDec, setBinToDec] = React.useState("0");
@@ -61,9 +54,13 @@ export default function InstructorDashboard(props) {
                         (parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
                         parseInt(numBinAdd) === 0 && parseInt(numBinSub) === 0) ||
                         parseInt(numBinToDec) < 0 ||  parseInt(numDecToBin) < 0 ||
-                        parseInt(numBinAdd) < 0 ||  parseInt(numBinSub) < 0);
-  const handleToggle = (e) => {
+                        parseInt(numBinAdd) < 0 ||  parseInt(numBinSub) < 0 ||
+                        assignmentName === "");
+  const handleToggle = () => {
     setOpen(!open);
+  };
+  const handleName = (e) => {
+    setAssignmentName(e.target.value);
   };
   const handleSubmit = (e) => {
   };
@@ -79,16 +76,16 @@ export default function InstructorDashboard(props) {
   const handleBinSub = (e) => {
     setBinSub(e.target.value);
   };
-  const emptyAssignment = {
-    "uid": "",
-    "type": "",
-    "due": "",
-    "course": "",
-    "title": "",
-    "questions": [
-      {"content": ""}
-    ]
-  };
+  // const emptyAssignment = {
+  //   "uid": "",
+  //   "type": "",
+  //   "due": "",
+  //   "course": "",
+  //   "title": "",
+  //   "questions": [
+  //     {"content": ""}
+  //   ]
+  // };
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
   const { currentUser } = useContext(AuthContext);
@@ -114,36 +111,36 @@ export default function InstructorDashboard(props) {
     <div>
       <Backdrop className={classes.backdrop} open={open}>
         <form>
-          <Paper style={{padding: "2em", paddingTop: "0.5em", justify: "center"}}>
-            <Grid container alignItems="center" justify="space-between">
-              <h1>New Assignment</h1>
-              <IconButton onClick={handleToggle}>
+          <Paper style={{padding: "1.5em", paddingBottom: "2em", justify: "center"}}>
+            <Grid container alignItems="flex-start" justify="space-between">
+              <TextField style={{paddingBottom: "1em", paddingTop: "1.5em"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
+              <IconButton style={{marginTop: "0.75em"}} onClick={handleToggle}>
                 <CloseIcon />
               </IconButton>
             </Grid>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
+              <div style={{width: "40%", textAlign: "right"}}>
                 <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleBinToDec} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
+              <div style={{width: "40%", textAlign: "right"}}>
                 <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleDecToBin} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
+              <div style={{width: "40%", textAlign: "right"}}>
                 <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
               <TextField onChange={handleBinAdd} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
+              <div style={{width: "40%", textAlign: "right"}}>
                 <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
               </div>
               <div style={{width: "1em"}} />
