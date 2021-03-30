@@ -9,7 +9,7 @@ import firebase from "firebase";
  * @returns A promise to get the assignment data.
  */
 export async function getAssignmentsForCourse(db, userCourse) {
-    var assignmentData = [];
+    var assignmentData = []
 
     // Get assignments collection.
     const assignments = await db.collection("assignments").where('course', '==', userCourse).get()
@@ -49,4 +49,21 @@ export async function getAssignment(db, id) {
 export async function hasStudentTakenAssignment(db, studentUID, assignmentUID) {
     const submissions = await db.collection("assignments").doc(assignmentUID).collection("submissions").where("studentID", "==", studentUID).get()
     return !submissions.empty
+}
+
+/**
+ * Gets all of the submissions for a given assignment from the given database.
+ * @param {firebase.firestore.Firestore} db A reference to the Firestore database.
+ * @param {string} assignmentUID The UID of the assignment to get the submissions of.
+ * @returns As a promise, info on all of the submissions for the given assignment.
+ */
+export async function getSubmissions(db, assignmentUID) {
+    var data = []
+    const submissions =  await db.collection("assignments").doc(assignmentUID).collection("submissions").get()
+
+    submissions.forEach(doc => {
+        data.push(doc.data())
+    })
+
+    return data
 }
