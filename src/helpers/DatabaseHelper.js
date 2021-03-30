@@ -1,3 +1,7 @@
+// Needed for javadocs
+// eslint-disable-next-line
+import firebase from "firebase";
+
 /**
  * Gets all of the assignments assigned to a given course.
  * @param {firebase.firestore.Firestore} db A reference to the Firestore database.
