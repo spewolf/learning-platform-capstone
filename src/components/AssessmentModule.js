@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { AuthContext } from "./AuthProvider.js";
-import firebase from "firebase";
 
+import firebase from "firebase";
 import queryString from 'query-string'
 
 import { Button, Container, Paper } from '@material-ui/core';
@@ -15,7 +15,7 @@ import {
   getAssignmentsForCourse,
   hasStudentTakenAssignment
 } from '../helpers/DatabaseHelper'
-import { getTotalAssignmentPoints } from '../helpers/Statistics'
+import { getTotalAssignmentPoints } from '../helpers/StatisticsHelper'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -86,8 +86,8 @@ const AssessmentModule = (props) => {
 
     const qs = queryString.parse(props.location.search)
     if (qs.id) { // An assignment was specified via the query strings.
-      const promise = getAssignment(db, qs.id)
-      promise.then((assignment) => {
+      const assignmentPromise = getAssignment(db, qs.id)
+      assignmentPromise.then((assignment) => {
         const hasTakenPromise = hasStudentTakenAssignment(db, currentUser.uid, assignment.id)
         hasTakenPromise.then((hasTaken) => {
           // Valid if the assignment has a course name, it's equal to the user's course, and the user has not taken it yet.

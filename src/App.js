@@ -6,6 +6,7 @@ import { AuthProvider } from "./components/AuthProvider";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import Statistics from "./components/Statistics";
 import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
 import AssessmentModule from "./components/AssessmentModule";
@@ -68,6 +69,7 @@ function App(props) {
                 <Route path="/register/teacher" render={() => <TeacherInfo setLocation={setLocation}/>} />
                 <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
                 <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
+                <PrivateRoute path="/stats" render={() => <Statistics setLocation={setLocation}/>} />
                 <PrivateRoute path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
