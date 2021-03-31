@@ -96,16 +96,16 @@ export default function InstructorDashboard(props) {
   const handleBinSub = (e) => {
     setBinSub(e.target.value);
   };
-  const emptyAssignment = {
-    "uid": "",
-    "type": "",
-    "due": "",
-    "course": "",
-    "title": "",
-    "questions": [
-      {"content": ""}
-    ]
-  };
+  // const emptyAssignment = {
+  //   "uid": "",
+  //   "type": "",
+  //   "due": "",
+  //   "course": "",
+  //   "title": "",
+  //   "questions": [
+  //     {"content": ""}
+  //   ]
+  // };
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
   const { currentUser } = useContext(AuthContext);
