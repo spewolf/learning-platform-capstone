@@ -130,8 +130,8 @@ export default function InstructorDashboard(props) {
         <form>
           <Paper style={{padding: "1.5em", paddingBottom: "2em", justify: "center"}}>
             <Grid container alignItems="flex-start" justify="space-between">
-              <TextField style={{paddingBottom: "1em", paddingTop: "1.5em"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
-              <IconButton style={{marginTop: "0.75em"}} onClick={handleToggle}>
+              <TextField style={{paddingBottom: "1em", width: "83%"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
+              <IconButton style={{marginTop: "0em"}} onClick={handleToggle}>
                 <CloseIcon />
               </IconButton>
             </Grid>
