@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { School } from "@material-ui/icons";
 
+import { isCourseNameUnique } from '../helpers/DatabaseHelper'
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,18 +50,27 @@ const TeacherInfo = ({ history }) => {
       event.preventDefault();
       const { name, course } = event.target.elements;
       const type = "instructor";
-      try {
-        const data = {
-          name: name.value,
-          course: course.value,
-          type: type,
+
+      // Make sure course name does not already exist.  THIS IS IMPORTANT.
+      const isUniquePromise = isCourseNameUnique(db, course.value)
+      isUniquePromise.then(async (isUnique) => {
+        if (isUnique) {
+          try {
+            const data = {
+              name: name.value,
+              course: course.value,
+              type: type
+            }
+            await db.collection("users").doc(currentUser.uid).set(data);
+            currentUser.data = data;
+            history.push("/");
+          } catch (error) {
+            alert(error);
+          }
+        } else {
+          alert("Error: That course name already exists.")
         }
-        await db.collection("users").doc(currentUser.uid).set(data);
-        currentUser.data = data;
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
+      })
     },
     [history, db, currentUser]
   );

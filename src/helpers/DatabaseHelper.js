@@ -67,3 +67,16 @@ export async function getSubmissions(db, assignmentUID) {
 
     return data
 }
+
+/**
+ * Checks if a course name is unique, ie does not already exist in the database.
+ * @param {firebase.firestore.Firestore} db A reference to the Firestore database.
+ * @param {String} courseName The name of the course to search for.
+ * @returns {boolean} True if this course name is unique.  False otherwise.
+ */
+export async function isCourseNameUnique(db, courseName) {
+    const assignments = await db.collection("users").where("type", "==", "instructor").where("course", "==", courseName).get()
+
+    // Course name is unique iff the above query returns zero results.
+    return assignments.docs.length === 0
+}
