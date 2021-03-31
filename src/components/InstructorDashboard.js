@@ -48,8 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InstructorDashboard(props) {
-  // DAVID!  THIS IS HOW YOU CAN NOW GENERATE ASSIGNMENTS :D
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [assignmentName, setAssignmentName] = React.useState("");
@@ -63,6 +61,10 @@ export default function InstructorDashboard(props) {
   const [numDTBPts, setDTBPts] = React.useState("0");
   const [numBAPts, setBAPts] = React.useState("0");
   const [numBSPts, setBSPts] = React.useState("0");
+  const { currentUser } = useContext(AuthContext);
+  const userCourse = currentUser.data.course;
+  const app = firebase.apps[0];
+  const db = firebase.firestore(app);
 
   // TODO: Relegate this to respective error functions
   const submittable = !(isNaN(parseInt(numBinToDec)) || isNaN(parseInt(numDecToBin)) || 
@@ -91,7 +93,8 @@ export default function InstructorDashboard(props) {
     generatorMap.set(generateDecToBinQuestion, {"quantity": numDecToBin, "points": numDTBPts});
     generatorMap.set(generateAdditionQuestion, {"quantity": numBinAdd, "points": numBAPts});
     generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": numBSPts});
-    const newAssignment = generateGradedAssignment(generatorMap, "Course Name", "Title");
+    const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName);
+    console.log(newAssignment);
   };
   const handleBinToDec = (e) => {
     if (e.target.value === "") setBinToDec("0");
@@ -125,20 +128,6 @@ export default function InstructorDashboard(props) {
     if (e.target.value === "") setBSPts("0");
     else setBSPts(e.target.value);
   }
-  // const emptyAssignment = {
-  //   "uid": "",
-  //   "type": "",
-  //   "due": "",
-  //   "course": "",
-  //   "title": "",
-  //   "questions": [
-  //     {"content": ""}
-  //   ]
-  // };
-  const app = firebase.apps[0];
-  const db = firebase.firestore(app);
-  const { currentUser } = useContext(AuthContext);
-  const userCourse = currentUser.data.course;
 
   useEffect(() => {
     function getAllAssignments() {
