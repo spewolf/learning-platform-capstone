@@ -105,14 +105,20 @@ export function generatePracticeAssignment(questionGenerators, numberOfQuestions
  * @param {Map<Function, Object} questionGeneratorMap A map from a question generator function to an object containing "quantity" and "points" elements.
  * @param {String} course The course ID of the course which created this assignment.
  * @param {String} title The title of this assignment.
+ * @param {Date} date The due date for the assignment.
+ * @return {JSON} The newly-created assignment JSON object.
  */
-export function generateGradedAssignment(questionGeneratorMap, course, title) {
+export function generateGradedAssignment(questionGeneratorMap, course, title, date=undefined) {
     // Set up JSON
     var JSON = {
         "type": "graded",
         "course": course,
         "title": title,
         "questions": []
+    }
+
+    if (date) {
+        JSON.due = date
     }
 
     // Fill questions based on given question information.
