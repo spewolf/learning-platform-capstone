@@ -49,13 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InstructorDashboard(props) {
   // DAVID!  THIS IS HOW YOU CAN NOW GENERATE ASSIGNMENTS :D
-  var generatorMap = new Map()
-  generatorMap.set(generateBinToDecQuestion, {"quantity": 10, "points": 1})
-  generatorMap.set(generateDecToBinQuestion, {"quantity": 1, "points": 10})
-  generatorMap.set(generateAdditionQuestion, {"quantity": 5, "points": 3})
-  generatorMap.set(generateSubtractionQuestion, {"quantity": 1, "points": 42})
-  var newAssignment = generateGradedAssignment(generatorMap, "Course Name", "Title")
-  console.log(newAssignment)
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -66,13 +59,26 @@ export default function InstructorDashboard(props) {
   const [numDecToBin, setDecToBin] = React.useState("0");
   const [numBinAdd, setBinAdd] = React.useState("0");
   const [numBinSub, setBinSub] = React.useState("0");
+  const [numBTDPts, setBTDPts] = React.useState("0");
+  const [numDTBPts, setDTBPts] = React.useState("0");
+  const [numBAPts, setBAPts] = React.useState("0");
+  const [numBSPts, setBSPts] = React.useState("0");
+
+  // TODO: Relegate this to respective error functions
   const submittable = !(isNaN(parseInt(numBinToDec)) || isNaN(parseInt(numDecToBin)) || 
                         isNaN(parseInt(numBinAdd)) || isNaN(parseInt(numBinSub)) || 
                         (parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
                         parseInt(numBinAdd) === 0 && parseInt(numBinSub) === 0) ||
                         parseInt(numBinToDec) < 0 ||  parseInt(numDecToBin) < 0 ||
                         parseInt(numBinAdd) < 0 ||  parseInt(numBinSub) < 0 ||
-                        assignmentName === "");
+                        assignmentName === "" || isNaN(parseInt(numBTDPts)) ||
+                        isNaN(parseInt(numDTBPts)) || isNaN(parseInt(numBAPts)) ||
+                        isNaN(parseInt(numBSPts)) || parseInt(numBTDPts) < 0 ||
+                        parseInt(numDTBPts) < 0 || parseInt(numBAPts) < 0 ||
+                        parseInt(numBSPts) < 0 || (parseInt(numBTDPts) === 0 &&
+                        parseInt(numDTBPts) === 0 && parseInt(numBAPts) === 0 &&
+                        parseInt(numBSPts) === 0));
+
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -80,19 +86,45 @@ export default function InstructorDashboard(props) {
     setAssignmentName(e.target.value);
   };
   const handleSubmit = (e) => {
+    let generatorMap = new Map();
+    generatorMap.set(generateBinToDecQuestion, {"quantity": numBinToDec, "points": numBTDPts});
+    generatorMap.set(generateDecToBinQuestion, {"quantity": numDecToBin, "points": numDTBPts});
+    generatorMap.set(generateAdditionQuestion, {"quantity": numBinAdd, "points": numBAPts});
+    generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": numBSPts});
+    const newAssignment = generateGradedAssignment(generatorMap, "Course Name", "Title");
   };
   const handleBinToDec = (e) => {
-    setBinToDec(e.target.value);
+    if (e.target.value === "") setBinToDec("0");
+    else setBinToDec(e.target.value);
   };
   const handleDecToBin = (e) => {
-    setDecToBin(e.target.value);
+    if (e.target.value === "") setDecToBin("0");
+    else setDecToBin(e.target.value);
   };
   const handleBinAdd = (e) => {
-    setBinAdd(e.target.value);
+    if (e.target.value === "") setBinAdd("0");
+    else setBinAdd(e.target.value);
   };
   const handleBinSub = (e) => {
-    setBinSub(e.target.value);
+    if (e.target.value === "") setBinSub("0");
+    else setBinSub(e.target.value);
   };
+  const handleBTDPts = (e) => {
+    if (e.target.value === "") setBTDPts("0");
+    else setBTDPts(e.target.value);
+  }
+  const handleDTBPts = (e) => {
+    if (e.target.value === "") setDTBPts("0");
+    else setDTBPts(e.target.value);
+  }
+  const handleBAPts = (e) => {
+    if (e.target.value === "") setBAPts("0");
+    else setBAPts(e.target.value);
+  }
+  const handleBSPts = (e) => {
+    if (e.target.value === "") setBSPts("0");
+    else setBSPts(e.target.value);
+  }
   // const emptyAssignment = {
   //   "uid": "",
   //   "type": "",
@@ -128,42 +160,46 @@ export default function InstructorDashboard(props) {
     <div>
       <Backdrop className={classes.backdrop} open={open}>
         <form>
-          <Paper style={{padding: "1.5em", paddingBottom: "2em", justify: "center"}}>
+          <Paper style={{padding: "1.5em", paddingBottom: "2em", justify: "center", width:"82%"}}>
             <Grid container alignItems="flex-start" justify="space-between">
-              <TextField style={{paddingBottom: "1em", width: "83%"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
-              <IconButton style={{marginTop: "0em"}} onClick={handleToggle}>
+              <TextField style={{paddingBottom: "1em", width: "86.5%"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
+              <IconButton onClick={handleToggle}>
                 <CloseIcon />
               </IconButton>
             </Grid>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%", textAlign: "right"}}>
+              <div style={{width: "40%"}}>
                 <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
               </div>
-              <div style={{width: "1em"}} />
-              <TextField onChange={handleBinToDec} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
+              <TextField onChange={handleBinToDec} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={handleBTDPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%", textAlign: "right"}}>
+              <div style={{width: "40%"}}>
                 <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
               </div>
-              <div style={{width: "1em"}} />
-              <TextField onChange={handleDecToBin} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
+              <TextField onChange={handleDecToBin} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={handleDTBPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%", textAlign: "right"}}>
+              <div style={{width: "40%"}}>
                 <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
               </div>
-              <div style={{width: "1em"}} />
-              <TextField onChange={handleBinAdd} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
+              <TextField onChange={handleBinAdd} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={handleBAPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%", textAlign: "right"}}>
+              <div style={{width: "40%"}}>
                 <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
               </div>
-              <div style={{width: "1em"}} />
-              <TextField onChange={handleBinSub} id="filled-basic" defaultValue="0" label="Number" variant="filled" />
+              <TextField onChange={handleBinSub} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={handleBSPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
-            <Button onClick={handleSubmit} variant="contained" type="submit" disabled={!submittable}>Submit</Button>
+            <div style={{padding: "0.5em"}} />
+            <Grid container alignItems="flex-start" justify="space-between">
+              <Button variant="contained">Cancel</Button>
+              <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" type="submit" color="primary" disabled={!submittable}>Submit</Button>
+            </Grid>
           </Paper>
         </form>
       </Backdrop>
