@@ -6,8 +6,10 @@ import firebase from "firebase";
 import queryString from 'query-string'
 
 import {
-    getAverageScore,
     getTotalAssignmentPoints,
+    getMostMissedQuestion,
+    getAverageScore,
+    getMedianScore,
     getHighestScore,
     getLowestScore
  } from '../helpers/StatisticsHelper'
@@ -61,8 +63,10 @@ const Statistics = (props) => {
                 <h3>{assignment.title} Statistics</h3>
                 <p>Number of submissions: {submissions.length}</p>
                 <p>Average: {getAverageScore(submissions).toFixed(1) + " / " + getTotalAssignmentPoints(assignment).toFixed(1)}</p>
+                <p>Median: {getMedianScore(submissions).toFixed(1) + " / " + getTotalAssignmentPoints(assignment).toFixed(1)}</p>
                 <p>Highest: {getHighestScore(submissions).toFixed(1) + " / " + getTotalAssignmentPoints(assignment).toFixed(1)}</p>
                 <p>Lowest: {getLowestScore(submissions).toFixed(1) + " / " + getTotalAssignmentPoints(assignment).toFixed(1)}</p>
+                <p>Most missed question index: {getMostMissedQuestion(submissions)}</p>
             </div>
         </div>
     )
