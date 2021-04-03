@@ -4,7 +4,8 @@ import {
   getAverageScore,
   getMedianScore,
   getHighestScore,
-  getLowestScore
+  getLowestScore,
+  getNumberCorrect
 } from './StatisticsHelper'
 
 // Total Assignment Points
@@ -13,12 +14,14 @@ describe("getTotalAssignmentPoints", () => {
     const JSON = { }
     expect(getTotalAssignmentPoints(JSON)).toBe(0)
   })
+
   test("Assignment with an empty list of questions", () => {
     const JSON = {
       "questions": []
     }
     expect(getTotalAssignmentPoints(JSON)).toBe(0)
   })
+
   test("Assignment with at least one question", () => {
     const JSON = {
       "questions": [
@@ -36,24 +39,28 @@ describe("getMostMissedQuestion", () => {
     const JSON = []
     expect(getMostMissedQuestion(JSON)).toBe(-1)
   })
+
   test("One submission with missing questions list", () => {
     const JSON = [
       { }
     ]
     expect(getMostMissedQuestion(JSON)).toBe(-1)
   })
+
   test("One submission; empty questions list", () => {
     const JSON = [
       { "questions" : []}
     ]
     expect(getMostMissedQuestion(JSON)).toBe(-1)
   })
+
   test("One submission; one question", () => {
     const JSON = [{
       "questions": [{ "result": true }]
     }]
     expect(getMostMissedQuestion(JSON)).toBe(0)
   })
+
   test("Multiple submissions; one question", () => {
     const JSON = [
       { "questions": [{ "result": true }] },
@@ -62,6 +69,7 @@ describe("getMostMissedQuestion", () => {
     ]
     expect(getMostMissedQuestion(JSON)).toBe(0)
   })
+
   test("One submission; multiple questions", () => {
     const JSON = [{
       "questions": [
@@ -73,6 +81,7 @@ describe("getMostMissedQuestion", () => {
     }]
     expect(getMostMissedQuestion(JSON)).toBe(2)
   })
+
   test("Multiple submissions; multiple questions", () => {
     const JSON = [
       { "questions": [
@@ -96,6 +105,7 @@ describe("getMostMissedQuestion", () => {
     ]
     expect(getMostMissedQuestion(JSON)).toBe(2)
   })
+
   test("Multiple submissions; multiple questions; first index", () => {
     const JSON = [
       { "questions": [
@@ -127,12 +137,14 @@ describe("getAverageScore", () => {
     const JSON = []
     expect(getAverageScore(JSON)).toBe(0)
   })
+
   test("One submission", () => {
     const JSON = [
       { "score": 10 }
     ]
     expect(getAverageScore(JSON)).toBe(10)
   })
+
   test("More than one submission; integer result", () => {
     const JSON = [
       { "score": 5 },
@@ -140,6 +152,7 @@ describe("getAverageScore", () => {
     ]
     expect(getAverageScore(JSON)).toBe(10)
   })
+
   test("More than one submission; floating-point result", () => {
     const JSON = [
       { "score": 5 },
@@ -155,12 +168,14 @@ describe("getMedianScore", () => {
     const JSON = []
     expect(getMedianScore(JSON)).toBe(0)
   })
+
   test("One submission", () => {
     const JSON = [
       { "score": 10 }
     ]
     expect(getMedianScore(JSON)).toBe(10)
   })
+
   test("Two submissions", () => {
     const JSON = [
       { "score": 5 },
@@ -168,6 +183,7 @@ describe("getMedianScore", () => {
     ]
     expect(getMedianScore(JSON)).toBe(10)
   })
+
   test("Odd number of submissions greater than two", () => {
     const JSON = [
       { "score": 5 },
@@ -178,6 +194,7 @@ describe("getMedianScore", () => {
     ]
     expect(getMedianScore(JSON)).toBe(15)
   })
+
   test("Even number of submissions greater than two", () => {
     const JSON = [
       { "score": 5 },
@@ -197,12 +214,14 @@ describe("getHighestScore", () => {
     const JSON = []
     expect(getHighestScore(JSON)).toBe(0)
   })
+
   test("One submission", () => {
     const JSON = [
       { "score": 10 }
     ]
     expect(getHighestScore(JSON)).toBe(10)
   })
+
   test("More than one submission", () => {
     const JSON = [
       { "score": 10 },
@@ -219,12 +238,14 @@ describe("getLowestScore", () => {
     const JSON = []
     expect(getLowestScore(JSON)).toBe(0)
   })
+
   test("One submission", () => {
     const JSON = [
       { "score": 10 }
     ]
     expect(getLowestScore(JSON)).toBe(10)
   })
+
   test("More than one submission", () => {
     const JSON = [
       { "score": 10 },
@@ -232,5 +253,98 @@ describe("getLowestScore", () => {
       { "score": 15 }
     ]
     expect(getLowestScore(JSON)).toBe(7)
+  })
+})
+
+// Number Correct
+describe("getNumberCorrect", () => {
+  test("Empty submission list", () => {
+    const JSON = []
+    expect(getNumberCorrect(JSON)).toStrictEqual([])
+  })
+
+  test("One submission with missing questions list", () => {
+    const JSON = [
+      { }
+    ]
+    expect(getNumberCorrect(JSON)).toStrictEqual([])
+  })
+
+  test("One submission; empty questions list", () => {
+    const JSON = [
+      { "questions" : []}
+    ]
+    expect(getNumberCorrect(JSON)).toStrictEqual([])
+  })
+
+  test("One submission; one question; true result", () => {
+    const JSON = [{
+      "questions" : [
+        {"result": true}
+      ]
+    }]
+    expect(getNumberCorrect(JSON)).toStrictEqual([1])
+  })
+
+  test("One submission; one question; false result", () => {
+    const JSON = [{
+      "questions" : [
+        {"result": false}
+      ]
+    }]
+    expect(getNumberCorrect(JSON)).toStrictEqual([0])
+  })
+
+  test("Multiple submissions; one question", () => {
+    const JSON = [
+      { "questions" : [
+        {"result": false}
+      ] },
+      { "questions" : [
+        {"result": true}
+      ] },
+      { "questions" : [
+        {"result": true}
+      ] }
+    ]
+    expect(getNumberCorrect(JSON)).toStrictEqual([2])
+  })
+
+  test("One submission; multiple questions", () => {
+    const JSON = [{
+      "questions" : [
+        {"result": true},
+        {"result": false},
+        {"result": true},
+      ]
+    }]
+    expect(getNumberCorrect(JSON)).toStrictEqual([1, 0, 1])
+  })
+
+  test("Multiple submissions; multiple questions", () => {
+    const JSON = [
+      { "questions" : [
+        {"result": true},
+        {"result": true},
+        {"result": true},
+        {"result": true},
+        {"result": false}
+      ] },
+      { "questions" : [
+        {"result": true},
+        {"result": false},
+        {"result": true},
+        {"result": false},
+        {"result": false}
+      ] },
+      { "questions" : [
+        {"result": true},
+        {"result": true},
+        {"result": false},
+        {"result": false},
+        {"result": false}
+      ] }
+    ]
+    expect(getNumberCorrect(JSON)).toStrictEqual([3, 2, 2, 1, 0])
   })
 })
