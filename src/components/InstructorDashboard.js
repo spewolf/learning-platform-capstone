@@ -9,6 +9,12 @@ import CloseIcon from "@material-ui/icons/Close";
 import { getAssignmentsForCourse } from "../helpers/DatabaseHelper";
 import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import {
   generateBinToDecQuestion,
@@ -51,36 +57,45 @@ export default function InstructorDashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [assignmentName, setAssignmentName] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [ongoingAssignments, setOngoing] = React.useState([]);
   const [completedAssignments, setCompleted] = React.useState([]);
-  const [numBinToDec, setBinToDec] = React.useState("0");
-  const [numDecToBin, setDecToBin] = React.useState("0");
-  const [numBinAdd, setBinAdd] = React.useState("0");
-  const [numBinSub, setBinSub] = React.useState("0");
-  const [numBTDPts, setBTDPts] = React.useState("0");
-  const [numDTBPts, setDTBPts] = React.useState("0");
-  const [numBAPts, setBAPts] = React.useState("0");
-  const [numBSPts, setBSPts] = React.useState("0");
+  const [numBinToDec, setBinToDec] = React.useState("");
+  const [numDecToBin, setDecToBin] = React.useState("");
+  const [numBinAdd, setBinAdd] = React.useState("");
+  const [numBinSub, setBinSub] = React.useState("");
+  const [numBTDPts, setBTDPts] = React.useState("");
+  const [numDTBPts, setDTBPts] = React.useState("");
+  const [numBAPts, setBAPts] = React.useState("");
+  const [numBSPts, setBSPts] = React.useState("");
   const { currentUser } = useContext(AuthContext);
   const userCourse = currentUser.data.course;
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
 
   // TODO: Relegate this to respective error functions
-  const submittable = !(isNaN(parseInt(numBinToDec)) || isNaN(parseInt(numDecToBin)) || 
-                        isNaN(parseInt(numBinAdd)) || isNaN(parseInt(numBinSub)) || 
-                        (parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
+  const submittable = !((parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
                         parseInt(numBinAdd) === 0 && parseInt(numBinSub) === 0) ||
-                        parseInt(numBinToDec) < 0 ||  parseInt(numDecToBin) < 0 ||
-                        parseInt(numBinAdd) < 0 ||  parseInt(numBinSub) < 0 ||
-                        assignmentName === "" || isNaN(parseInt(numBTDPts)) ||
-                        isNaN(parseInt(numDTBPts)) || isNaN(parseInt(numBAPts)) ||
-                        isNaN(parseInt(numBSPts)) || parseInt(numBTDPts) < 0 ||
-                        parseInt(numDTBPts) < 0 || parseInt(numBAPts) < 0 ||
-                        parseInt(numBSPts) < 0 || (parseInt(numBTDPts) === 0 &&
-                        parseInt(numDTBPts) === 0 && parseInt(numBAPts) === 0 &&
-                        parseInt(numBSPts) === 0));
+                        (parseInt(numBTDPts) === 0 && parseInt(numDTBPts) === 0 && 
+                        parseInt(numBAPts) === 0 && parseInt(numBSPts) === 0) ||
+                        (numBinToDec === "" && numDecToBin === "" && 
+                        numBinAdd === "" && numBinSub === "") ||
+                        (numBTDPts === "" && numDTBPts === "" && 
+                        numBAPts === "" && numBSPts === "") ||
+                        assignmentName === "" || selectedDate < Date.now());
 
+  const handleNumInput = (e, setter) => {
+    let flag = true;
+    
+    for (let i = 0; i < e.target.value.length && flag; i++)
+      if (isNaN(e.target.value[i]) || e.target.value[i] === " ") flag = false; 
+    if (flag) setter(e.target.value);
+    // if (e.target.value === "") setter("0");
+    // else setter(e.target.value);
+  };
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -93,41 +108,12 @@ export default function InstructorDashboard(props) {
     generatorMap.set(generateDecToBinQuestion, {"quantity": numDecToBin, "points": numDTBPts});
     generatorMap.set(generateAdditionQuestion, {"quantity": numBinAdd, "points": numBAPts});
     generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": numBSPts});
-    const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName);
-    console.log(newAssignment);
+    const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName, firebase.firestore.Timestamp.fromDate(selectedDate));
+    db.collection("assignments").add(newAssignment);
+    // console.log(newAssignment);
+    // TODO: Refresh assignments
+    handleToggle();
   };
-  const handleBinToDec = (e) => {
-    if (e.target.value === "") setBinToDec("0");
-    else setBinToDec(e.target.value);
-  };
-  const handleDecToBin = (e) => {
-    if (e.target.value === "") setDecToBin("0");
-    else setDecToBin(e.target.value);
-  };
-  const handleBinAdd = (e) => {
-    if (e.target.value === "") setBinAdd("0");
-    else setBinAdd(e.target.value);
-  };
-  const handleBinSub = (e) => {
-    if (e.target.value === "") setBinSub("0");
-    else setBinSub(e.target.value);
-  };
-  const handleBTDPts = (e) => {
-    if (e.target.value === "") setBTDPts("0");
-    else setBTDPts(e.target.value);
-  }
-  const handleDTBPts = (e) => {
-    if (e.target.value === "") setDTBPts("0");
-    else setDTBPts(e.target.value);
-  }
-  const handleBAPts = (e) => {
-    if (e.target.value === "") setBAPts("0");
-    else setBAPts(e.target.value);
-  }
-  const handleBSPts = (e) => {
-    if (e.target.value === "") setBSPts("0");
-    else setBSPts(e.target.value);
-  }
 
   useEffect(() => {
     function getAllAssignments() {
@@ -150,44 +136,64 @@ export default function InstructorDashboard(props) {
       <Backdrop className={classes.backdrop} open={open}>
         <form>
           <Paper style={{padding: "1.5em", paddingBottom: "2em", justify: "center", width:"82%"}}>
-            <Grid container alignItems="flex-start" justify="space-between">
+            <Grid container alignItems="flex-start" justify="space-around">
               <TextField style={{paddingBottom: "1em", width: "86.5%"}} onChange={handleName} placeholder="New Assignment" defaultValue="" variant="outlined"/>
               <IconButton onClick={handleToggle}>
                 <CloseIcon />
               </IconButton>
             </Grid>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-evenly" style={{paddingBottom: "1em"}}>
+                <KeyboardDatePicker
+                  variant="outlined"
+                  id="date-picker-dialog"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  style={{width: "30%"}}
+                  format="MM/dd/yyyy"
+                />
+                <KeyboardTimePicker
+                  variant="outlined"
+                  id="time-picker"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  style={{width: "30%"}}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
                 <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
               </div>
-              <TextField onChange={handleBinToDec} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
-              <TextField onChange={handleBTDPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBinToDec)} value={numBinToDec} autoComplete="off" style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBTDPts)} value={numBTDPts} autoComplete="off" style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
                 <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
               </div>
-              <TextField onChange={handleDecToBin} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
-              <TextField onChange={handleDTBPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setDecToBin)} value={numDecToBin} autoComplete="off" style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setDTBPts)} value={numDTBPts} autoComplete="off" style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
                 <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
               </div>
-              <TextField onChange={handleBinAdd} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
-              <TextField onChange={handleBAPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBinAdd)} value={numBinAdd} autoComplete="off" style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBAPts)} value={numBAPts} autoComplete="off" style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div className={classes.newAssignmentQuestions}>
               <div style={{width: "40%"}}>
                 <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
               </div>
-              <TextField onChange={handleBinSub} style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
-              <TextField onChange={handleBSPts} style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBinSub)} value={numBinSub} autoComplete="off" style={{maxWidth: "50%"}} id="outlined-basic" placeholder="# Questions" variant="outlined" />
+              <TextField onChange={(e) => handleNumInput(e, setBSPts)} value={numBSPts} autoComplete="off" style={{maxWidth: "12%"}} placeholder="Pts" variant="outlined" />
             </div>
             <div style={{padding: "0.5em"}} />
             <Grid container alignItems="flex-start" justify="space-between">
-              <Button variant="contained">Cancel</Button>
-              <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" type="submit" color="primary" disabled={!submittable}>Submit</Button>
+              <Button onClick={handleToggle} variant="contained">Cancel</Button>
+              <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" color="primary" disabled={!submittable}>Submit</Button>
             </Grid>
           </Paper>
         </form>
