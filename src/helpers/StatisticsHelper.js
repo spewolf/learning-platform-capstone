@@ -168,3 +168,25 @@ export function getNumberCorrect(submissions) {
 
   return counts
 }
+
+/**
+ * Calculates and returns the frequencies for all answers to a given question in a given list of submissions.
+ * @param {array} submissions List of submissions for an assignment.
+ * @param {number} questionIndex Index of the question to get the frequencies for.
+ * @returns {Map<string, number>} Mapping between answers and the frequencies for those answers. 
+ */
+export function getAnswerFrequencies(submissions, questionIndex) {
+  if (!submissions.forEach || submissions.length < 1 || !submissions[0].questions || submissions[0].questions.length < 1) return null
+
+  var frequencies = new Map()
+  submissions.forEach(submission => {
+    const answer = submission.questions[questionIndex].answer
+    if (frequencies.has(answer)) {
+      frequencies.set(answer, frequencies.get(answer) + 1)
+    } else {
+      frequencies.set(answer, 1)
+    }
+  })
+
+  return frequencies
+}

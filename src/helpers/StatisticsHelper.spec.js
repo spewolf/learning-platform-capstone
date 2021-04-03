@@ -5,7 +5,8 @@ import {
   getMedianScore,
   getHighestScore,
   getLowestScore,
-  getNumberCorrect
+  getNumberCorrect,
+  getAnswerFrequencies
 } from './StatisticsHelper'
 
 // Total Assignment Points
@@ -346,5 +347,175 @@ describe("getNumberCorrect", () => {
       ] }
     ]
     expect(getNumberCorrect(JSON)).toStrictEqual([3, 2, 2, 1, 0])
+  })
+})
+
+// Answer Frequencies
+describe("getAnswerFrequencies", () => {
+  test("Empty submission list", () => {
+    const JSON = []
+    expect(getAnswerFrequencies(JSON, 0)).toBeNull()
+  })
+
+  test("One submission with missing questions list", () => {
+    const JSON = [
+      { }
+    ]
+    expect(getAnswerFrequencies(JSON, 0)).toBeNull()
+  })
+
+  test("One submission; empty questions list", () => {
+    const JSON = [
+      { "questions" : []}
+    ]
+    expect(getAnswerFrequencies(JSON, 0)).toBeNull()
+  })
+  
+  test("One submission; one question", () => {
+    const JSON = [{
+      "questions" : [
+        {"answer": "42"}
+      ]
+    }]
+
+    var map = new Map()
+    map.set("42", 1)
+    expect(getAnswerFrequencies(JSON, 0)).toStrictEqual(map)
+  })
+
+  test("Multiple submissions; one question", () => {
+    const JSON = [
+      { "questions" : [
+        {"answer": "42"}
+      ] },
+      { "questions" : [
+        {"answer": "58"}
+      ] },
+      { "questions" : [
+        {"answer": "42"}
+      ] }
+    ]
+
+    var map = new Map()
+    map.set("42", 2)
+    map.set("58", 1)
+    expect(getAnswerFrequencies(JSON, 0)).toStrictEqual(map)
+  })
+
+  test("One submission; multiple questions; index=0", () => {
+    const JSON = [{
+      "questions" : [
+        {"answer": "42"},
+        {"answer": "57"},
+        {"answer": "24"},
+      ]
+    }]
+
+    var map = new Map()
+    map.set("42", 1)
+    expect(getAnswerFrequencies(JSON, 0)).toStrictEqual(map)
+  })
+
+  test("One submission; multiple questions; index=len-1", () => {
+    const JSON = [{
+      "questions" : [
+        {"answer": "42"},
+        {"answer": "57"},
+        {"answer": "24"},
+      ]
+    }]
+
+    var map = new Map()
+    map.set("24", 1)
+    expect(getAnswerFrequencies(JSON, 2)).toStrictEqual(map)
+  })
+
+  test("One submission; multiple questions; index in middle", () => {
+    const JSON = [{
+      "questions" : [
+        {"answer": "42"},
+        {"answer": "57"},
+        {"answer": "24"},
+      ]
+    }]
+
+    var map = new Map()
+    map.set("57", 1)
+    expect(getAnswerFrequencies(JSON, 1)).toStrictEqual(map)
+  })
+
+  test("Multiple submissions; multiple questions; index=0", () => {
+    const JSON = [
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "69"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "58"},
+        {"answer": "420"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "doge"},
+        {"answer": "1"}
+      ] }
+    ]
+
+    var map = new Map()
+    map.set("42", 2)
+    map.set("58", 1)
+    expect(getAnswerFrequencies(JSON, 0)).toStrictEqual(map)
+  })
+
+  test("Multiple submissions; multiple questions; index=len-1", () => {
+    const JSON = [
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "69"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "58"},
+        {"answer": "420"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "doge"},
+        {"answer": "1"}
+      ] }
+    ]
+
+    var map = new Map()
+    map.set("1", 3)
+    expect(getAnswerFrequencies(JSON, 2)).toStrictEqual(map)
+  })
+
+  test("Multiple submissions; multiple questions; index in middle", () => {
+    const JSON = [
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "69"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "58"},
+        {"answer": "420"},
+        {"answer": "1"}
+      ] },
+      { "questions" : [
+        {"answer": "42"},
+        {"answer": "doge"},
+        {"answer": "1"}
+      ] }
+    ]
+
+    var map = new Map()
+    map.set("69", 1)
+    map.set("420", 1)
+    map.set("doge", 1)
+    expect(getAnswerFrequencies(JSON, 1)).toStrictEqual(map)
   })
 })
