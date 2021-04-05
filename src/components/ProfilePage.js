@@ -14,7 +14,6 @@ import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -41,7 +40,7 @@ const WarnButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText(red[500]),
     backgroundColor: red[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: red[700],
     },
   },
@@ -51,8 +50,17 @@ export default function ProfilePage(props) {
   const app = firebase.apps[0];
   const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
-  function handleNewPassword(e) {
-    console.log(e);
+  function handleNewPassword(event) {
+    event.preventDefault();
+    const { newPassword } = event.target.elements;
+    currentUser
+      .updatePassword(newPassword.value)
+      .then(function () {
+        app.auth().signOut();
+      })
+      .catch(function (error) {
+        console.log("Update Failed", error);
+      });
   }
 
   if (!currentUser) {
@@ -81,11 +89,10 @@ export default function ProfilePage(props) {
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="newPassword"
             label="New password"
-            name="email"
-            autoComplete="email"
-            autoFocus
+            name="newPassword"
+            autoComplete="newPassword"
           />
           <WarnButton
             type="submit"
