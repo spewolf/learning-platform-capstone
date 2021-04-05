@@ -18,6 +18,7 @@ import TeacherInfo from "./components/TeacherInfo";
 import ProfilePage from "./components/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import ForgotPassword from "./components/ForgotPassword";
 
 const theme = createMuiTheme({
   palette: {
@@ -69,6 +70,7 @@ function App(props) {
                 <Route path="/register/teacher" render={() => <TeacherInfo setLocation={setLocation}/>} />
                 <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
                 <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
+                <Route path="/forgotPassword" render={() => <ForgotPassword setLocation={setLocation}/>} />
                 <PrivateRoute path="/stats" render={() => <Statistics setLocation={setLocation}/>} />
                 <PrivateRoute path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
