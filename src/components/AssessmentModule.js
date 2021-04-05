@@ -116,7 +116,7 @@ const AssessmentModule = (props) => {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
           <form>
-              <h3 style = {{paddingLeft: ".9em"}}>Choose an assignment to start</h3>
+              <h3 style={{paddingLeft: ".9em"}}>Choose an assignment to start</h3>
               <Paper elevation={3} className={classes.paper}>
                 <p style={assignmentObjects.length>0 ? {display: "none"} : {}}>You have no assignments.</p>
                 <div style={assignmentObjects.length>0 ? {} : {display: "none"}}>

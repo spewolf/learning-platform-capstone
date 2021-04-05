@@ -155,7 +155,7 @@ export function getNumberCorrect(submissions) {
 
   var counts = []
   for (let i = 0; i < submissions[0].questions.length; i++) {
-    var count = 0
+    let count = 0
 
     submissions.forEach(submission => {
       if (submission.questions[i].result) {
