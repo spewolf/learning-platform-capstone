@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Card, Divider } from "@material-ui/core";
 import { AccountBox } from "@material-ui/icons";
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,13 +31,19 @@ const useStyles = makeStyles((theme) => ({
   },
   profileCard: {
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
     padding: "1rem",
   },
 }));
 
 export default function ProfilePage(props) {
+  const app = firebase.apps[0];
   const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
+
+  function handleNewPassword(e) {
+    console.log(e);
+  }
 
   if (!currentUser) {
     return <Redirect to="/login"></Redirect>;
@@ -57,7 +64,7 @@ export default function ProfilePage(props) {
           <p>Email: {currentUser.email}</p>
         </div>
         <Divider></Divider>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleNewPassword} className={classes.form} noValidate>
           <h3>Change your password</h3>
           <TextField
             variant="outlined"
@@ -80,6 +87,18 @@ export default function ProfilePage(props) {
             Save new password
           </Button>
         </form>
+        <Divider></Divider>
+        <h3>Sign out</h3>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="secondary"
+          className={classes.submit}
+          onClick={() => app.auth().signOut()}
+        >
+          Sign out of Binary Learning
+        </Button>
       </Card>
     </Container>
   );
