@@ -5,11 +5,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Card, Divider } from "@material-ui/core";
 import { AccountBox } from "@material-ui/icons";
 import firebase from "firebase";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,11 +37,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const WarnButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
+
 export default function ProfilePage(props) {
   const app = firebase.apps[0];
   const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
-
   function handleNewPassword(e) {
     console.log(e);
   }
@@ -77,7 +87,7 @@ export default function ProfilePage(props) {
             autoComplete="email"
             autoFocus
           />
-          <Button
+          <WarnButton
             type="submit"
             fullWidth
             variant="contained"
@@ -85,11 +95,11 @@ export default function ProfilePage(props) {
             className={classes.submit}
           >
             Save new password
-          </Button>
+          </WarnButton>
         </form>
         <Divider></Divider>
         <h3>Sign out</h3>
-        <Button
+        <WarnButton
           type="submit"
           fullWidth
           variant="contained"
@@ -98,7 +108,7 @@ export default function ProfilePage(props) {
           onClick={() => app.auth().signOut()}
         >
           Sign out of Binary Learning
-        </Button>
+        </WarnButton>
       </Card>
     </Container>
   );
