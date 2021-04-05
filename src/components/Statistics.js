@@ -2,8 +2,9 @@ import React, { useContext, useEffect }  from 'react'
 import { withRouter } from 'react-router'
 import { AuthContext } from "./AuthProvider.js";
 
-import { Container, Grid, Paper } from '@material-ui/core'
+import { Accordion, AccordionDetails, AccordionSummary, Container, Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import firebase from "firebase";
 import queryString from 'query-string'
@@ -16,12 +17,13 @@ import {
   getMedianScore,
   getHighestScore,
   getLowestScore,
-  getNumberCorrect
+  getNumberCorrect,
+  getAnswerFrequencies
 } from '../helpers/StatisticsHelper'
-
 import {
   getAssignment, getSubmissions,
 } from '../helpers/DatabaseHelper'
+import QuestionOverview from './QuestionOverview'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -76,7 +78,7 @@ const Statistics = (props) => {
     const numberCorrect = getNumberCorrect(submissionsData)
     var questionsCorrect = [ ]
     for (let i = 0; i < numberCorrect.length; i++) {
-      questionsCorrect[i] = {x: i, y: numberCorrect[i]}
+      questionsCorrect.push({x: i+"", y: numberCorrect[i]})
     }
     setQuestionsCorrectData(questionsCorrect)
   }
@@ -106,7 +108,7 @@ const Statistics = (props) => {
           <Paper elevation="3" className={classes.paper}>
             <Grid container spacing="3">
               <Grid item xs={4}>
-                <XYPlot className={classes.xyPlot} height={300} width={300}>
+                <XYPlot className={classes.xyPlot} height={300} width={300} xType="ordinal">
                   <XAxis top={254} />
                   <YAxis left={12} />
                   <ChartLabel style={{textAnchor: "middle"}} includeMargin={false} text="Question #" xPercent={0.5} yPercent={1.2} />
@@ -123,7 +125,33 @@ const Statistics = (props) => {
                   <h2>Median Score: {getMedianScore(submissions).toFixed(1) + " / " + totalPoints.toFixed(1)}</h2>
               </Grid>
             </Grid>
+
             <h2 style={{paddingTop: "1em"}}>Most missed question:</h2>
+            <Paper elevation="3" className={classes.paper}>
+              <QuestionOverview
+                question={assignment.questions ? assignment.questions[getMostMissedQuestion(submissions)] : undefined}
+                frequencies={assignment.questions ? getAnswerFrequencies(submissions, getMostMissedQuestion(submissions)) : undefined}
+              />
+            </Paper>
+
+            <h2 style={{paddingTop: "1em"}}>Question breakdown:</h2>
+            {assignment.questions ? assignment.questions.map((question, index) => {
+              return (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                  >
+                    <Typography>{question.content}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <QuestionOverview
+                      question={question}
+                      frequencies={getAnswerFrequencies(submissions, index)}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+              )
+            }) : <div/>}
           </Paper>
         </div>
       </Container>
