@@ -2,7 +2,7 @@ import React, { useContext, useEffect }  from 'react'
 import { withRouter } from 'react-router'
 import { AuthContext } from "./AuthProvider.js";
 
-import { Accordion, AccordionDetails, AccordionSummary, Container, Grid, Paper, Typography } from '@material-ui/core'
+import { Accordion, AccordionDetails, AccordionSummary, Button, Container, Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -55,6 +55,7 @@ const Statistics = (props) => {
   const [submissions, setSubmissions] = React.useState({ })
   const [totalPoints, setTotalPoints] = React.useState(0)
   const [questionsCorrectData, setQuestionsCorrectData] = React.useState([])
+  const [accordionStates, setAccordionStates] = React.useState([])
   
   const classes = useStyles()
 
@@ -72,16 +73,50 @@ const Statistics = (props) => {
 
   const setAssignmentStats = (assignmentData) => {
     setTotalPoints(getTotalAssignmentPoints(assignmentData))
+
+    // Also set up accordion states at this point.
+    let states = []
+    assignmentData.questions.forEach(() => {
+      states.push(false)
+    })
+    setAccordionStates(states)
   }
 
   const setSubmissionStats = (submissionsData) => {
     const numberCorrect = getNumberCorrect(submissionsData)
     var questionsCorrect = [ ]
     for (let i = 0; i < numberCorrect.length; i++) {
-      questionsCorrect.push({x: i+"", y: numberCorrect[i]})
+      questionsCorrect.push({x: (i+1)+"", y: numberCorrect[i]})
     }
     setQuestionsCorrectData(questionsCorrect)
   }
+
+  // ======= Start accordion handling stuff =======
+  function handleAccordionChange(index) {
+    let states = [...accordionStates]
+    states[index] = !states[index]
+    setAccordionStates(states)
+    console.log(accordionStates, index)
+  }
+  function expandAll() {
+    if (!assignment.questions) return
+
+    let states = []
+    assignment.questions.forEach(() => {
+      states.push(true)
+    })
+    setAccordionStates(states)
+  }
+  function collapseAll() {
+    if (!assignment.questions) return
+
+    let states = []
+    assignment.questions.forEach(() => {
+      states.push(false)
+    })
+    setAccordionStates(states)
+  }
+  // ======= End accordion handling stuff =======
 
   // Require an assignment be specified (otherwise, what is there to look at?).
   if (!qs.assignment) {
@@ -106,6 +141,7 @@ const Statistics = (props) => {
         <div style={currentUser.data.course === assignment.course ? {} : {display: "none"}}>
           <h3 style={{paddingLeft: ".9em"}}>{assignment.title}</h3>
           <Paper elevation="3" className={classes.paper}>
+            <h2>Overview</h2>
             <Grid container spacing="3">
               <Grid item xs={4}>
                 <XYPlot className={classes.xyPlot} height={300} width={300} xType="ordinal">
@@ -126,7 +162,7 @@ const Statistics = (props) => {
               </Grid>
             </Grid>
 
-            <h2 style={{paddingTop: "1em"}}>Most missed question:</h2>
+              <h2 style={{paddingTop: "1em"}}>Most missed question</h2>
             <Paper elevation="3" className={classes.paper}>
               <QuestionOverview
                 question={assignment.questions ? assignment.questions[getMostMissedQuestion(submissions)] : undefined}
@@ -134,14 +170,23 @@ const Statistics = (props) => {
               />
             </Paper>
 
-            <h2 style={{paddingTop: "1em"}}>Question breakdown:</h2>
+            <div style={{display: "flex"}}>
+              <h2 style={{paddingTop: "1em"}}>All Questions</h2>
+              <Button variant="contained" color="primary" style={{marginTop: "2.6em", marginLeft: "0.5em", height: "10%"}} onClick={() => expandAll()}>
+                  Expand All
+              </Button>
+              <Button variant="contained" color="primary" style={{marginTop: "2.6em", marginLeft: "0.5em", height: "10%"}} onClick={() => collapseAll()}>
+                  Collapse All
+              </Button>
+            </div>
             {assignment.questions ? assignment.questions.map((question, index) => {
               return (
-                <Accordion>
+                <Accordion expanded={accordionStates.length === 0 || accordionStates[index]} onChange={() => handleAccordionChange(index)}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                   >
-                    <Typography>{question.content}</Typography>
+                    <Typography>{index+1}. {question.content}</Typography>
+                    <Typography style={{paddingLeft: ".3em", color: "#AAAAAA"}}>({getNumberCorrect(submissions)[index]} of {submissions.length} answered correctly)</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <QuestionOverview

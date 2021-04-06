@@ -104,10 +104,10 @@ export default function InstructorDashboard(props) {
   };
   const handleSubmit = (e) => {
     let generatorMap = new Map();
-    generatorMap.set(generateBinToDecQuestion, {"quantity": numBinToDec, "points": numBTDPts});
-    generatorMap.set(generateDecToBinQuestion, {"quantity": numDecToBin, "points": numDTBPts});
-    generatorMap.set(generateAdditionQuestion, {"quantity": numBinAdd, "points": numBAPts});
-    generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": numBSPts});
+    generatorMap.set(generateBinToDecQuestion, {"quantity": numBinToDec, "points": parseInt(numBTDPts)});
+    generatorMap.set(generateDecToBinQuestion, {"quantity": numDecToBin, "points": parseInt(numDTBPts)});
+    generatorMap.set(generateAdditionQuestion, {"quantity": numBinAdd, "points": parseInt(numBAPts)});
+    generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": parseInt(numBSPts)});
     const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName, firebase.firestore.Timestamp.fromDate(selectedDate));
     db.collection("assignments").add(newAssignment);
     // console.log(newAssignment);

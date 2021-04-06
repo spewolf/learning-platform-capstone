@@ -25,18 +25,24 @@ export default function QuestionOverview(props) {
   } else if (type === "binaryToDecimal") {
     correctAnswer = binaryToDecimal(args)
   } else if (type === "binaryAddition") {
-    correctAnswer = padBinaryWithZeros(binaryAdd(args))
+    correctAnswer = padBinaryWithZeros(binaryAdd(args[0], args[1]))
   } else if (type === "binarySubtraction") {
-    correctAnswer = padBinaryWithZeros(binarySubtract(args))
+    correctAnswer = padBinaryWithZeros(binarySubtract(args[0], args[1]))
   }
 
   var frequenciesData = []
   props.frequencies.forEach((frequency, answer) => {
+    const noResponseColor = "#AAAAAA"
+    const correctColor = "#33BB33"
+    const incorrectColor = "#FF6666"
     if (!answer) {
-      frequenciesData.push({x: "(No answer)", y: frequency, color: "#AAAAAA"})
+      frequenciesData.push({x: "(No answer)", y: frequency, color: noResponseColor})
     } else {
-      console.log(binaryStrEquality(answer, correctAnswer))
-      frequenciesData.push({x: '"' + answer + '"', y: frequency, color: (binaryStrEquality(answer, correctAnswer) === "TRUE" ? "#33BB33" : "#FF6666")})
+      if (type === "binaryToDecimal") { // Answer in base 10
+        frequenciesData.push({x: '"' + answer + '"', y: frequency, color: (answer === correctAnswer ? correctColor : incorrectColor)})
+      } else { // Answer in base 2
+        frequenciesData.push({x: '"' + answer + '"', y: frequency, color: (binaryStrEquality(answer, correctAnswer) === "TRUE" ? correctColor : incorrectColor)})
+      }
     }
   })
 
@@ -51,12 +57,12 @@ export default function QuestionOverview(props) {
           <h4 className={classes.h4}>Correct answer: {correctAnswer}</h4>
         </Grid>
         <Grid item xs={6}>
-          <XYPlot className={classes.xyPlot} height={200} width={450} xType="ordinal" colorType="literal">
-            <VerticalBarSeries color="#FF7300" data={frequenciesData}/>
-            <XAxis top={125} />
+          <XYPlot className={classes.xyPlot} height={200} width={575} xType="ordinal" colorType="literal">
+            <VerticalBarSeries data={frequenciesData}/>
+            <XAxis top={0} />
             <YAxis left={19} />
             <ChartLabel style={{textAnchor: "middle"}} includeMargin={false} text="Response" xPercent={0.5} yPercent={1.2} />
-            <ChartLabel style={{transform: "rotate(-90)", textAnchor: "middle"}} includeMargin={false} text="Frequency" xPercent={-0.065} yPercent={0.5} />
+            <ChartLabel style={{transform: "rotate(-90)", textAnchor: "middle"}} includeMargin={false} text="Frequency" xPercent={-0.045} yPercent={0.5} />
           </XYPlot>
         </Grid>
       </Grid>

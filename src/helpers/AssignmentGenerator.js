@@ -123,7 +123,6 @@ export function generateGradedAssignment(questionGeneratorMap, course, title, da
 
     // Fill questions based on given question information.
     questionGeneratorMap.forEach((info, generator) => {
-        console.log(info)
         for (var i = 0; i < info.quantity; i++) {
             JSON.questions.push(generator(info.points))
         }
