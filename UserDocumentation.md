@@ -67,6 +67,14 @@ number of questions for each assignment, as well as whether or not they have tak
 any given assignment already.   
    
 ### Statistics   
-This page will show assignment statistics for the instructor.  Currently, the instructor
-can see the average, high, and low scores.  This page is still very much in development
-and will look much better in future iterations.
+This page will show assignment statistics for the instructor.  This page is divided
+into three sections:
+* Overview
+  * Graph showing the number of correct responses for each question
+  * Overall statistics for the assignment including lowest, highest, average, and median scores.
+* Most Missed Question
+  * Contains info about the most missed question
+  * Question information such as number of points, correct answer, etc.
+  * Response-frequency graph
+* All Questions
+  * Contains the same info as the Most Missed Question section, but for all questions in the assignment.

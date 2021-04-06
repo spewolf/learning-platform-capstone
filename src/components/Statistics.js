@@ -162,7 +162,7 @@ const Statistics = (props) => {
               </Grid>
             </Grid>
 
-              <h2 style={{paddingTop: "1em"}}>Most missed question</h2>
+              <h2 style={{paddingTop: "1em"}}>Most Missed Question</h2>
             <Paper elevation="3" className={classes.paper}>
               <QuestionOverview
                 question={assignment.questions ? assignment.questions[getMostMissedQuestion(submissions)] : undefined}
