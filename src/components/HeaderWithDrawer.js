@@ -19,7 +19,6 @@ import AlarmIcon from "@material-ui/icons/Alarm"; // Practice
 import SchoolIcon from "@material-ui/icons/School"; // Learning
 import AssessmentIcon from "@material-ui/icons/Assessment"; // Assessment
 import { useContext } from "react";
-import firebase from "firebase";
 import { AuthContext } from "./AuthProvider";
 import Button from "@material-ui/core/Button";
 
@@ -41,13 +40,10 @@ const useStyles = makeStyles((theme) => ({
     color: "palette.primary.text",
   },
   navItem: {
-    padding: theme.spacing(0),
+    padding: theme.spacing(1),
   },
   spacer: {
     marginRight: "auto",
-  },
-  toolbar: {
-    paddingRight: theme.spacing(9),
   },
   toolbarIcon: {
     display: "flex",
@@ -141,14 +137,13 @@ function NavItem(props) {
 }
 
 function LoginLinks(props) {
-  const app = firebase.apps[0];
 
   const { currentUser } = useContext(AuthContext);
 
   let loginLinks;
 
   if (currentUser) {
-    loginLinks = <NavItem onClick={() => app.auth().signOut()}>Sign out</NavItem>;
+    loginLinks = <NavItem href="/profile">Welcome {currentUser.data?.name.split(" ")[0] ?? ""}</NavItem>;
   } else {
     loginLinks = (
       <React.Fragment>
@@ -161,7 +156,7 @@ function LoginLinks(props) {
   return <React.Fragment>{loginLinks}</React.Fragment>;
 }
 
-export default function HeaderWithDrawer(props) {
+function HeaderWithDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const icons = [<DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon />];
@@ -267,3 +262,5 @@ export default function HeaderWithDrawer(props) {
     </React.Fragment>
   );
 }
+
+export default HeaderWithDrawer;

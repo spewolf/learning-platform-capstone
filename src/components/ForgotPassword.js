@@ -6,7 +6,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -46,10 +45,10 @@ const Login = (props) => {
   const handleLogin = useCallback(
     async (event) => {
       event.preventDefault();
-      const { email, password } = event.target.elements;
+      const { email } = event.target.elements;
       try {
-        await app?.auth().signInWithEmailAndPassword(email.value, password.value);
-        props.history.push("/");
+        await app?.auth().sendPasswordResetEmail(email.value);
+        props.history.push("/login");
       } catch (error) {
         alert(error);
       }
@@ -71,8 +70,10 @@ const Login = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+        Reset Password
+
         </Typography>
+        <h5>Enter your account email</h5>
         <form className={classes.form} onSubmit={handleLogin} noValidate>
           <TextField
             variant="outlined"
@@ -85,24 +86,6 @@ const Login = (props) => {
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Grid container>
-            <Grid item>
-              <Link href="/forgotPassword" variant="body2" className={classes.forgotLink}>
-                {"Forgot password?"}
-              </Link>
-            </Grid>
-          </Grid>
           <Button
             type="submit"
             fullWidth
@@ -110,14 +93,9 @@ const Login = (props) => {
             color="primary"
             className={classes.submit}
           >
-            Login
+            Send Email
           </Button>
           <Grid container>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
           </Grid>
         </form>
       </div>
