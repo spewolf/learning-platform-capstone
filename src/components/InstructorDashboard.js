@@ -22,6 +22,8 @@ import {
   generateGradedAssignment
 } from '../helpers/AssignmentGenerator';
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -71,6 +73,8 @@ export default function InstructorDashboard(props) {
   const userCourse = currentUser.data.course;
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
+
+  // These check if there are questions without points or points in a field without questions
   const BTDQErr = ((parseInt(numBinToDec) === 0 || numBinToDec === "") && parseInt(numBTDPts) > 0);
   const BTDPErr = (parseInt(numBinToDec) > 0 && (parseInt(numBTDPts) === 0 || numBTDPts === ""));
   const DTBQErr = ((parseInt(numDecToBin) === 0 || numDecToBin === "") && parseInt(numDTBPts) > 0);
@@ -81,7 +85,7 @@ export default function InstructorDashboard(props) {
   const BSPErr = (parseInt(numBinSub) > 0 && (parseInt(numBSPts) === 0 || numBSPts === ""));
   const titleErr = assignmentName === "";
 
-  // TODO: Relegate this to respective error functions
+  // Submit button is disabled until this becomes true
   const submittable = !((parseInt(numBinToDec) === 0 && parseInt(numDecToBin) === 0 && 
                         parseInt(numBinAdd) === 0 && parseInt(numBinSub) === 0) ||
                         (parseInt(numBTDPts) === 0 && parseInt(numDTBPts) === 0 && 
@@ -93,9 +97,9 @@ export default function InstructorDashboard(props) {
                         dateErr || BTDQErr || BTDPErr || DTBQErr || DTBPErr || 
                         BAQErr || BAPErr || BSQErr || BSPErr || titleErr);
   
+  // This will not allow non-numeric characters to be input
   const handleNumInput = (e, setter) => {
     let flag = true;
-    
     for (let i = 0; i < e.target.value.length && flag; i++)
       if (isNaN(e.target.value[i]) || e.target.value[i] === " ") flag = false; 
     if (flag) setter(e.target.value);
@@ -105,6 +109,7 @@ export default function InstructorDashboard(props) {
     if (date < Date.now()) setDateErr(true);
     else setDateErr(false);
   };
+  // Opens backdrop
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -119,11 +124,9 @@ export default function InstructorDashboard(props) {
     generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": parseInt(numBSPts)});
     const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName, firebase.firestore.Timestamp.fromDate(selectedDate));
     db.collection("assignments").add(newAssignment);
-    // console.log(newAssignment);
-    // TODO: Refresh assignments
     handleToggle();
   };
-  const handleCancel = () => {
+  const handleClear = () => {
     setAssignmentName("");
     setBinToDec("");
     setDecToBin("");
@@ -134,7 +137,6 @@ export default function InstructorDashboard(props) {
     setBAPts("");
     setBSPts("");
     setSelectedDate(Date.now());
-    handleToggle();
   };
 
   useEffect(() => {
@@ -293,7 +295,7 @@ export default function InstructorDashboard(props) {
             </div>
             <div style={{padding: "0.5em"}} />
             <Grid container alignItems="flex-start" justify="space-between">
-              <Button onClick={handleCancel} variant="contained">Cancel</Button>
+              <Button onClick={handleClear} variant="contained">Clear</Button>
               <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" color="primary" disabled={!submittable}>Submit</Button>
             </Grid>
           </Paper>
@@ -325,6 +327,10 @@ export default function InstructorDashboard(props) {
                 {ongoingAssignments.map((a) => 
                   <ListItem button component="a" href={`/stats?assignment=${a.id}`}>
                     <ListItemText style={{paddingLeft: "1em"}} primary={a.title} />
+                    <ListItemText 
+                    style={{textAlign: "right", paddingRight: "1em"}} 
+                    primary={`${months[a.due.toDate().getMonth()]} ${a.due.toDate().getDate()}`} 
+                  />
                   </ListItem>
                 )}
               </List>
@@ -338,6 +344,10 @@ export default function InstructorDashboard(props) {
                 {completedAssignments.map((a) => 
                   <ListItem button component="a" href={`/stats?assignment=${a.id}`}>
                     <ListItemText style={{paddingLeft: "1em"}} primary={a.title} />
+                    <ListItemText 
+                    style={{textAlign: "right", paddingRight: "1em"}} 
+                    primary={`${months[a.due.toDate().getMonth()]} ${a.due.toDate().getDate()}`} 
+                  />
                   </ListItem>
                 )}
               </List>

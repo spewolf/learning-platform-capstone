@@ -40,6 +40,7 @@ export default function StudentDashboard(props) {
   const db = firebase.firestore(app);
   const { currentUser } = useContext(AuthContext);
   const userCourse = currentUser.data.course;
+  
 
   useEffect(() => {
     function getAllAssignments() {
@@ -52,7 +53,7 @@ export default function StudentDashboard(props) {
         })
         setOngoing(ongoing);
         setCompleted(completed);
-      });
+      })
     }
     getAllAssignments();
   }, [db, userCourse]);
@@ -150,7 +151,7 @@ export default function StudentDashboard(props) {
             </List>
             <List className={classes.root} subheader={<ListSubheader style={{paddingLeft: "1em"}}>Past</ListSubheader>} >
               {completedAssignments.map((a) => 
-                <ListItem button disabled component="a" href={`/assessment?id=${a.id}`}>
+                <ListItem button disabled component="a">
                   <ListItemText style={{paddingLeft: "1em"}} primary={a.title} />
                   <ListItemText 
                     style={{textAlign: "right", paddingRight: "1em"}} 
