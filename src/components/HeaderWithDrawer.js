@@ -15,9 +15,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard"; // Dashboard
-import AlarmIcon from "@material-ui/icons/Alarm"; // Practice
+import AlarmIcon from "@material-ui/icons/Alarm"; // Assessment
 import SchoolIcon from "@material-ui/icons/School"; // Learning
-import AssessmentIcon from "@material-ui/icons/Assessment"; // Assessment
+import AssessmentIcon from "@material-ui/icons/Assessment"; // Statistics
+import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects"; // Practice
+import GradeIcon from '@material-ui/icons/Grade'; // Grades
 import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
 import Button from "@material-ui/core/Button";
@@ -158,10 +160,11 @@ function LoginLinks(props) {
 
 function HeaderWithDrawer(props) {
   const classes = useStyles();
+  const { currentUser } = useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const icons = [<DashboardIcon />, <SchoolIcon />, <AlarmIcon />, <AssessmentIcon />];
-  const addresses = ["/dashboard", "/learning", "/practice", "/assessment"];
-  const labels = ["Dashboard", "Learn", "Practice", "Assessments"];
+  const icons = (currentUser.data?.type === "student" ? [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AlarmIcon />] : [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AssessmentIcon />, <GradeIcon />]);
+  const addresses = (currentUser.data?.type === "student" ? ["/dashboard", "/learning", "/practice", "/assessment"] : ["/dashboard", "/learning", "/practice", "/stats", "/grades"]);
+  const labels = (currentUser.data?.type === "student" ? ["Dashboard", "Learn", "Practice", "Assessments"] : ["Dashboard", "Learn", "Practice", "Statistics", "Grades"]);
   const [tempOpen, setTempOpen] = React.useState(false);
   const drawerTimer = React.useRef();
 
