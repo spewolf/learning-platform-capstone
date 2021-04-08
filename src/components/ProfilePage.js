@@ -92,7 +92,6 @@ export default function ProfilePage(props) {
             id="newPassword"
             label="New password"
             name="newPassword"
-            autoComplete="newPassword"
           />
           <WarnButton
             type="submit"
