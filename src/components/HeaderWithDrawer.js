@@ -165,7 +165,7 @@ function HeaderWithDrawer(props) {
   if (currentUser) userType = currentUser.data?.type;
   const [open, setOpen] = React.useState(false);
   const icons = (userType === "instructor" ? [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AssessmentIcon />, <GradeIcon />] : [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AlarmIcon />]);
-  const addresses = (userType === "instructor" ? ["/dashboard", "/learning", "/practice", "/stats", "/grades"] : ["/dashboard", "/learning", "/practice", "/assessment"]);
+  const addresses = (userType === "instructor" ? ["/dashboard", "/learning", "/practice", "/pickStats", "/pickGrades"] : ["/dashboard", "/learning", "/practice", "/assessment"]);
   const labels = (userType === "instructor" ? ["Dashboard", "Learn", "Practice", "Statistics", "Grades"] : ["Dashboard", "Learn", "Practice", "Assessments"]);
   const [tempOpen, setTempOpen] = React.useState(false);
   const drawerTimer = React.useRef();

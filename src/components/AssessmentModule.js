@@ -58,7 +58,6 @@ const AssessmentModule = (props) => {
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
 
-  
   useEffect(() => {
     // Only called if no assignment was provided in the query strings or if the provided assignment is invalid.
     function getValidAssignments() {
@@ -70,7 +69,6 @@ const AssessmentModule = (props) => {
         assignments.forEach((assignment, index) => {
           const hasTakenPromise = hasStudentTakenAssignment(db, currentUser.uid, assignment.id)
           hasTakenPromise.then((hasTaken) => {
-
             // Student has not taken this assignment, so we can add it to validAssignments
             assignment.hasTaken = hasTaken
             validAssignments.push(assignment)
@@ -128,7 +126,7 @@ const AssessmentModule = (props) => {
                         onClick={() => startAssignment(index)}
                         style={{padding: "0em"}}>
                           <strong>{(data.hasTaken ? "[ALREADY SUBMITTED] " : "") + data.title}</strong>
-                        </Button>
+                      </Button>
                       <p style={{margin: "0em"}}>{getTotalAssignmentPoints(data)} {getTotalAssignmentPoints(data) === 1 ? "Point" : "Points"} | {data.questions.length} {data.questions.length === 1 ? "Question" : "Questions"}</p>
                       <p style={{margin: "0em"}}>Due {cleanDate(new Date(data.due.seconds*1000))}</p>
                       <hr/>

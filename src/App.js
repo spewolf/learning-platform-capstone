@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Statistics from "./components/Statistics";
+import Grades from "./components/Grades";
 import PracticeModule from "./components/PracticeModule";
 import LearningModule from "./components/LearningModule";
 import AssessmentModule from "./components/AssessmentModule";
@@ -19,6 +20,8 @@ import ProfilePage from "./components/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ForgotPassword from "./components/ForgotPassword";
+import PickAssignmentForStatistics from "./components/PickAssignmentForStatistics";
+import PickAssignmentForGrades from "./components/PickAssignmentForGrades";
 
 const theme = createMuiTheme({
   palette: {
@@ -71,7 +74,10 @@ function App(props) {
                 <Route path="/register" render={() => <Register setLocation={setLocation}/>} />
                 <Route path="/login" render={() => <Login setLocation={setLocation}/>} />
                 <Route path="/forgotPassword" render={() => <ForgotPassword setLocation={setLocation}/>} />
+                <PrivateRoute path="/pickStats" render={() => <PickAssignmentForStatistics setLocation={setLocation}/>} />
+                <PrivateRoute path="/pickGrades" render={() => <PickAssignmentForGrades setLocation={setLocation}/>} />
                 <PrivateRoute path="/stats" render={() => <Statistics setLocation={setLocation}/>} />
+                <PrivateRoute path="/grades" render={() => <Grades setLocation={setLocation}/>} />
                 <PrivateRoute path="/learning" render={() => <LearningModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/practice" render={() => <PracticeModule setLocation={setLocation}/>} />
                 <PrivateRoute path="/assessment" render={() => <AssessmentModule setLocation={setLocation}/>} />
