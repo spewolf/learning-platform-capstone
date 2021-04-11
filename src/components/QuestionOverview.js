@@ -53,7 +53,13 @@ export default function QuestionOverview(props) {
           <h4 className={classes.h4}>Question: {content}</h4>
           <h4 className={classes.h4}>Points: {points}</h4>
           <h4 className={classes.h4}>Type: {type}</h4>
-          <h4 className={classes.h4}>Arguments: {args}</h4>
+          <h4 className={classes.h4}>Arguments: [ {args.map((arg, index) => {
+            if(index === args.length-1) {
+              return arg
+            } else {
+              return arg + ", "
+            }
+          })} ]</h4>
           <h4 className={classes.h4}>Correct answer: {correctAnswer}</h4>
         </Grid>
         <Grid item xs={6}>
