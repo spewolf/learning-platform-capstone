@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { withRouter, Redirect } from "react-router";
 import { AuthContext } from "./AuthProvider.js";
 import firebase from "firebase";
@@ -12,7 +12,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { School } from "@material-ui/icons";
 
-import { isCourseNameUnique } from '../helpers/DatabaseHelper'
+import { isCourseNameUnique } from "../helpers/DatabaseHelper";
+
+const validateForm = errors => {
+  let valid = true;
+  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
+  return valid;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,13 +39,45 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   detail: {
-      color: "#5a5a5a",
+    color: "#5a5a5a",
+  },
+  error: {
+    color: "red",
   },
 }));
 
 const TeacherInfo = ({ history }) => {
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
+
+  const [form, setForm] = useState({
+    course: null,
+    name: null,
+    errors: {
+      course: "",
+      name: "",
+    },
+  });
+
+  const handleChange = (event) => {
+    console.log(form)
+    event.preventDefault();
+    const { name, value } = event.target;
+    let err = form.errors;
+
+    switch (name) {
+      case "name":
+        err.name = value.length > 0 ? "" : "Your name is required";
+        setForm({ errors: err, course: form.course, name: value });
+        break;
+      case "course":
+        err.course = value.length > 4 ? "" : "Course code must be at least 5 characters";
+        setForm({ errors: err, course: value, name: form.name });
+        break;
+      default:
+        break;
+    }
+  };
 
   const classes = useStyles();
 
@@ -52,15 +90,15 @@ const TeacherInfo = ({ history }) => {
       const type = "instructor";
 
       // Make sure course name does not already exist.  THIS IS IMPORTANT.
-      const isUniquePromise = isCourseNameUnique(db, course.value)
+      const isUniquePromise = isCourseNameUnique(db, course.value);
       isUniquePromise.then(async (isUnique) => {
         if (isUnique) {
           try {
             const data = {
               name: name.value,
               course: course.value,
-              type: type
-            }
+              type: type,
+            };
             await db.collection("users").doc(currentUser.uid).set(data);
             currentUser.data = data;
             history.push("/");
@@ -68,9 +106,9 @@ const TeacherInfo = ({ history }) => {
             alert(error);
           }
         } else {
-          alert("Error: That course name already exists.")
+          alert("Error: That course name already exists.");
         }
-      })
+      });
     },
     [history, db, currentUser]
   );
@@ -99,8 +137,13 @@ const TeacherInfo = ({ history }) => {
             label="Your Name"
             name="name"
             autoComplete="name"
+            onChange={handleChange}
             autoFocus
           />
+          {(form.name?.length ?? 0) > 0 && (
+            <span className={classes.error}>{form.errors.name}</span>
+          )}
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -109,10 +152,15 @@ const TeacherInfo = ({ history }) => {
             name="course"
             label="Course Code"
             id="course"
+            onChange={handleChange}
           />
+          {(form.course?.length ?? 0) > 0 && (
+            <span className={classes.error}>{form.errors.course}</span>
+          )}
+
           <Grid container justify="flex-start">
             <Grid item className={classes.detail}>
-                Give this code to your students when they sign up
+              Give this code to your students when they sign up
             </Grid>
           </Grid>
           <Button
@@ -121,6 +169,7 @@ const TeacherInfo = ({ history }) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!validateForm(form.errors)}
           >
             Submit
           </Button>

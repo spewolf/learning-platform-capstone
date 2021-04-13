@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import firebase from "firebase";
 import { withRouter, Redirect } from "react-router";
 import { AuthContext } from "./AuthProvider.js";
@@ -53,7 +53,6 @@ const Register = (props) => {
 
   const classes = useStyles();
   const [form, setForm] = useState({
-    fullName: null,
     email: null,
     password: null,
     errors: {
@@ -98,10 +97,6 @@ const Register = (props) => {
   );
 
   const { currentUser } = useContext(AuthContext);
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   if (currentUser) {
     return <Redirect to="/" />;
