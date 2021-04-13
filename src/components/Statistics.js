@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
-      paddingLeft: "1em",
-      paddingTop: ".6em",
-      paddingBottom: ".6em",
-      paddingRight: "1em"
+    paddingLeft: "1em",
+    paddingTop: ".6em",
+    paddingBottom: ".6em",
+    paddingRight: "1em"
   },
   xyPlot: {
     marginTop: ".3em",
@@ -72,6 +72,8 @@ const Statistics = (props) => {
   }, [db, setAssignment, setSubmissions, qs.assignment])
 
   const setAssignmentStats = (assignmentData) => {
+    if (!assignmentData || !assignmentData.questions) return
+
     setTotalPoints(getTotalAssignmentPoints(assignmentData))
 
     // Also set up accordion states at this point.

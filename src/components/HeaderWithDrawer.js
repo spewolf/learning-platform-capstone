@@ -21,7 +21,7 @@ import AssessmentIcon from "@material-ui/icons/Assessment"; // Statistics
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects"; // Practice
 import GradeIcon from '@material-ui/icons/Grade'; // Grades
 import { useContext } from "react";
-import { AuthContext } from "./AuthProvider";
+import { AuthContext } from "./AuthProvider.js";
 import Button from "@material-ui/core/Button";
 
 import logo from "../assets/bl_logo.png";
@@ -161,10 +161,12 @@ function LoginLinks(props) {
 function HeaderWithDrawer(props) {
   const classes = useStyles();
   const { currentUser } = useContext(AuthContext);
+  let userType = "";
+  if (currentUser) userType = currentUser.data?.type;
   const [open, setOpen] = React.useState(false);
-  const icons = (currentUser.data?.type === "student" ? [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AlarmIcon />] : [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AssessmentIcon />, <GradeIcon />]);
-  const addresses = (currentUser.data?.type === "student" ? ["/dashboard", "/learning", "/practice", "/assessment"] : ["/dashboard", "/learning", "/practice", "/stats", "/grades"]);
-  const labels = (currentUser.data?.type === "student" ? ["Dashboard", "Learn", "Practice", "Assessments"] : ["Dashboard", "Learn", "Practice", "Statistics", "Grades"]);
+  const icons = (userType === "instructor" ? [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AssessmentIcon />, <GradeIcon />] : [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AlarmIcon />]);
+  const addresses = (userType === "instructor" ? ["/dashboard", "/learning", "/practice", "/pickStats", "/pickGrades"] : ["/dashboard", "/learning", "/practice", "/assessment"]);
+  const labels = (userType === "instructor" ? ["Dashboard", "Learn", "Practice", "Statistics", "Grades"] : ["Dashboard", "Learn", "Practice", "Assessments"]);
   const [tempOpen, setTempOpen] = React.useState(false);
   const drawerTimer = React.useRef();
 
@@ -192,6 +194,7 @@ function HeaderWithDrawer(props) {
       }
     }, 140);
   };
+
   const hoverDrawerClose = () => {
     if (!open) clearTimeout(drawerTimer.current);
     else if (tempOpen) {
@@ -242,6 +245,7 @@ function HeaderWithDrawer(props) {
         open={open}
         onMouseEnter={hoverDrawerOpen}
         onMouseLeave={hoverDrawerClose}
+        style={userType !== "" ? {} : {display: "none"}}
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
