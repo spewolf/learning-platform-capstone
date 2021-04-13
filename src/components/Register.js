@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import firebase from "firebase";
 import { withRouter, Redirect } from "react-router";
 import { AuthContext } from "./AuthProvider.js";
@@ -12,6 +12,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+const validEmailRegex = RegExp(
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+
+const validateForm = errors => {
+  let valid = true;
+  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
+  return valid;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,23 +41,54 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error: {
+    color: "red",
+  },
 }));
 
 const Register = (props) => {
-  props.setLocation("Register")
+  props.setLocation("Register");
 
   const app = firebase.apps[0];
 
   const classes = useStyles();
+  const [form, setForm] = useState({
+    fullName: null,
+    email: null,
+    password: null,
+    errors: {
+      fullName: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let err = form.errors;
+
+    switch (name) {
+      case "email":
+        err.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
+        setForm({ errors: err, password: form.password, email: value });
+        break;
+      case "password":
+        err.password =
+          (value?.length ?? 0) < 8 ? "Password must be at least 8 characters long!" : "";
+        setForm({ errors: err, password: value, email: form.email });
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleRegistration = useCallback(
     async (event) => {
       event.preventDefault();
       const { email, password } = event.target.elements;
       try {
-        await app
-          ?.auth()
-          .createUserWithEmailAndPassword(email.value, password.value);
+        await app?.auth().createUserWithEmailAndPassword(email.value, password.value);
         props.history.push("/register/student-or-teacher");
       } catch (error) {
         alert(error);
@@ -57,6 +98,10 @@ const Register = (props) => {
   );
 
   const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
 
   if (currentUser) {
     return <Redirect to="/" />;
@@ -83,7 +128,9 @@ const Register = (props) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
+              {(form.email?.length ?? 0) > 0 && <span className={classes.error}>{form.errors.email}</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -95,7 +142,11 @@ const Register = (props) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
               />
+              {(form.password?.length ?? 0) > 0 && (
+                <span className={classes.error}>{form.errors.password}</span>
+              )}
             </Grid>
           </Grid>
           <Button
@@ -104,6 +155,7 @@ const Register = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!validateForm(form.errors)}
           >
             Register
           </Button>
