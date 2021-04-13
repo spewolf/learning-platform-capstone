@@ -56,7 +56,6 @@ const Register = (props) => {
     email: null,
     password: null,
     errors: {
-      fullName: "",
       email: "",
       password: "",
     },

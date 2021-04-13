@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { withRouter, Redirect } from "react-router";
 import { AuthContext } from "./AuthProvider.js";
 import firebase from "firebase";
@@ -12,6 +12,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+const validEmailRegex = RegExp(
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  return valid;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +43,10 @@ const useStyles = makeStyles((theme) => ({
   },
   forgotLink: {
     color: "red",
-  }
+  },
+  error: {
+    color: "red",
+  },
 }));
 
 const Login = (props) => {
@@ -42,6 +55,35 @@ const Login = (props) => {
   const app = firebase.apps[0];
 
   const classes = useStyles();
+
+  const [form, setForm] = useState({
+    email: null,
+    password: null,
+    errors: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let err = form.errors;
+
+    switch (name) {
+      case "email":
+        err.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
+        setForm({ errors: err, password: form.password, email: value });
+        break;
+      case "password":
+        err.password =
+          (value?.length ?? 0) < 1 ? "Password required" : "";
+        setForm({ errors: err, password: value, email: form.email });
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleLogin = useCallback(
     async (event) => {
@@ -83,8 +125,13 @@ const Login = (props) => {
             label="Email Address"
             name="email"
             autoComplete="email"
+            onChange={handleChange}
             autoFocus
           />
+          {(form.email?.length ?? 0) > 0 && (
+            <span className={classes.error}>{form.errors.email}</span>
+          )}
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -95,7 +142,11 @@ const Login = (props) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
+          {(form.password?.length ?? 0) > 0 && (
+            <span className={classes.error}>{form.errors.password}</span>
+          )}
           <Grid container>
             <Grid item>
               <Link href="/forgotPassword" variant="body2" className={classes.forgotLink}>
@@ -109,6 +160,7 @@ const Login = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!validateForm(form.errors)}
           >
             Login
           </Button>
