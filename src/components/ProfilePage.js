@@ -1,5 +1,5 @@
 import { AuthContext } from "./AuthProvider.js";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -11,6 +11,12 @@ import { Card, Divider } from "@material-ui/core";
 import { AccountBox } from "@material-ui/icons";
 import firebase from "firebase";
 import { red } from "@material-ui/core/colors";
+
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  return valid;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     padding: "1rem",
   },
+  error: {
+    color: "red",
+  },
 }));
 
 const WarnButton = withStyles((theme) => ({
@@ -50,6 +59,37 @@ export default function ProfilePage(props) {
   const app = firebase.apps[0];
   const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
+
+  const [form, setForm] = useState({
+    password: null,
+    confirmPassword: null,
+    errors: {
+      password: "required",
+      confirmPassword: "required",
+    },
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let err = form.errors;
+
+    switch (name) {
+      case "newPassword":
+        err.password =
+          (value?.length ?? 0) < 8 ? "Password must be at least 8 characters long!" : "";
+        setForm({ errors: err, password: value, confirmPassword: form.confirmPassword });
+        break;
+      case "confirmPassword":
+        err.confirmPassword =
+          value !== form.password ? "Passwords must match!" : "";
+        setForm({ errors: err, confirmPassword: value, password: form.password });
+        break;
+      default:
+        break;
+    }
+  };
+
   function handleNewPassword(event) {
     event.preventDefault();
     const { newPassword } = event.target.elements;
@@ -86,19 +126,39 @@ export default function ProfilePage(props) {
           <h3>Change your password</h3>
           <TextField
             variant="outlined"
+            type="password"
             margin="normal"
             required
             fullWidth
             id="newPassword"
             label="New password"
             name="newPassword"
+            onChange={handleChange}
           />
+                        {(form.password?.length ?? 0) > 0 && (
+                <span className={classes.error}>{form.errors.password}</span>
+              )}
+          <TextField
+            variant="outlined"
+            type="password"
+            margin="normal"
+            required
+            fullWidth
+            id="confirmPassword"
+            label="Confirm password"
+            name="confirmPassword"
+            onChange={handleChange}
+          />
+                        {(form.confirmPassword?.length ?? 0) > 0 && (
+                <span className={classes.error}>{form.errors.confirmPassword}</span>
+              )}
           <WarnButton
             type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}
+            disabled={!validateForm(form.errors)}
           >
             Save new password
           </WarnButton>
