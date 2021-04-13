@@ -60,7 +60,6 @@ const TeacherInfo = ({ history }) => {
   });
 
   const handleChange = (event) => {
-    console.log(form)
     event.preventDefault();
     const { name, value } = event.target;
     let err = form.errors;
