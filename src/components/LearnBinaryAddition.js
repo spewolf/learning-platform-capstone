@@ -9,7 +9,8 @@ import AddNibble from '../diagrams/AddNibble.png'
 import AddOneByte from '../diagrams/AddOneByte.png'
 import AddOneByteSolution from '../diagrams/AddOneByteSolution.png'
 
-import * as names from '../LearningModuleNames'
+import { Names } from '../LearningModuleNames'
+
 
 const useStyles = makeStyles((theme) => ({
     h3: {
@@ -27,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
   
 
-export default function LearnBinaryToDecimal(props) {
-    const TOTAL_STEPS = 4;
+export default function LearnBinaryAddition(props) {
+    const TOTAL_STEPS = Names[2].steps.length;
     const [stepCounter, setStepCounter] = React.useState(1)
 
     const classes = useStyles();
@@ -66,7 +67,7 @@ export default function LearnBinaryToDecimal(props) {
                                 We can add numbers in binary similar to how we can add numbers in decimal.  Below, you can see all of the solutions to adding two bits
                                 together.  The first three are pretty straight-forward as they are the same in both decimal and binary.  But the last one is a little
                                 bit different (pun intended).  In decimal, we would add 1 + 1 and get 2.  But there is no digit to represent 2 in binary!  So, instead,
-                                we have to use the binary representation of 2, which is 10<sub>bin</sub>.
+                                we have to use the binary representation of 2, which is 0b10.
                             </p>
                             <Grid style={{textAlign: "center"}}>
                                 <img
@@ -97,7 +98,7 @@ export default function LearnBinaryToDecimal(props) {
                                 there is no 3 in binary.  But, 3<sub>dec</sub> = 11<sub>bin</sub>.  So, in this case, we carry the 1 and also record a 1.
                             </p>
                             <p>
-                                Finally, we have 0 + 0, but with a 1 carried in.  So this is 1 + 0 + 0, which is just 1.  And now we get our answer: 1101.
+                                Finally, we have 0 + 0, but with a 1 carried in.  So this is 1 + 0 + 0, which is just 1.  And now we get our answer: 0b1101.
                             </p>
                             <p>
                                 One more thing: A good way to check to see if your answer is correct is to convert the two numbers you're adding and the answer into
@@ -154,18 +155,13 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{marginTop: "1em"}}>
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.Add1}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.Add2}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.Add3}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.Add4}</div>
-                    </Button>
+                    {Names[2].steps.map((stepName, index) => {
+                        return (
+                            <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(index+1)}>
+                                <div style={stepCounter === (index+1) ? {fontWeight: "bold"} : {}}>{stepName}</div>
+                            </Button>
+                        )
+                    })}
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>
             </Container>

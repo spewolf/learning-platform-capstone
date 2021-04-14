@@ -99,6 +99,7 @@ export default function PracticeModule(props) {
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
           <form onSubmit={begin}>
+              <h3 style={{paddingLeft: ".9em"}}>Select your preferences to begin</h3>
               <Paper elevation={3} className={classes.paper}>
                 <FormControlLabel style={{display: "block"}} value="BinToDec" control={<Checkbox name="BinToDec" onChange={onBinToDecChanged}/>} label="Binary to Decimal Conversion" />
                 <FormControlLabel style={{display: "block"}} value="DecToBin" control={<Checkbox name="DecToBin" onChange={onDecToBinChanged}/>} label="Decimal to Binary Conversion" />

@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 const Statistics = (props) => {
   props.setLocation("Statistics")
   
-  const app = firebase.apps[0];
-  const db = firebase.firestore(app);
+  const app = firebase.apps[0]
+  const db = firebase.firestore(app)
   const qs = queryString.parse(props.location.search)
   const { currentUser } = useContext(AuthContext)
 
