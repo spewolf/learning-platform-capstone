@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useCallback } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,11 +20,11 @@ import SchoolIcon from "@material-ui/icons/School"; // Learning
 import AssessmentIcon from "@material-ui/icons/Assessment"; // Statistics
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects"; // Practice
 import GradeIcon from '@material-ui/icons/Grade'; // Grades
-import { useContext } from "react";
+import BrightnessMediumIcon from '@material-ui/icons/BrightnessMedium'; // Dark/Light toggle
 import { AuthContext } from "./AuthProvider.js";
 import Button from "@material-ui/core/Button";
-
 import logo from "../assets/bl_logo.png";
+import firebase from "firebase";
 
 const drawerWidth = 250;
 
@@ -139,9 +139,7 @@ function NavItem(props) {
 }
 
 function LoginLinks(props) {
-
   const { currentUser } = useContext(AuthContext);
-
   let loginLinks;
 
   if (currentUser) {
@@ -158,17 +156,21 @@ function LoginLinks(props) {
   return <React.Fragment>{loginLinks}</React.Fragment>;
 }
 
-function HeaderWithDrawer(props) {
+export default function HeaderWithDrawer(props) {
   const classes = useStyles();
   const { currentUser } = useContext(AuthContext);
   let userType = "";
-  if (currentUser) userType = currentUser.data?.type;
+  if (currentUser) {
+    userType = currentUser.data?.type;
+  }
   const [open, setOpen] = React.useState(false);
   const icons = (userType === "instructor" ? [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AssessmentIcon />, <GradeIcon />] : [<DashboardIcon />, <SchoolIcon />, <EmojiObjectsIcon />, <AlarmIcon />]);
   const addresses = (userType === "instructor" ? ["/dashboard", "/learning", "/practice", "/pickStats", "/pickGrades"] : ["/dashboard", "/learning", "/practice", "/assessment"]);
   const labels = (userType === "instructor" ? ["Dashboard", "Learn", "Practice", "Statistics", "Grades"] : ["Dashboard", "Learn", "Practice", "Assessments"]);
   const [tempOpen, setTempOpen] = React.useState(false);
   const drawerTimer = React.useRef();
+  const app = firebase.apps[0];
+  const db = firebase.firestore(app);
 
   React.useEffect(
     () => () => {
@@ -185,7 +187,6 @@ function HeaderWithDrawer(props) {
     setOpen(false);
     setTempOpen(false);
   };
-
   const hoverDrawerOpen = () => {
     drawerTimer.current = window.setTimeout(() => {
       if (!open) {
@@ -194,7 +195,6 @@ function HeaderWithDrawer(props) {
       }
     }, 140);
   };
-
   const hoverDrawerClose = () => {
     if (!open) clearTimeout(drawerTimer.current);
     else if (tempOpen) {
@@ -202,6 +202,14 @@ function HeaderWithDrawer(props) {
     }
     setTempOpen(false);
   };
+
+  const handleThemeClick = useCallback(
+    async (e) => {
+      await db.collection("users").doc(currentUser.uid).update(currentUser && (currentUser.data?.theme === "light" || currentUser.data?.theme === "") ? {theme: "dark"} : {theme: "light"});
+      window.location.reload();
+    },
+    [db, currentUser]
+  );
 
   return (
     <React.Fragment>
@@ -227,6 +235,7 @@ function HeaderWithDrawer(props) {
             {props.location}
           </Typography>
           <div className={classes.spacer} />
+          <IconButton onClick={handleThemeClick}><BrightnessMediumIcon /></IconButton>
           <LoginLinks />
         </Toolbar>
       </AppBar>
@@ -269,5 +278,3 @@ function HeaderWithDrawer(props) {
     </React.Fragment>
   );
 }
-
-export default HeaderWithDrawer;
