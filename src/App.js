@@ -23,7 +23,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import PickAssignmentForStatistics from "./components/PickAssignmentForStatistics";
 import PickAssignmentForGrades from "./components/PickAssignmentForGrades";
 
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
   palette: {
     spacing: 8,
     typography: {
@@ -53,11 +53,49 @@ const theme = createMuiTheme({
       disabled: "rgba(0, 0, 0, 0.38)",
     },
     divider: "rgb(0,0,0,0.2)",
+    theme: "light",
   },
+});
+
+const darkTheme = createMuiTheme({
+  palette: {
+    spacing: 8,
+    typography: {
+      fontFamily: ["Roboto", '"Seqoe UI"', "Arial", "sans-serif"].join(","),
+    },
+    primary: {
+      main: "#ff7300",
+      light: "#ffa441",
+      dark: "#c44300",
+      contrastText: "#000000",
+    },
+    secondary: {
+      main: "#4f2c1d",
+      light: "#7d5544",
+      dark: "#290200",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#303030",
+      dark: "#000000",
+      paper: "#424242",
+    },
+    text: {
+      primary: "#fff",
+      secondary: "rgba(255, 255, 255, 0.7)",
+      disabled: "rgba(255, 255, 255, 0.5)",
+    },
+    divider: "rgba(255, 255, 255, 0.12)",
+    theme: "dark",
+  }
 });
 
 function App(props) {
   const [location, setLocation] = React.useState("");
+  const [theme, setTheme] = React.useState(lightTheme)
+  const handleSetTheme = (s) => {
+    setTheme(s === "light" ? lightTheme : darkTheme);
+  }
 
   return (
     <div style={{ display: "flex" }}>
@@ -65,7 +103,7 @@ function App(props) {
       <CssBaseline />
         <AuthProvider>
           <Router>
-            <HeaderWithDrawer location={location}/>
+            <HeaderWithDrawer location={location} handleSetTheme={handleSetTheme} />
             <main style={{ flexGrow: 1, paddingTop: theme.spacing(8), paddingLeft: theme.spacing(3) }}>
               <Switch>
                 <Route path="/register/student-or-teacher" render={() => <StudentOrTeacher setLocation={setLocation}/>} />

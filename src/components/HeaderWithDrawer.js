@@ -23,6 +23,7 @@ import GradeIcon from '@material-ui/icons/Grade'; // Grades
 import BrightnessMediumIcon from '@material-ui/icons/BrightnessMedium'; // Dark/Light toggle
 import { AuthContext } from "./AuthProvider.js";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 import logo from "../assets/bl_logo.png";
 import firebase from "firebase";
 
@@ -35,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     flexDirection: "row",
-    boxShadow: "0px 0px 5px 1px rgba(0,0,0,.2)",
+    boxShadow: "0px 0px 5px 1px rgba(0,0,0,0.2)",
     position: "sticky",
     zIndex: "5",
     top: "0",
-    color: "palette.primary.text",
   },
   navItem: {
     padding: theme.spacing(1),
+    color: theme.palette.primary.contrastText,
   },
   spacer: {
     marginRight: "auto",
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: theme.palette.primary[theme.palette.theme === "dark" ? "main" : "main"], // Change as needed
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -69,6 +71,12 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  appBarSpacer: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      height: "100vh",
+      overflow: "auto",
+    },
   menuButton: {
     marginRight: 16,
   },
@@ -77,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: theme.palette.primary.contrastText,
   },
   drawer: {
     width: drawerWidth,
@@ -100,12 +109,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(10),
     },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -171,6 +174,7 @@ export default function HeaderWithDrawer(props) {
   const drawerTimer = React.useRef();
   const app = firebase.apps[0];
   const db = firebase.firestore(app);
+  if (currentUser) props.handleSetTheme((currentUser.data?.theme === "light" || currentUser.data?.theme === "") ? "light" : "dark");
 
   React.useEffect(
     () => () => {
@@ -202,26 +206,27 @@ export default function HeaderWithDrawer(props) {
     }
     setTempOpen(false);
   };
-
   const handleThemeClick = useCallback(
     async (e) => {
       await db.collection("users").doc(currentUser.uid).update(currentUser && (currentUser.data?.theme === "light" || currentUser.data?.theme === "") ? {theme: "dark"} : {theme: "light"});
+      if (currentUser) props.handleSetTheme((currentUser.data?.theme === "light" || currentUser.data?.theme === "") ? "dark" : "light")
       window.location.reload();
     },
-    [db, currentUser]
+    [db, currentUser, props]
   );
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
+      <AppBar color="inherit" position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.title}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            style={currentUser ? {} : {display: "none"}}
           >
             <MenuIcon />
           </IconButton>
@@ -235,8 +240,12 @@ export default function HeaderWithDrawer(props) {
             {props.location}
           </Typography>
           <div className={classes.spacer} />
-          <IconButton onClick={handleThemeClick}><BrightnessMediumIcon /></IconButton>
-          <LoginLinks />
+          <Tooltip title="Toggle dark mode">
+            <IconButton color="inherit" onClick={handleThemeClick} style={currentUser ? {} : {display: "none"}}>
+              <BrightnessMediumIcon />
+            </IconButton>
+          </Tooltip>
+          <LoginLinks className={classes.title} />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -257,7 +266,7 @@ export default function HeaderWithDrawer(props) {
         style={userType !== "" ? {} : {display: "none"}}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} style={{color: "inherit"}}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -266,7 +275,7 @@ export default function HeaderWithDrawer(props) {
         <List style={{ paddingLeft: "0.21em" }}>
           {labels.map((text, index) => (
             <ListItem button key={text} component="a" href={addresses[index]}>
-              <ListItemIcon>
+              <ListItemIcon style={{color: "inherit"}}>
                 <div style={{ width: "8%" }} />
                 {icons[index]}
               </ListItemIcon>
