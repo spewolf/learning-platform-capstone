@@ -69,6 +69,7 @@ export default function InstructorDashboard(props) {
   const [numDTBPts, setDTBPts] = React.useState("");
   const [numBAPts, setBAPts] = React.useState("");
   const [numBSPts, setBSPts] = React.useState("");
+  const [reloading, setReloading] = React.useState(false);
   const { currentUser } = useContext(AuthContext);
   const userCourse = currentUser.data.course;
   const app = firebase.apps[0];
@@ -116,6 +117,10 @@ export default function InstructorDashboard(props) {
   const handleName = (e) => {
     setAssignmentName(e.target.value);
   };
+  const handleReload = () => {
+    setReloading(true);
+    handleToggle();
+  }
   const handleSubmit = () => {
     let generatorMap = new Map();
     generatorMap.set(generateBinToDecQuestion, {"quantity": numBinToDec, "points": parseInt(numBTDPts)});
@@ -124,7 +129,8 @@ export default function InstructorDashboard(props) {
     generatorMap.set(generateSubtractionQuestion, {"quantity": numBinSub, "points": parseInt(numBSPts)});
     const newAssignment = generateGradedAssignment(generatorMap, userCourse, assignmentName, firebase.firestore.Timestamp.fromDate(selectedDate));
     db.collection("assignments").add(newAssignment);
-    handleToggle();
+    handleReload();
+    setTimeout((() => { window.location.reload(); }), 500);
   };
   const handleClear = () => {
     setAssignmentName("");
@@ -157,148 +163,153 @@ export default function InstructorDashboard(props) {
 
   return (
     <div>
-      <Backdrop className={classes.backdrop} open={open}>
+      <Backdrop className={classes.backdrop} open={open || reloading}>
         <form>
-          <Paper style={{padding: "1.5em", paddingBottom: "1.5em", justify: "center", width:"82%"}}>
-            <Grid container alignItems="flex-start" justify="space-around">
-              <TextField 
-                style={{paddingBottom: "1em", width: "86.5%"}} 
-                onChange={handleName} 
-                placeholder="New Assignment" 
-                defaultValue="" 
-                variant="outlined"
-                value={assignmentName}
-                error={titleErr}
-              />
-              
-              <IconButton onClick={handleToggle}>
-                <CloseIcon />
-              </IconButton>
-            </Grid>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-evenly" style={{paddingBottom: "1em"}}>
-                <KeyboardDatePicker
-                  variant="outlined"
-                  id="date-picker-dialog"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  style={{width: "30%"}}
-                  format="MM/dd/yyyy"
-                  error={dateErr}
-                />
-                <KeyboardTimePicker
-                  variant="outlined"
-                  id="time-picker"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  style={{width: "30%"}}
-                  error={dateErr}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-
-            <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
-                <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
-              </div>
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBinToDec)} 
-                value={numBinToDec} 
-                autoComplete="off" 
-                style={{maxWidth: "50%"}} 
-                id="outlined-basic" 
-                placeholder="# Questions" 
-                variant="outlined" 
-                error={BTDQErr}
-              />
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBTDPts)} 
-                value={numBTDPts} 
-                autoComplete="off" 
-                style={{maxWidth: "12%"}} 
-                placeholder="Pts" 
-                variant="outlined" 
-                error={BTDPErr}
-              />
-            </div>
-            <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
-                <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
-              </div>
-              <TextField 
-                onChange={(e) => handleNumInput(e, setDecToBin)} 
-                value={numDecToBin} 
-                autoComplete="off" 
-                style={{maxWidth: "50%"}} 
-                id="outlined-basic" 
-                placeholder="# Questions" 
-                variant="outlined" 
-                error={DTBQErr}
-              />
-              <TextField 
-                onChange={(e) => handleNumInput(e, setDTBPts)} 
-                value={numDTBPts} 
-                autoComplete="off" 
-                style={{maxWidth: "12%"}} 
-                placeholder="Pts" 
-                variant="outlined"
-                error={DTBPErr} 
-              />
-            </div>
-            <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
-                <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
-              </div>
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBinAdd)} 
-                value={numBinAdd} 
-                autoComplete="off" 
-                style={{maxWidth: "50%"}} 
-                id="outlined-basic" 
-                placeholder="# Questions" 
-                variant="outlined" 
-                error={BAQErr}
-              />
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBAPts)} 
-                value={numBAPts} 
-                autoComplete="off" 
-                style={{maxWidth: "12%"}} 
-                placeholder="Pts" 
-                variant="outlined" 
-                error={BAPErr}
-              />
-            </div>
-            <div className={classes.newAssignmentQuestions}>
-              <div style={{width: "40%"}}>
-                <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
-              </div>
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBinSub)} 
-                value={numBinSub} 
-                autoComplete="off" 
-                style={{maxWidth: "50%"}} 
-                id="outlined-basic" 
-                placeholder="# Questions" 
-                variant="outlined" 
-                error={BSQErr}
-                />
-              <TextField 
-                onChange={(e) => handleNumInput(e, setBSPts)} 
-                value={numBSPts} 
-                autoComplete="off" 
-                style={{maxWidth: "12%"}} 
-                placeholder="Pts" 
-                variant="outlined" 
-                error={BSPErr}
-                />
-            </div>
-            <div style={{padding: "0.5em"}} />
-            <Grid container alignItems="flex-start" justify="space-between">
-              <Button onClick={handleClear} variant="contained">Clear</Button>
-              <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" color="primary" disabled={!submittable}>Submit</Button>
-            </Grid>
+          <Paper style={open && !reloading ? {display: "none"} : {}}>
+            <h1 style={{padding: "0.9em"}}>Please wait...</h1>
           </Paper>
+          <div style={open && !reloading ? {} : {display: "none"}}>
+            <Paper style={{padding: "1.5em", paddingBottom: "1.5em", justify: "center", width:"82%"}}>
+              <Grid container alignItems="flex-start" justify="space-around">
+                <TextField 
+                  style={{paddingBottom: "1em", width: "86.5%"}} 
+                  onChange={handleName} 
+                  placeholder="New Assignment" 
+                  defaultValue="" 
+                  variant="outlined"
+                  value={assignmentName}
+                  error={titleErr}
+                />
+
+                <IconButton onClick={handleToggle}>
+                  <CloseIcon />
+                </IconButton>
+              </Grid>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-evenly" style={{paddingBottom: "1em"}}>
+                  <KeyboardDatePicker
+                    variant="outlined"
+                    id="date-picker-dialog"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    style={{width: "30%"}}
+                    format="MM/dd/yyyy"
+                    error={dateErr}
+                  />
+                  <KeyboardTimePicker
+                    variant="outlined"
+                    id="time-picker"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    style={{width: "30%"}}
+                    error={dateErr}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+
+              <div className={classes.newAssignmentQuestions}>
+                <div style={{width: "40%"}}>
+                  <FormLabel label="Binary to Decimal:" value={numBinToDec}>Binary to Decimal:</FormLabel>
+                </div>
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBinToDec)} 
+                  value={numBinToDec} 
+                  autoComplete="off" 
+                  style={{maxWidth: "50%"}} 
+                  id="outlined-basic" 
+                  placeholder="# Questions" 
+                  variant="outlined" 
+                  error={BTDQErr}
+                />
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBTDPts)} 
+                  value={numBTDPts} 
+                  autoComplete="off" 
+                  style={{maxWidth: "12%"}} 
+                  placeholder="Pts" 
+                  variant="outlined" 
+                  error={BTDPErr}
+                />
+              </div>
+              <div className={classes.newAssignmentQuestions}>
+                <div style={{width: "40%"}}>
+                  <FormLabel label="Decimal to Binary:" value={numDecToBin}>Decimal to Binary:</FormLabel>
+                </div>
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setDecToBin)} 
+                  value={numDecToBin} 
+                  autoComplete="off" 
+                  style={{maxWidth: "50%"}} 
+                  id="outlined-basic" 
+                  placeholder="# Questions" 
+                  variant="outlined" 
+                  error={DTBQErr}
+                />
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setDTBPts)} 
+                  value={numDTBPts} 
+                  autoComplete="off" 
+                  style={{maxWidth: "12%"}} 
+                  placeholder="Pts" 
+                  variant="outlined"
+                  error={DTBPErr} 
+                />
+              </div>
+              <div className={classes.newAssignmentQuestions}>
+                <div style={{width: "40%"}}>
+                  <FormLabel label="Binary Addition:" value={numBinAdd}>Binary Addition:</FormLabel>
+                </div>
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBinAdd)} 
+                  value={numBinAdd} 
+                  autoComplete="off" 
+                  style={{maxWidth: "50%"}} 
+                  id="outlined-basic" 
+                  placeholder="# Questions" 
+                  variant="outlined" 
+                  error={BAQErr}
+                />
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBAPts)} 
+                  value={numBAPts} 
+                  autoComplete="off" 
+                  style={{maxWidth: "12%"}} 
+                  placeholder="Pts" 
+                  variant="outlined" 
+                  error={BAPErr}
+                />
+              </div>
+              <div className={classes.newAssignmentQuestions}>
+                <div style={{width: "40%"}}>
+                  <FormLabel label="Binary Subtraction" value={numBinSub}>Binary Subtraction:</FormLabel>
+                </div>
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBinSub)} 
+                  value={numBinSub} 
+                  autoComplete="off" 
+                  style={{maxWidth: "50%"}} 
+                  id="outlined-basic" 
+                  placeholder="# Questions" 
+                  variant="outlined" 
+                  error={BSQErr}
+                  />
+                <TextField 
+                  onChange={(e) => handleNumInput(e, setBSPts)} 
+                  value={numBSPts} 
+                  autoComplete="off" 
+                  style={{maxWidth: "12%"}} 
+                  placeholder="Pts" 
+                  variant="outlined" 
+                  error={BSPErr}
+                  />
+              </div>
+              <div style={{padding: "0.5em"}} />
+              <Grid container alignItems="flex-start" justify="space-between">
+                <Button onClick={handleClear} variant="contained">Clear</Button>
+                <Button onClick={handleSubmit} style={{marginRight:"0.4em"}} variant="contained" color="primary" disabled={!submittable}>Submit</Button>
+              </Grid>
+            </Paper>
+          </div>
         </form>
       </Backdrop>
       <Container component="main" className={classes.content} maxWidth="" style={{display: "flex"}}>
