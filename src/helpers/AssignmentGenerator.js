@@ -4,7 +4,7 @@ import {getRandomBase10, getRandomBase2} from './Random'
 export function generateBinToDecQuestion(points) {
     const num = getRandomBase2("00000000", "100000000");
     const type = "binaryToDecimal"
-    const content = "What is the decimal form of " + padBinaryWithZeros(num, 8) + "(base2)?"
+    const content = "What is the decimal form of 0b" + padBinaryWithZeros(num, 8) + "?"
     const args = [num]
 
     const JSON = {
@@ -20,7 +20,7 @@ export function generateBinToDecQuestion(points) {
 export function generateDecToBinQuestion(points) {
     const num = getRandomBase10(0, 256);
     const type = "decimalToBinary"
-    const content = "What is the binary form of " + num + "(base10)?"
+    const content = "What is the binary form of " + num + "?"
     const args = [num]
 
     const JSON = {
@@ -39,8 +39,8 @@ export function generateAdditionQuestion(points) {
     const num1Bin = decimalToBinary(num1)
     const num2Bin = decimalToBinary(num2)
     const type = "binaryAddition"
-    const content = "What is " + padBinaryWithZeros(num1Bin, 8) + "(base2) + "
-        + padBinaryWithZeros(num2Bin, 8) + "(base2)?"
+    const content = "What is 0b" + padBinaryWithZeros(num1Bin, 8) + " + 0b"
+        + padBinaryWithZeros(num2Bin, 8) + "?"
     const args = [num1Bin, num2Bin]
 
     const JSON = {
@@ -59,8 +59,8 @@ export function generateSubtractionQuestion(points) {
     const num1Bin = decimalToBinary(num1)
     const num2Bin = decimalToBinary(num2)
     const type = "binarySubtraction"
-    const content = "What is " + padBinaryWithZeros(num1Bin, 8) + "(base2) - "
-        + padBinaryWithZeros(num2Bin, 8) + "(base2)?"
+    const content = "What is 0b" + padBinaryWithZeros(num1Bin, 8) + " - 0b"
+        + padBinaryWithZeros(num2Bin, 8) + "?"
     const args = [num1Bin, num2Bin]
 
     const JSON = {

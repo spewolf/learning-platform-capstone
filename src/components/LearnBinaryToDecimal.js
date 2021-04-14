@@ -10,7 +10,7 @@ import BinToDecStep1 from '../diagrams/BinToDecStep1.png'
 import BinToDecStep2 from '../diagrams/BinToDecStep2.png'
 import BinToDecTipsAndTricks from '../diagrams/BinToDecTipsAndTricks.png'
 
-import * as names from '../LearningModuleNames'
+import { Names } from '../LearningModuleNames'
 
 const useStyles = makeStyles((theme) => ({
     h3: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   
 
 export default function LearnBinaryToDecimal(props) {
-    const TOTAL_STEPS = 5;
+    const TOTAL_STEPS = Names[0].steps.length;
     const [stepCounter, setStepCounter] = React.useState(1)
 
     const classes = useStyles();
@@ -109,13 +109,37 @@ export default function LearnBinaryToDecimal(props) {
                     </div>
                 </Zoom>
                 <Zoom in={stepCounter === 3} style={stepCounter === 3 ? {} : {display: "none"}}>
+                    <div style={{width: "100%"}}>
+                        <h3 className={classes.h3}>Note on Writing Binary vs Decimal Numbers</h3>
+                        <Paper elevation="3" className={classes.paper}>
+                            <p>
+                                To avoid confusion, all numbers in binary will be written with a "0b" prefix, such as:
+                            </p>
+                            <p>
+                                0b00101001
+                            </p>
+                            <p>
+                                This is simply a common convention that is used to differentiate numbers like 100 (one hundred in decimal) versus numbers like 0b100
+                                (four in binary).  On this site, you will primarily see binary numbers written with the prefix and decimal numbers with no prefix.  However,
+                                feel free to use whatever convention you'd like.  Here are a couple other examples:
+                            </p>
+                            <p>
+                                10 (base-10) = 1010 (base-2)
+                            </p>
+                            <p>
+                                10<sub>dec</sub> = 1010<sub>bin</sub>
+                            </p>
+                        </Paper>
+                    </div>
+                </Zoom>
+                <Zoom in={stepCounter === 4} style={stepCounter === 4 ? {} : {display: "none"}}>
                     <div style={{width:"100%"}}>
                         <h3 className={classes.h3}>Binary to Decimal Conversion - Step 1</h3>
                         <Paper elevation="3" className={classes.paper}>
                             <p>
                                 The first step to converting a binary number into a decimal number is to list out all of the bits and calculate what each bit represents
                                 by looking at its value (either 0 or 1) and its place value (2 to the power of the place's position).  For this example, let's use the
-                                8-bit number, 1001 0011.
+                                8-bit number, 0b10010011.
                             </p>
                             <Grid style={{textAlign: "center"}}>
                                 <img
@@ -127,7 +151,7 @@ export default function LearnBinaryToDecimal(props) {
                         </Paper>
                     </div>
                 </Zoom>
-                <Zoom in={stepCounter === 4} style={stepCounter === 4 ? {} : {display: "none"}}>
+                <Zoom in={stepCounter === 5} style={stepCounter === 5 ? {} : {display: "none"}}>
                     <div style={{width:"100%"}}>
                         <h3 className={classes.h3}>Binary to Decimal Conversion - Step 2</h3>
                         <Paper elevation="3" className={classes.paper}>
@@ -147,13 +171,13 @@ export default function LearnBinaryToDecimal(props) {
                         </Paper>
                     </div>
                 </Zoom>
-                <Zoom in={stepCounter === 5} style={stepCounter === 5 ? {} : {display: "none"}}>
+                <Zoom in={stepCounter === 6} style={stepCounter === 6 ? {} : {display: "none"}}>
                     <div style={{width:"100%"}}>
                         <h3 className={classes.h3}>Tips and Tricks!</h3>
                         <Paper elevation="3" className={classes.paper}>
                             <p>
                                 Because binary numbers can only consist of 0s and 1s, we can simplify the previous process a bit.  Let's start by listing the powers of
-                                2 from right to left underneath our example number, 1001 0011, just like in step 1.  Notice that we can simply skip over the multiplication
+                                2 from right to left underneath our example number, 0b10010011, just like in step 1.  Notice that we can simply skip over the multiplication
                                 step by realizing that the zero bits can be ignored and the one bits can simply have their place value added to the final result.
                             </p>
                             <Grid style={{textAlign: "center"}}>
@@ -173,21 +197,13 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{marginTop: "1em"}}>
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.BinToDec1}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.BinToDec2}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.BinToDec3}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.BinToDec4}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>{names.BinToDec5}</div>
-                    </Button>
+                    {Names[0].steps.map((stepName, index) => {
+                        return (
+                            <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(index+1)}>
+                                <div style={stepCounter === (index+1) ? {fontWeight: "bold"} : {}}>{stepName}</div>
+                            </Button>
+                        )
+                    })}
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>
             </Container>

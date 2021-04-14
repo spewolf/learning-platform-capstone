@@ -11,6 +11,8 @@ import LearnDecimalToBinary from './LearnDecimalToBinary'
 import LearnBinaryAddition from './LearnBinaryAddition'
 import LearnBinarySubtraction from './LearnBinarySubtraction'
 
+import { Names } from '../LearningModuleNames'
+
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
@@ -52,40 +54,28 @@ const LearningModule = (props) => {
     }
   }, [props.location.search])
 
-  // Called when the user clicks the "begin" button.
-  const begin = (event) => {
-    event.preventDefault()
-
-    setShowAssignment(true)
-  };
-
-  function radioChange(event) {
-    setCoreFunction(event.target.value)
-  }
-
   return (
     <div>
       <div style={showAssignment ? {display: "none"} : {}}>
         <Container className={classes.container}>
-          <form onSubmit={begin}>
-              <Paper elevation={3} className={classes.paper}>
-                <RadioGroup aria-label="moduleSelection" onChange={radioChange}>
-                  <FormControlLabel value="BinToDec" control={<Radio />} label="Binary to Decimal Conversion" />
-                  <FormControlLabel value="DecToBin" control={<Radio />} label="Decimal to Binary Conversion" />
-                  <FormControlLabel value="Add" control={<Radio />} label="Binary Addition" />
-                  <FormControlLabel value="Sub" control={<Radio />} label="Binary Subtraction" />
-                </RadioGroup>
-              </Paper>
-            <Button
-              disabled={ coreFunction === "none" }
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Begin
-            </Button>
-          </form>
+          <h3 style={{paddingLeft: ".9em"}}>Choose a module to begin</h3>
+          <Paper elevation={3} className={classes.paper}>
+            {Names.map((module) => {
+              return (
+                <div style={{padding: ".3em"}}>
+                  <a style={{textDecoration: "none"}} href={"/learning?module=" + module.moduleName}>
+                    <Button
+                      color="primary"
+                      style={{padding: "0em"}}>
+                        <strong>{module.moduleFullName}</strong>
+                    </Button>
+                  </a>
+                  <p style={{margin: "0em"}}>{module.steps.length} Steps</p>
+                  <hr/>
+                </div>
+              )
+            })}
+          </Paper>
         </Container>
       </div>
       <div className={classes.container} style={(coreFunction === "BinToDec" && showAssignment) ? {} : {display: "none"}}>
