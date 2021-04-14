@@ -12,7 +12,7 @@ import DecToBinStep4 from '../diagrams/DecToBinStep4.png'
 import DecToBinStep5 from '../diagrams/DecToBinStep5.png'
 import DecToBinTipsAndTricks from '../diagrams/DecToBinTipsAndTricks.png'
 
-import * as names from '../LearningModuleNames'
+import { Names } from '../LearningModuleNames'
 
 const useStyles = makeStyles((theme) => ({
     h3: {
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
   
 
-export default function LearnBinaryToDecimal(props) {
-    const TOTAL_STEPS = 7;
+export default function LearnDecimalToBinary(props) {
+    const TOTAL_STEPS = Names[1].steps.length;
     const [stepCounter, setStepCounter] = React.useState(1)
 
     const classes = useStyles();
@@ -242,27 +242,13 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{marginTop: "1em"}}>
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.DecToBin1}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.DecToBin2}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.DecToBin3}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.DecToBin4}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>{names.DecToBin5}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(6)}>
-                        <div style={stepCounter === 6 ? {fontWeight: "bold"} : {}}>{names.DecToBin6}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(7)}>
-                        <div style={stepCounter === 7 ? {fontWeight: "bold"} : {}}>{names.DecToBin7}</div>
-                    </Button>
+                    {Names[1].steps.map((stepName, index) => {
+                        return (
+                            <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(index+1)}>
+                                <div style={stepCounter === (index+1) ? {fontWeight: "bold"} : {}}>{stepName}</div>
+                            </Button>
+                        )
+                    })}
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>
             </Container>

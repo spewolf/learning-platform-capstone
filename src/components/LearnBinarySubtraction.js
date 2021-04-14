@@ -12,7 +12,7 @@ import SubBytes from '../diagrams/SubBytes.png'
 import SubBytesComp from '../diagrams/SubBytesComp.png'
 import SubBytesSolution from '../diagrams/SubBytesSolution.png'
 
-import * as names from '../LearningModuleNames'
+import { Names } from '../LearningModuleNames'
 
 const useStyles = makeStyles((theme) => ({
     h3: {
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
   
 
-export default function LearnBinaryToDecimal(props) {
-    const TOTAL_STEPS = 7;
+export default function LearnBinarySubtraction(props) {
+    const TOTAL_STEPS = Names[3].steps.length;
     const [stepCounter, setStepCounter] = React.useState(1)
 
     const classes = useStyles();
@@ -90,7 +90,7 @@ export default function LearnBinaryToDecimal(props) {
                         <h3 className={classes.h3}>One's Complement</h3>
                         <Paper elevation="3" className={classes.paper}>
                             <p>
-                                The bottom number of our problem is 1001. There are several techniques to convert a binary number to its negative counterpart, but for subtraction,
+                                The bottom number of our problem is 0b1001. There are several techniques to convert a binary number to its negative counterpart, but for subtraction,
                                 we will use the two's complement method.  To start we need to take the one's complement of our number.  This is very simple.  All we have to do is
                                 flip all of the bits.  To do so, just convert every one into a zero and every zero into a one.
                             </p>
@@ -202,27 +202,13 @@ export default function LearnBinaryToDecimal(props) {
             <Container style={{marginTop: "1em"}}>
                 <Grid style={{textAlign: "center"}}>
                     <Button disabled={stepCounter === 1} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={decrementStep}>&#60;</Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(1)}>
-                        <div style={stepCounter === 1 ? {fontWeight: "bold"} : {}}>{names.Sub1}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(2)}>
-                        <div style={stepCounter === 2 ? {fontWeight: "bold"} : {}}>{names.Sub2}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(3)}>
-                        <div style={stepCounter === 3 ? {fontWeight: "bold"} : {}}>{names.Sub3}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(4)}>
-                        <div style={stepCounter === 4 ? {fontWeight: "bold"} : {}}>{names.Sub4}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(5)}>
-                        <div style={stepCounter === 5 ? {fontWeight: "bold"} : {}}>{names.Sub5}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(6)}>
-                        <div style={stepCounter === 6 ? {fontWeight: "bold"} : {}}>{names.Sub6}</div>
-                    </Button>
-                    <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(7)}>
-                        <div style={stepCounter === 7 ? {fontWeight: "bold"} : {}}>{names.Sub7}</div>
-                    </Button>
+                    {Names[3].steps.map((stepName, index) => {
+                        return (
+                            <Button variant="contained" color="primary" style={{margin: ".3em", height: "10%"}} onClick={() => setStepCounter(index+1)}>
+                                <div style={stepCounter === (index+1) ? {fontWeight: "bold"} : {}}>{stepName}</div>
+                            </Button>
+                        )
+                    })}
                     <Button disabled={stepCounter === TOTAL_STEPS} variant="contained" color="secondary" style={{margin: ".3em", height: "10%"}} onClick={incrementStep}>&#62;</Button>
                 </Grid>
             </Container>
